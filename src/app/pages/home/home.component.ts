@@ -1,0 +1,122 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+  template: `
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div class="animate-fade-in">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+              Protect Your Place <br>
+              <span class="text-yellow-300">From Pest</span>
+            </h1>
+            <p class="text-xl mb-8 text-gray-100">
+              Professional pest control solutions with eco-friendly methods. Your trusted partner for a pest-free environment.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <a routerLink="/enquiry" class="btn-primary bg-white text-brand hover:bg-gray-100">
+                Get Free Quote
+              </a>
+              <a routerLink="/services" class="btn-secondary border-white text-white hover:bg-white hover:text-brand">
+                Our Services
+              </a>
+            </div>
+          </div>
+          <div class="animate-slide-up">
+            <div class="relative">
+              <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center">
+                <span class="material-icons text-8xl text-yellow-300 animate-bounce-slow">pest_control</span>
+                <h3 class="text-2xl font-bold mt-4">24/7 Protection</h3>
+                <p class="text-gray-200 mt-2">Round the clock pest monitoring and control</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose Pestozap?</h2>
+          <p class="text-xl text-gray-600">Your shield against pests with professional expertise</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="card p-8 text-center animate-fade-in">
+            <span class="material-icons text-5xl text-brand mb-4">verified_user</span>
+            <h3 class="text-xl font-bold mb-3">Licensed & Insured</h3>
+            <p class="text-gray-600">Fully licensed professionals with comprehensive insurance coverage</p>
+          </div>
+          
+          <div class="card p-8 text-center animate-fade-in">
+            <span class="material-icons text-5xl text-brand mb-4">eco</span>
+            <h3 class="text-xl font-bold mb-3">Eco-Friendly</h3>
+            <p class="text-gray-600">Safe, environmentally responsible pest control methods</p>
+          </div>
+          
+          <div class="card p-8 text-center animate-fade-in">
+            <span class="material-icons text-5xl text-brand mb-4">support_agent</span>
+            <h3 class="text-xl font-bold mb-3">24/7 Support</h3>
+            <p class="text-gray-600">Round-the-clock customer support and emergency services</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Preview -->
+    <section class="py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
+          <p class="text-xl text-gray-600">Comprehensive pest control solutions</p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="card p-8 animate-fade-in">
+            <div class="flex items-center mb-4">
+              <span class="material-icons text-3xl text-brand mr-3">home</span>
+              <h3 class="text-2xl font-bold">Home Pest Control</h3>
+            </div>
+            <p class="text-gray-600 mb-4">
+              Protect your family and home from cockroaches, rodents, termites, and other household pests with our residential services.
+            </p>
+            <a routerLink="/services" class="text-brand font-medium hover:underline">Learn More →</a>
+          </div>
+          
+          <div class="card p-8 animate-fade-in">
+            <div class="flex items-center mb-4">
+              <span class="material-icons text-3xl text-brand mr-3">business</span>
+              <h3 class="text-2xl font-bold">Commercial Pest Control</h3>
+            </div>
+            <p class="text-gray-600 mb-4">
+              Keep your business pest-free with our commercial solutions designed for offices, restaurants, and industrial facilities.
+            </p>
+            <a routerLink="/services" class="text-brand font-medium hover:underline">Learn More →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-bg text-white py-16">
+      <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Get Started?</h2>
+        <p class="text-xl mb-8 text-gray-100">
+          Contact us today for a free consultation and protect your property from pests.
+        </p>
+        <a routerLink="/enquiry" class="btn-primary bg-white text-brand hover:bg-gray-100">
+          Get Free Quote Now
+        </a>
+      </div>
+    </section>
+  `
+})
+export class HomeComponent {}
