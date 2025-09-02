@@ -5,7 +5,8 @@
       <div class="flex items-center">
         <a routerLink="/" class="flex items-center space-x-2">
           <span class="material-icons text-brand text-3xl">pest_control</span>
-          <span class="text-2xl font-bold text-gradient">Pestozap</span>
+          <!-- <span class="text-2xl font-bold text-gradient">Pestozap</span> -->
+           <img src="../../../assets/logo.jpg" description="logo" class="h-10"/>
         </a>
       </div>
 
@@ -32,6 +33,7 @@
           </div>
         </div>
         <a routerLink="/about" class="text-gray-700 hover:text-brand transition-colors">About</a>
+        <a routerLink="/blog" class="text-gray-700 hover:text-brand transition-colors">Blog</a>
         <a routerLink="/contact" class="text-gray-700 hover:text-brand transition-colors">Contact</a>
         <a routerLink="/enquiry" class="btn-primary">Enquiry</a>
       </div>
@@ -51,6 +53,7 @@
           <a routerLink="/services" (click)="closeMobileMenu()" class="block px-6 py-2 text-gray-600 hover:text-brand">Commercial Pest Control</a>
         </div>
         <a routerLink="/about" (click)="closeMobileMenu()" class="block px-3 py-2 text-gray-700 hover:text-brand">About</a>
+        <a routerLink="/blog" (click)="closeMobileMenu()" class="block px-3 py-2 text-gray-700 hover:text-brand">Blog</a>
         <a routerLink="/contact" (click)="closeMobileMenu()" class="block px-3 py-2 text-gray-700 hover:text-brand">Contact</a>
         <a routerLink="/enquiry" (click)="closeMobileMenu()" class="block px-3 py-2 text-brand font-medium">Enquiry</a>
       </div>

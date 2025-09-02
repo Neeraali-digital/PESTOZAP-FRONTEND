@@ -22,6 +22,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/enquiry/enquiry.component').then(m => m.EnquiryComponent)
   },
   {
+    path: 'blog',
+    loadComponent: () => import('./pages/blog/blog.component').then(m => m.BlogComponent)
+  },
+  {
     path: '**',
     redirectTo: ''
   }

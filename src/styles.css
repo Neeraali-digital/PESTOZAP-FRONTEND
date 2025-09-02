@@ -28,4 +28,16 @@
   .text-gradient {
     @apply bg-gradient-to-r from-brand to-brand-dark bg-clip-text text-transparent;
   }
+  
+  .glass {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20;
+  }
+  
+  .glass-dark {
+    @apply bg-black/10 backdrop-blur-lg border border-white/10;
+  }
+  
+  .bento-card {
+    @apply bg-white rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1;
+  }
 }
