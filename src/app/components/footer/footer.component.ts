@@ -6,72 +6,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-footer',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  template: `
-    <footer class="bg-gray-900 text-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <!-- Brand Section -->
-          <div class="col-span-1 md:col-span-2">
-            <div class="flex items-center space-x-2 mb-4">
-              <span class="material-icons text-brand text-3xl">pest_control</span>
-              <span class="text-2xl font-bold">Pestozap</span>
-            </div>
-            <p class="text-gray-300 mb-4 max-w-md">
-              Protect your place from pest. Professional pest control solutions for homes and businesses with eco-friendly methods and guaranteed results.
-            </p>
-            <div class="flex space-x-4">
-              <a href="#" class="text-gray-400 hover:text-brand transition-colors">
-                <span class="material-icons">facebook</span>
-              </a>
-              <a href="#" class="text-gray-400 hover:text-brand transition-colors">
-                <span class="material-icons">call</span>
-              </a>
-              <a href="#" class="text-gray-400 hover:text-brand transition-colors">
-                <span class="material-icons">email</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- Quick Links -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul class="space-y-2">
-              <li><a routerLink="/" class="text-gray-300 hover:text-brand transition-colors">Home</a></li>
-              <li><a routerLink="/about" class="text-gray-300 hover:text-brand transition-colors">About Us</a></li>
-              <li><a routerLink="/services" class="text-gray-300 hover:text-brand transition-colors">Services</a></li>
-              <li><a routerLink="/contact" class="text-gray-300 hover:text-brand transition-colors">Contact</a></li>
-              <li><a routerLink="/enquiry" class="text-gray-300 hover:text-brand transition-colors">Get Quote</a></li>
-            </ul>
-          </div>
-
-          <!-- Contact Info -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Contact Info</h3>
-            <div class="space-y-3">
-              <div class="flex items-center space-x-2">
-                <span class="material-icons text-brand">location_on</span>
-                <span class="text-gray-300">123 Pest Control St, City</span>
-              </div>
-              <div class="flex items-center space-x-2">
-                <span class="material-icons text-brand">phone</span>
-                <span class="text-gray-300">+91-9851495495</span>
-              </div>
-              <div class="flex items-center space-x-2">
-                <span class="material-icons text-brand">email</span>
-                <span class="text-gray-300">solutions&#64;pestozap.com</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p class="text-gray-400">
-            © {{ currentYear }} Pestozap. All rights reserved. | Your Shield Against Pests!
-          </p>
-        </div>
-      </div>
-    </footer>
-  `
+  templateUrl: './footer.component.html'
 })
 export class FooterComponent {
   currentYear = new Date().getFullYear();

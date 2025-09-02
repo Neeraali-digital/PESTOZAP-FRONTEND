@@ -6,67 +6,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-navbar',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  template: `
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-          <!-- Logo -->
-          <div class="flex items-center">
-            <a routerLink="/" class="flex items-center space-x-2">
-              <span class="material-icons text-brand text-3xl">pest_control</span>
-              <span class="text-2xl font-bold text-gradient">Pestozap</span>
-            </a>
-          </div>
-
-          <!-- Desktop Menu -->
-          <div class="hidden md:flex items-center space-x-8">
-            <div class="relative group">
-              <button class="flex items-center space-x-1 text-gray-700 hover:text-brand transition-colors">
-                <span>Services</span>
-                <span class="material-icons text-sm">keyboard_arrow_down</span>
-              </button>
-              <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                <a routerLink="/services" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors">
-                  <div class="flex items-center space-x-2">
-                    <span class="material-icons text-brand">home</span>
-                    <span>Home Pest Control</span>
-                  </div>
-                </a>
-                <a routerLink="/services" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors">
-                  <div class="flex items-center space-x-2">
-                    <span class="material-icons text-brand">business</span>
-                    <span>Commercial Pest Control</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <a routerLink="/about" class="text-gray-700 hover:text-brand transition-colors">About</a>
-            <a routerLink="/contact" class="text-gray-700 hover:text-brand transition-colors">Contact</a>
-            <a routerLink="/enquiry" class="btn-primary">Enquiry</a>
-          </div>
-
-          <!-- Mobile Menu Button -->
-          <button (click)="toggleMobileMenu()" class="md:hidden text-gray-700">
-            <span class="material-icons">{{ mobileMenuOpen ? 'close' : 'menu' }}</span>
-          </button>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div class="md:hidden" [class.hidden]="!mobileMenuOpen">
-          <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
-            <div class="space-y-1">
-              <div class="text-gray-700 font-medium px-3 py-2">Services</div>
-              <a routerLink="/services" (click)="closeMobileMenu()" class="block px-6 py-2 text-gray-600 hover:text-brand">Home Pest Control</a>
-              <a routerLink="/services" (click)="closeMobileMenu()" class="block px-6 py-2 text-gray-600 hover:text-brand">Commercial Pest Control</a>
-            </div>
-            <a routerLink="/about" (click)="closeMobileMenu()" class="block px-3 py-2 text-gray-700 hover:text-brand">About</a>
-            <a routerLink="/contact" (click)="closeMobileMenu()" class="block px-3 py-2 text-gray-700 hover:text-brand">Contact</a>
-            <a routerLink="/enquiry" (click)="closeMobileMenu()" class="block px-3 py-2 text-brand font-medium">Enquiry</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-  `
+  templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
   mobileMenuOpen = false;
