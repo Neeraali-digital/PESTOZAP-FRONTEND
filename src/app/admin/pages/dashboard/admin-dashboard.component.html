@@ -1,0 +1,95 @@
+<div class="dashboard">
+  <!-- Header Section -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1>Dashboard Overview</h1>
+      <p>Welcome back! Here's what's happening with your business today.</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-primary">
+        <i class="fas fa-download"></i>
+        Export Report
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card" *ngFor="let stat of stats" [class]="'stat-' + stat.color">
+      <div class="stat-icon">
+        <i [class]="stat.icon"></i>
+      </div>
+      <div class="stat-content">
+        <h3>{{stat.title}}</h3>
+        <div class="stat-value">{{stat.value}}</div>
+        <div class="stat-change" [class]="'trend-' + stat.trend">
+          <i class="fas fa-arrow-up" *ngIf="stat.trend === 'up'"></i>
+          <i class="fas fa-arrow-down" *ngIf="stat.trend === 'down'"></i>
+          {{stat.change}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="charts-grid">
+    <!-- Revenue Chart -->
+    <div class="chart-card large">
+      <div class="chart-header">
+        <h3>Revenue Trend</h3>
+        <div class="chart-actions">
+          <select class="chart-filter">
+            <option>Last 6 months</option>
+            <option>Last year</option>
+          </select>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas #revenueChart></canvas>
+      </div>
+    </div>
+
+    <!-- Services Distribution -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>Services Distribution</h3>
+      </div>
+      <div class="chart-container">
+        <canvas #servicesChart></canvas>
+      </div>
+    </div>
+
+    <!-- Website Traffic -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>Website Traffic</h3>
+      </div>
+      <div class="chart-container">
+        <canvas #trafficChart></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activities -->
+  <div class="activities-section">
+    <div class="section-header">
+      <h3>Recent Activities</h3>
+      <a href="#" class="view-all">View All</a>
+    </div>
+    <div class="activities-list">
+      <div class="activity-item" *ngFor="let activity of recentActivities">
+        <div class="activity-icon" [class]="'activity-' + activity.type">
+          <i class="fas fa-clipboard-list" *ngIf="activity.type === 'request'"></i>
+          <i class="fas fa-credit-card" *ngIf="activity.type === 'payment'"></i>
+          <i class="fas fa-user-plus" *ngIf="activity.type === 'user'"></i>
+          <i class="fas fa-check-circle" *ngIf="activity.type === 'service'"></i>
+          <i class="fas fa-star" *ngIf="activity.type === 'review'"></i>
+        </div>
+        <div class="activity-content">
+          <p>{{activity.action}}</p>
+          <span class="activity-time">{{activity.time}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

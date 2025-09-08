@@ -1,32 +1,44 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './contact.component.html'
+  imports: [CommonModule, FormsModule],
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.css']
 })
 export class ContactComponent {
-  contactForm: FormGroup;
-
-  constructor(private fb: FormBuilder) {
-    this.contactForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
-      subject: ['', Validators.required],
-      message: ['', Validators.required]
-    });
-  }
+  formData = {
+    name: '',
+    email: '',
+    phone: '',
+    service: '',
+    message: ''
+  };
 
   onSubmit() {
-    if (this.contactForm.valid) {
-      console.log('Contact form submitted:', this.contactForm.value);
-      alert('Thank you for your message! We will get back to you soon.');
-      this.contactForm.reset();
+    if (this.isFormValid()) {
+      console.log('Form submitted:', this.formData);
+      // Handle form submission
+      alert('Thank you for your message! We will contact you soon.');
+      this.resetForm();
     }
+  }
+
+  private isFormValid(): boolean {
+    return !!(this.formData.name && this.formData.email && 
+             this.formData.phone && this.formData.service);
+  }
+
+  private resetForm() {
+    this.formData = {
+      name: '',
+      email: '',
+      phone: '',
+      service: '',
+      message: ''
+    };
   }
 }

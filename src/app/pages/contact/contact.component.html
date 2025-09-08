@@ -1,0 +1,132 @@
+<div class="contact-page">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">Contact Us</h1>
+        <p class="hero-subtitle">Ready to eliminate pests? Let's get started today</p>
+        <div class="hero-cta">
+          <a href="tel:+15551234567" class="emergency-call">
+            <i class="fas fa-phone"></i>
+            <span>Emergency: (555) 123-4567</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="main-content">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Contact Form -->
+        <div class="form-section">
+          <div class="form-card glass-morphism">
+            <div class="form-header">
+              <h3>Get Your Free Quote</h3>
+              <p>Fill out the form and we'll contact you within 24 hours</p>
+            </div>
+            
+            <form class="contact-form" (ngSubmit)="onSubmit()" #contactForm="ngForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <input type="text" id="name" name="name" [(ngModel)]="formData.name" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                  <input type="email" id="email" name="email" [(ngModel)]="formData.email" placeholder="Email Address" required>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <input type="tel" id="phone" name="phone" [(ngModel)]="formData.phone" placeholder="Phone Number" required>
+                </div>
+                <div class="form-group">
+                  <select id="service" name="service" [(ngModel)]="formData.service" required>
+                    <option value="">Select Service</option>
+                    <option value="residential">Residential Control</option>
+                    <option value="commercial">Commercial Control</option>
+                    <option value="termite">Termite Treatment</option>
+                    <option value="rodent">Rodent Control</option>
+                    <option value="inspection">Property Inspection</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <textarea id="message" name="message" rows="4" [(ngModel)]="formData.message" placeholder="Describe your pest problem..."></textarea>
+              </div>
+              
+              <button type="submit" class="submit-btn" [disabled]="!contactForm.form.valid">
+                <span>Send Message</span>
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="info-section">
+          <!-- Quick Contact -->
+          <div class="quick-contact glass-morphism">
+            <h3>Quick Contact</h3>
+            <div class="contact-methods">
+              <a href="tel:+15551234567" class="contact-method">
+                <div class="method-icon">
+                  <i class="fas fa-phone"></i>
+                </div>
+                <div class="method-info">
+                  <span class="method-label">Call Us</span>
+                  <span class="method-value">(555) 123-4567</span>
+                </div>
+              </a>
+              
+              <a href="mailto:info@pestozap.com" class="contact-method">
+                <div class="method-icon">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div class="method-info">
+                  <span class="method-label">Email Us</span>
+                  <span class="method-value">info&#64;pestozap.com</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Business Info -->
+          <div class="business-info glass-morphism">
+            <h3>Visit Our Office</h3>
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <div>
+                <strong>Address</strong>
+                <p>123 Pest Control Street<br>City, State 12345</p>
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <i class="fas fa-clock"></i>
+              <div>
+                <strong>Business Hours</strong>
+                <p>Mon-Fri: 8AM-6PM<br>Sat: 9AM-4PM<br>Sun: Emergency Only</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Emergency Card -->
+          <div class="emergency-card glass-morphism">
+            <div class="emergency-content">
+              <i class="fas fa-exclamation-triangle"></i>
+              <h4>Pest Emergency?</h4>
+              <p>We're available 24/7 for urgent pest situations</p>
+              <a href="tel:+15551234567" class="emergency-btn">
+                Call Emergency Line
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

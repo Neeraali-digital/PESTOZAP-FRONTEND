@@ -1,0 +1,15 @@
+<div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+  <div class="flex items-center justify-between">
+    <div class="flex-1">
+      <p class="text-sm font-medium text-gray-600 mb-1">{{ title }}</p>
+      <p class="text-3xl font-bold text-gray-900 mb-2">{{ value | number }}</p>
+      <div *ngIf="trend !== undefined" class="flex items-center">
+        <span class="text-sm text-gray-500">+{{ trend }} {{ trendLabel }}</span>
+      </div>
+    </div>
+    
+    <div [ngClass]="getIconClasses()" class="w-12 h-12 rounded-xl flex items-center justify-center">
+      <span class="material-icons text-white">{{ icon }}</span>
+    </div>
+  </div>
+</div>

@@ -1,20 +1,33 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, FooterComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, CommonModule],
   template: `
     <div class="min-h-screen flex flex-col">
-      <app-navbar></app-navbar>
-      <main class="flex-grow">
+      <app-navbar *ngIf="!isAdminRoute"></app-navbar>
+      <main [class]="isAdminRoute ? 'admin-main' : 'flex-grow'">
         <router-outlet></router-outlet>
       </main>
-      <app-footer></app-footer>
+      <app-footer *ngIf="!isAdminRoute"></app-footer>
     </div>
-  `
+  `,
+  styles: ['.admin-main{height:100vh;overflow:hidden}']
 })
-export class AppComponent {}
+export class AppComponent {
+  isAdminRoute = false;
+
+  constructor(private router: Router) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event) => {
+      this.isAdminRoute = (event as NavigationEnd).url.startsWith('/admin');
+    });
+  }
+}
