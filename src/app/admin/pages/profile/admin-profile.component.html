@@ -1,0 +1,446 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 rounded-2xl shadow-2xl p-8 mb-8 text-white relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-20">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32"></div>
+      <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-24 -translate-x-24"></div>
+    </div>
+    
+    <div class="relative z-10 flex flex-col lg:flex-row items-center gap-8">
+      <div class="relative">
+        <div class="w-32 h-32 rounded-full border-4 border-white/30 overflow-hidden shadow-2xl">
+          <img [src]="adminProfile.avatar" [alt]="adminProfile.name" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute -top-2 -right-2 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
+          <span class="material-icons text-white text-lg">star</span>
+        </div>
+      </div>
+      
+      <div class="text-center lg:text-left">
+        <h1 class="text-4xl font-bold mb-2">{{adminProfile.name}}</h1>
+        <p class="text-xl text-blue-100 mb-4">{{adminProfile.role}}</p>
+        <div class="flex flex-col lg:flex-row gap-6 text-blue-100">
+          <div class="flex items-center gap-2">
+            <span class="material-icons">event</span>
+            <span>Joined {{adminProfile.joinDate}}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-icons">schedule</span>
+            <span>Last login {{adminProfile.lastLogin}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="bg-white rounded-2xl shadow-lg mb-8 overflow-hidden border border-slate-200/50">
+    <div class="flex flex-wrap border-b border-slate-200">
+      <button 
+        class="flex items-center gap-3 px-8 py-4 font-semibold transition-all duration-300 relative"
+        [class]="activeTab === 'profile' ? 
+          'text-blue-600 bg-blue-50 border-b-2 border-blue-600' : 
+          'text-slate-600 hover:text-blue-600 hover:bg-slate-50'"
+        (click)="setActiveTab('profile')">
+        <span class="material-icons">person</span>
+        <span>Profile</span>
+      </button>
+      <button 
+        class="flex items-center gap-3 px-8 py-4 font-semibold transition-all duration-300 relative"
+        [class]="activeTab === 'security' ? 
+          'text-blue-600 bg-blue-50 border-b-2 border-blue-600' : 
+          'text-slate-600 hover:text-blue-600 hover:bg-slate-50'"
+        (click)="setActiveTab('security')">
+        <span class="material-icons">security</span>
+        <span>Security</span>
+      </button>
+      <button 
+        class="flex items-center gap-3 px-8 py-4 font-semibold transition-all duration-300 relative"
+        [class]="activeTab === 'notifications' ? 
+          'text-blue-600 bg-blue-50 border-b-2 border-blue-600' : 
+          'text-slate-600 hover:text-blue-600 hover:bg-slate-50'"
+        (click)="setActiveTab('notifications')">
+        <span class="material-icons">notifications</span>
+        <span>Notifications</span>
+      </button>
+      <button 
+        class="flex items-center gap-3 px-8 py-4 font-semibold transition-all duration-300 relative"
+        [class]="activeTab === 'activity' ? 
+          'text-blue-600 bg-blue-50 border-b-2 border-blue-600' : 
+          'text-slate-600 hover:text-blue-600 hover:bg-slate-50'"
+        (click)="setActiveTab('activity')">
+        <span class="material-icons">history</span>
+        <span>Activity</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="space-y-8">
+    <!-- Profile Tab -->
+    <div *ngIf="activeTab === 'profile'" class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+      <!-- Main Content -->
+      <div class="xl:col-span-2">
+        <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-200/50">
+          <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+            <span class="material-icons text-blue-600 text-3xl">person</span>
+            Personal Information
+          </h3>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label class="block text-sm font-semibold text-slate-700">Full Name</label>
+              <input 
+                type="text" 
+                [(ngModel)]="adminProfile.name"
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+            </div>
+            
+            <div class="space-y-2">
+              <label class="block text-sm font-semibold text-slate-700">Email Address</label>
+              <input 
+                type="email" 
+                [(ngModel)]="adminProfile.email"
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+            </div>
+            
+            <div class="space-y-2">
+              <label class="block text-sm font-semibold text-slate-700">Phone Number</label>
+              <input 
+                type="tel" 
+                [(ngModel)]="adminProfile.phone"
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+            </div>
+            
+            <div class="space-y-2">
+              <label class="block text-sm font-semibold text-slate-700">Department</label>
+              <input 
+                type="text" 
+                [(ngModel)]="adminProfile.department"
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+            </div>
+            
+            <div class="lg:col-span-2 space-y-2">
+              <label class="block text-sm font-semibold text-slate-700">Location</label>
+              <input 
+                type="text" 
+                [(ngModel)]="adminProfile.location"
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+            </div>
+            
+            <div class="lg:col-span-2 space-y-2">
+              <label class="block text-sm font-semibold text-slate-700">Bio</label>
+              <textarea 
+                [(ngModel)]="adminProfile.bio" 
+                rows="4"
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none">
+              </textarea>
+            </div>
+          </div>
+          
+          <div class="mt-8">
+            <button 
+              (click)="updateProfile()"
+              class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3">
+              <span class="material-icons">save</span>
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Content -->
+      <div class="space-y-6">
+        <!-- Profile Picture Card -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-200/50">
+          <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+            <span class="material-icons text-purple-600">photo_camera</span>
+            Profile Picture
+          </h3>
+          
+          <div class="text-center">
+            <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-slate-200 shadow-lg">
+              <img [src]="adminProfile.avatar" [alt]="adminProfile.name" class="w-full h-full object-cover">
+            </div>
+            <button class="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white px-6 py-2 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 mx-auto">
+              <span class="material-icons text-lg">photo_camera</span>
+              Change Photo
+            </button>
+          </div>
+        </div>
+
+        <!-- Permissions Card -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-200/50">
+          <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+            <span class="material-icons text-green-600">verified_user</span>
+            Permissions
+          </h3>
+          
+          <div class="space-y-3">
+            <div 
+              *ngFor="let permission of adminProfile.permissions" 
+              class="flex items-center gap-3 p-3 bg-green-50 rounded-xl border border-green-200">
+              <span class="material-icons text-green-600">check_circle</span>
+              <span class="font-medium text-green-700">{{permission | titlecase}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Tab -->
+    <div *ngIf="activeTab === 'security'" class="max-w-4xl">
+      <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-200/50">
+        <h3 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+          <span class="material-icons text-red-600 text-3xl">security</span>
+          Password & Security
+        </h3>
+        
+        <div class="space-y-6">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-6 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="mb-4 lg:mb-0">
+              <h4 class="text-lg font-semibold text-slate-800 mb-2">Password</h4>
+              <p class="text-slate-600">Last changed 30 days ago</p>
+            </div>
+            <button 
+              (click)="openPasswordModal()"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2">
+              <span class="material-icons">lock</span>
+              Change Password
+            </button>
+          </div>
+          
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-6 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="mb-4 lg:mb-0">
+              <h4 class="text-lg font-semibold text-slate-800 mb-2">Two-Factor Authentication</h4>
+              <p class="text-slate-600">Add an extra layer of security to your account</p>
+            </div>
+            <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2">
+              <span class="material-icons">shield</span>
+              Enable 2FA
+            </button>
+          </div>
+          
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-6 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="mb-4 lg:mb-0">
+              <h4 class="text-lg font-semibold text-slate-800 mb-2">Login Sessions</h4>
+              <p class="text-slate-600">Manage your active sessions</p>
+            </div>
+            <button class="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2">
+              <span class="material-icons">devices</span>
+              View Sessions
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications Tab -->
+    <div *ngIf="activeTab === 'notifications'" class="max-w-4xl">
+      <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-200/50">
+        <h3 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+          <span class="material-icons text-yellow-600 text-3xl">notifications</span>
+          Notification Preferences
+        </h3>
+        
+        <div class="space-y-6">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-6 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="mb-4 lg:mb-0">
+              <h4 class="text-lg font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                <span class="material-icons text-blue-600">email</span>
+                Email Notifications
+              </h4>
+              <p class="text-slate-600">Receive notifications via email</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input 
+                type="checkbox" 
+                [(ngModel)]="notifications.emailNotifications" 
+                (change)="updateNotifications()"
+                class="sr-only peer">
+              <div class="w-14 h-7 bg-slate-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-6 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="mb-4 lg:mb-0">
+              <h4 class="text-lg font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                <span class="material-icons text-green-600">sms</span>
+                SMS Notifications
+              </h4>
+              <p class="text-slate-600">Receive notifications via SMS</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input 
+                type="checkbox" 
+                [(ngModel)]="notifications.smsNotifications" 
+                (change)="updateNotifications()"
+                class="sr-only peer">
+              <div class="w-14 h-7 bg-slate-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-6 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="mb-4 lg:mb-0">
+              <h4 class="text-lg font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                <span class="material-icons text-purple-600">notifications_active</span>
+                Push Notifications
+              </h4>
+              <p class="text-slate-600">Receive browser push notifications</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input 
+                type="checkbox" 
+                [(ngModel)]="notifications.pushNotifications" 
+                (change)="updateNotifications()"
+                class="sr-only peer">
+              <div class="w-14 h-7 bg-slate-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-6 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="mb-4 lg:mb-0">
+              <h4 class="text-lg font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                <span class="material-icons text-orange-600">assessment</span>
+                Weekly Reports
+              </h4>
+              <p class="text-slate-600">Receive weekly summary reports</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input 
+                type="checkbox" 
+                [(ngModel)]="notifications.weeklyReports" 
+                (change)="updateNotifications()"
+                class="sr-only peer">
+              <div class="w-14 h-7 bg-slate-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-6 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="mb-4 lg:mb-0">
+              <h4 class="text-lg font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                <span class="material-icons text-red-600">warning</span>
+                System Alerts
+              </h4>
+              <p class="text-slate-600">Receive important system alerts</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input 
+                type="checkbox" 
+                [(ngModel)]="notifications.systemAlerts" 
+                (change)="updateNotifications()"
+                class="sr-only peer">
+              <div class="w-14 h-7 bg-slate-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Tab -->
+    <div *ngIf="activeTab === 'activity'" class="max-w-4xl">
+      <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-200/50">
+        <h3 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+          <span class="material-icons text-indigo-600 text-3xl">history</span>
+          Recent Activity
+        </h3>
+        
+        <div class="space-y-4">
+          <div 
+            *ngFor="let activity of activityLog" 
+            class="flex items-center gap-4 p-6 bg-slate-50 rounded-xl border border-slate-200 hover:bg-slate-100 transition-all duration-300">
+            
+            <div class="w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
+                 [class]="activity.type === 'profile' ? 'bg-blue-100 text-blue-600' :
+                          activity.type === 'content' ? 'bg-green-100 text-green-600' :
+                          activity.type === 'review' ? 'bg-yellow-100 text-yellow-600' :
+                          activity.type === 'offer' ? 'bg-purple-100 text-purple-600' :
+                          activity.type === 'enquiry' ? 'bg-red-100 text-red-600' :
+                          'bg-slate-100 text-slate-600'">
+              <span class="material-icons">
+                {{activity.type === 'profile' ? 'person' :
+                  activity.type === 'content' ? 'edit' :
+                  activity.type === 'review' ? 'star' :
+                  activity.type === 'offer' ? 'local_offer' :
+                  activity.type === 'enquiry' ? 'email' : 'circle'}}
+              </span>
+            </div>
+            
+            <div class="flex-1">
+              <p class="font-semibold text-slate-800 mb-1">{{activity.action}}</p>
+              <span class="text-sm text-slate-600 flex items-center gap-1">
+                <span class="material-icons text-xs">schedule</span>
+                {{activity.timestamp}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Password Modal -->
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4" *ngIf="showPasswordModal" (click)="closePasswordModal()">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md" (click)="$event.stopPropagation()">
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-red-500 to-pink-600 text-white p-6 rounded-t-2xl">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xl font-bold flex items-center gap-2">
+            <span class="material-icons">lock</span>
+            Change Password
+          </h3>
+          <button 
+            (click)="closePasswordModal()"
+            class="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-all duration-300">
+            <span class="material-icons text-sm">close</span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Modal Body -->
+      <div class="p-6 space-y-4">
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-slate-700">Current Password</label>
+          <input 
+            type="password" 
+            [(ngModel)]="passwordForm.currentPassword" 
+            placeholder="Enter current password"
+            class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300">
+        </div>
+        
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-slate-700">New Password</label>
+          <input 
+            type="password" 
+            [(ngModel)]="passwordForm.newPassword" 
+            placeholder="Enter new password"
+            class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300">
+        </div>
+        
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-slate-700">Confirm New Password</label>
+          <input 
+            type="password" 
+            [(ngModel)]="passwordForm.confirmPassword" 
+            placeholder="Confirm new password"
+            class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300">
+        </div>
+      </div>
+      
+      <!-- Modal Footer -->
+      <div class="bg-slate-50 px-6 py-4 rounded-b-2xl flex justify-end gap-3">
+        <button 
+          (click)="closePasswordModal()"
+          class="px-6 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-semibold transition-all duration-300">
+          Cancel
+        </button>
+        <button 
+          (click)="changePassword()"
+          class="px-6 py-2 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+          Change Password
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

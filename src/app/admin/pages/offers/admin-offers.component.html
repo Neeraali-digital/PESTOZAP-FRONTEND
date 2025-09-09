@@ -1,123 +1,344 @@
-<div class="space-y-6">
-  <!-- Page Header -->
-  <div class="flex items-center justify-between">
-    <div>
-      <h1 class="text-3xl font-bold text-gray-900">Offers Management</h1>
-      <p class="text-gray-600 mt-1">Create and manage special offers and promotions</p>
-    </div>
-    <div class="flex space-x-3">
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
+  <!-- Header -->
+  <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-slate-200/50">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+      <div class="space-y-2">
+        <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          Offers Management
+        </h1>
+        <p class="text-slate-600 text-lg">Create and manage promotional offers and discounts</p>
+      </div>
       <button 
-        (click)="loadOffers()"
-        class="px-4 py-2 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors">
-        <span class="material-icons mr-2">refresh</span>
-        Refresh
+        (click)="openModal('create')"
+        class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3">
+        <span class="material-icons text-xl">add</span>
+        Create Offer
       </button>
-      <a 
-        routerLink="/admin/offers/create"
-        class="px-4 py-2 bg-brand text-white rounded-xl hover:bg-brand-dark transition-colors">
-        <span class="material-icons mr-2">add</span>
-        New Offer
-      </a>
     </div>
   </div>
 
-  <!-- Loading State -->
-  <div *ngIf="loading" class="bg-white rounded-2xl p-6 shadow-sm">
-    <div class="animate-pulse space-y-4">
-      <div class="h-4 bg-gray-200 rounded w-1/4"></div>
-      <div class="space-y-3">
-        <div class="h-4 bg-gray-200 rounded"></div>
-        <div class="h-4 bg-gray-200 rounded w-5/6"></div>
-        <div class="h-4 bg-gray-200 rounded w-4/6"></div>
+  <!-- Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl p-6 border border-green-200/50 shadow-lg hover:shadow-xl transition-all duration-300">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-green-600 font-semibold text-sm uppercase tracking-wide">Active Offers</p>
+          <p class="text-3xl font-bold text-green-700 mt-2">{{activeOffersCount}}</p>
+        </div>
+        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
+          <span class="material-icons text-white text-2xl">local_offer</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-gradient-to-br from-orange-50 to-amber-100 rounded-2xl p-6 border border-orange-200/50 shadow-lg hover:shadow-xl transition-all duration-300">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-orange-600 font-semibold text-sm uppercase tracking-wide">Expired Offers</p>
+          <p class="text-3xl font-bold text-orange-700 mt-2">{{expiredOffersCount}}</p>
+        </div>
+        <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg">
+          <span class="material-icons text-white text-2xl">schedule</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6 border border-blue-200/50 shadow-lg hover:shadow-xl transition-all duration-300">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-blue-600 font-semibold text-sm uppercase tracking-wide">Total Usage</p>
+          <p class="text-3xl font-bold text-blue-700 mt-2">{{totalUsage}}</p>
+        </div>
+        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+          <span class="material-icons text-white text-2xl">trending_up</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Offers Table -->
-  <div *ngIf="!loading" class="bg-white rounded-2xl shadow-sm overflow-hidden">
-    <div class="px-6 py-4 border-b border-gray-200">
-      <h2 class="text-lg font-semibold text-gray-900">All Offers ({{ totalCount }})</h2>
+  <!-- Filters -->
+  <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-slate-200/50">
+    <div class="flex flex-col lg:flex-row gap-4">
+      <div class="flex-1 relative">
+        <span class="material-icons absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400">search</span>
+        <input 
+          type="text" 
+          placeholder="Search offers..." 
+          [(ngModel)]="searchTerm"
+          class="w-full pl-12 pr-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-slate-50 focus:bg-white">
+      </div>
+      <select 
+        [(ngModel)]="statusFilter"
+        class="px-6 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-slate-50 focus:bg-white min-w-[180px]">
+        <option value="">All Status</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+        <option value="expired">Expired</option>
+      </select>
     </div>
+  </div>
 
-    <div class="overflow-x-auto">
-      <table class="w-full">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Offer</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Discount</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valid Until</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <tr *ngFor="let offer of offers" class="hover:bg-gray-50">
-            <td class="px-6 py-4">
-              <div class="flex items-center">
-                <div class="flex-shrink-0 h-12 w-12">
-                  <img 
-                    *ngIf="offer.image" 
-                    [src]="offer.image" 
-                    [alt]="offer.title"
-                    class="h-12 w-12 rounded-lg object-cover">
-                  <div 
-                    *ngIf="!offer.image"
-                    class="h-12 w-12 rounded-lg bg-gray-200 flex items-center justify-center">
-                    <span class="material-icons text-gray-400">local_offer</span>
-                  </div>
-                </div>
-                <div class="ml-4">
-                  <div class="text-sm font-medium text-gray-900">{{ offer.title }}</div>
-                  <div class="text-sm text-gray-500">{{ offer.description | slice:0:50 }}...</div>
-                </div>
+  <!-- Offers Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+    <div 
+      *ngFor="let offer of filteredOffers" 
+      class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-slate-200/50 group hover:scale-105">
+      
+      <!-- Offer Image -->
+      <div class="relative h-48 overflow-hidden">
+        <img [src]="offer.image" [alt]="offer.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        
+        <!-- Status Badge -->
+        <div class="absolute top-4 right-4">
+          <span 
+            [class]="offer.status === 'active' ? 'bg-green-500 text-white' : 
+                     offer.status === 'inactive' ? 'bg-orange-500 text-white' : 
+                     'bg-red-500 text-white'"
+            class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide shadow-lg">
+            {{offer.status}}
+          </span>
+        </div>
+        
+        <!-- Discount Badge -->
+        <div class="absolute top-4 left-4">
+          <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
+            {{offer.discount}}{{offer.discountType === 'percentage' ? '%' : '$'}} OFF
+          </div>
+        </div>
+      </div>
+      
+      <!-- Offer Content -->
+      <div class="p-6">
+        <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+          {{offer.title}}
+        </h3>
+        <p class="text-slate-600 mb-4 line-clamp-2">{{offer.description}}</p>
+        
+        <!-- Offer Details -->
+        <div class="space-y-3 mb-4">
+          <div class="flex items-center gap-3 text-sm text-slate-600">
+            <span class="material-icons text-blue-500 text-lg">confirmation_number</span>
+            <span>Code: <strong class="text-slate-800">{{offer.code}}</strong></span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-slate-600">
+            <span class="material-icons text-green-500 text-lg">event</span>
+            <span>{{offer.validFrom}} - {{offer.validTo}}</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-slate-600">
+            <span class="material-icons text-purple-500 text-lg">people</span>
+            <span>Used: {{offer.usedCount}}/{{offer.usageLimit}}</span>
+          </div>
+        </div>
+
+        <!-- Services Tags -->
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span 
+            *ngFor="let service of offer.services" 
+            class="bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium border border-blue-200">
+            {{service | titlecase}}
+          </span>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-medium text-slate-700">Usage Progress</span>
+            <span class="text-sm text-slate-600">{{((offer.usedCount / offer.usageLimit) * 100).toFixed(0)}}%</span>
+          </div>
+          <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+            <div 
+              class="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-500"
+              [style.width.%]="(offer.usedCount / offer.usageLimit) * 100">
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-2">
+          <button 
+            class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 p-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 font-medium"
+            title="View">
+            <span class="material-icons text-lg">visibility</span>
+            <span class="hidden sm:inline">View</span>
+          </button>
+          <button 
+            (click)="openModal('edit', offer)"
+            class="flex-1 bg-green-50 hover:bg-green-100 text-green-600 p-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 font-medium"
+            title="Edit">
+            <span class="material-icons text-lg">edit</span>
+            <span class="hidden sm:inline">Edit</span>
+          </button>
+          <button 
+            (click)="toggleOfferStatus(offer.id)"
+            [class]="offer.status === 'active' ? 
+              'bg-orange-50 hover:bg-orange-100 text-orange-600' : 
+              'bg-green-50 hover:bg-green-100 text-green-600'"
+            class="flex-1 p-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 font-medium"
+            [title]="offer.status === 'active' ? 'Deactivate' : 'Activate'">
+            <span class="material-icons text-lg">{{offer.status === 'active' ? 'pause' : 'play_arrow'}}</span>
+          </button>
+          <button 
+            (click)="deleteOffer(offer.id)"
+            class="bg-red-50 hover:bg-red-100 text-red-600 p-3 rounded-xl transition-all duration-300 flex items-center justify-center"
+            title="Delete">
+            <span class="material-icons text-lg">delete</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4" *ngIf="showModal" (click)="closeModal()">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden" (click)="$event.stopPropagation()">
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="text-2xl font-bold">{{modalMode === 'create' ? 'Create New Offer' : 'Edit Offer'}}</h3>
+          <button 
+            (click)="closeModal()"
+            class="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-all duration-300">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Modal Body -->
+      <div class="p-6 max-h-[60vh] overflow-y-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">Offer Title</label>
+              <input 
+                type="text" 
+                [(ngModel)]="selectedOffer.title" 
+                placeholder="Enter offer title"
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Discount Amount</label>
+                <input 
+                  type="number" 
+                  [(ngModel)]="selectedOffer.discount" 
+                  placeholder="Enter discount"
+                  class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
               </div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <span class="text-lg font-bold text-brand">{{ offer.discount_percentage }}%</span>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <span class="px-2 py-1 bg-gray-100 text-gray-800 text-sm font-mono rounded">{{ offer.code }}</span>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-              {{ offer.valid_until | date:'MMM dd, yyyy' }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <span 
-                [class]="offer.is_active ? 
-                  'px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800' : 
-                  'px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800'">
-                {{ offer.is_active ? 'Active' : 'Inactive' }}
-              </span>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-              <a 
-                [routerLink]="['/admin/offers', offer.id, 'edit']"
-                class="text-brand hover:text-brand-dark">
-                <span class="material-icons">edit</span>
-              </a>
-              <button 
-                (click)="deleteOffer(offer.id)"
-                class="text-red-600 hover:text-red-900">
-                <span class="material-icons">delete</span>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Empty State -->
-    <div *ngIf="offers.length === 0" class="text-center py-12">
-      <span class="material-icons text-6xl text-gray-300 mb-4">local_offer</span>
-      <h3 class="text-lg font-medium text-gray-900 mb-2">No offers found</h3>
-      <p class="text-gray-500 mb-6">Get started by creating your first special offer.</p>
-      <a 
-        routerLink="/admin/offers/create"
-        class="inline-flex items-center px-4 py-2 bg-brand text-white rounded-xl hover:bg-brand-dark transition-colors">
-        <span class="material-icons mr-2">add</span>
-        Create Offer
-      </a>
+              
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Discount Type</label>
+                <select 
+                  [(ngModel)]="selectedOffer.discountType"
+                  class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+                  <option value="percentage">Percentage (%)</option>
+                  <option value="fixed">Fixed Amount ($)</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Promo Code</label>
+                <input 
+                  type="text" 
+                  [(ngModel)]="selectedOffer.code" 
+                  placeholder="Enter promo code"
+                  class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Usage Limit</label>
+                <input 
+                  type="number" 
+                  [(ngModel)]="selectedOffer.usageLimit" 
+                  placeholder="Enter usage limit"
+                  class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Valid From</label>
+                <input 
+                  type="date" 
+                  [(ngModel)]="selectedOffer.validFrom"
+                  class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Valid To</label>
+                <input 
+                  type="date" 
+                  [(ngModel)]="selectedOffer.validTo"
+                  class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+              </div>
+            </div>
+          </div>
+          
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">Description</label>
+              <textarea 
+                [(ngModel)]="selectedOffer.description" 
+                rows="4" 
+                placeholder="Enter offer description"
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none">
+              </textarea>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">Image URL</label>
+              <input 
+                type="url" 
+                [(ngModel)]="selectedOffer.image" 
+                placeholder="Enter image URL"
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">Applicable Services</label>
+              <div class="grid grid-cols-2 gap-3">
+                <label 
+                  *ngFor="let service of serviceTypes" 
+                  class="flex items-center gap-3 p-3 border border-slate-300 rounded-xl hover:bg-slate-50 cursor-pointer transition-all duration-300">
+                  <input 
+                    type="checkbox" 
+                    [checked]="isServiceSelected(service)"
+                    (change)="toggleService(service)"
+                    class="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500">
+                  <span class="text-sm font-medium text-slate-700">{{service | titlecase}}</span>
+                </label>
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">Status</label>
+              <select 
+                [(ngModel)]="selectedOffer.status"
+                class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="expired">Expired</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal Footer -->
+      <div class="bg-slate-50 px-6 py-4 flex justify-end gap-4">
+        <button 
+          (click)="closeModal()"
+          class="px-6 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-semibold transition-all duration-300">
+          Cancel
+        </button>
+        <button 
+          (click)="saveOffer()"
+          class="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+          {{modalMode === 'create' ? 'Create Offer' : 'Update Offer'}}
+        </button>
+      </div>
     </div>
   </div>
 </div>
