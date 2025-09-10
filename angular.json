@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "pestozap": {
+    "pestozap-frontend": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "pestozap:build:production"
+              "buildTarget": "pestozap-frontend:build:production"
             },
             "development": {
-              "buildTarget": "pestozap:build:development"
+              "buildTarget": "pestozap-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

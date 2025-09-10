@@ -9,4 +9,7 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     provideAnimations()
   ]
-}).catch(err => console.error(err));
+}).catch(err => {
+  console.error('Error starting app:', err);
+  document.body.innerHTML = `<div style="padding: 20px; color: red;">Error loading application: ${err.message}</div>`;
+});

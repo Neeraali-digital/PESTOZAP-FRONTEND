@@ -10,7 +10,7 @@ import { filter } from 'rxjs/operators';
   standalone: true,
   imports: [RouterOutlet, NavbarComponent, FooterComponent, CommonModule],
   template: `
-    <div class="min-h-screen flex flex-col">
+    <div class="min-h-screen flex flex-col bg-white">
       <app-navbar *ngIf="!isAdminRoute"></app-navbar>
       <main [class]="isAdminRoute ? 'admin-main' : 'flex-grow'">
         <router-outlet></router-outlet>
