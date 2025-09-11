@@ -1,13 +1,13 @@
 <!-- Advertising Slider -->
-<section class="h-[35vh] relative overflow-hidden">
+<section class="h-[40vh] relative overflow-hidden">
   <div class="relative w-full h-full">
     <div class="absolute inset-0 flex transition-transform duration-500 ease-in-out" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
       <div *ngFor="let ad of advertisements; let i = index" class="w-full h-full flex-shrink-0 relative">
         <img [src]="ad.imageUrl" [alt]="ad.title" class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+        <div class="absolute inset-0  flex items-center justify-center">
           <div class="text-center text-white">
-            <h3 class="text-2xl md:text-4xl font-bold mb-2">{{ad.title}}</h3>
-            <p class="text-lg">{{ad.description}}</p>
+            <!-- <h3 class="text-2xl md:text-4xl font-ex mb-2 text-brand ">{{ad.title}}</h3>
+            <p class="text-lg text-brand">{{ad.description}}</p> -->
           </div>
         </div>
       </div>
@@ -165,7 +165,7 @@
             </div>
           </div>
 
-          <div class="bg-gray-50 rounded-lg p-3 mb-4 border border-gray-100">
+          <div class="bg-gray-50 rounded-lg p-3 mb-4 border border-gray-100 pb-5">
             <div class="flex items-center justify-between">
               <span class="text-xs text-gray-600">Package</span>
               <span class="text-sm font-bold text-gray-700">Single Service</span>

@@ -1,6 +1,6 @@
 <!-- Moving Text Banner -->
 <div class="bg-brand text-white py-2 overflow-hidden">
-  <div class="animate-marquee whitespace-nowrap">
+  <div class="animate-marquee whitespace-nowrap !text-sm ">
     <span class="mx-8">🏠 Professional Pest Control Services Available 24/7</span>
     <span class="mx-8">🐛 Eco-Friendly Solutions for Home & Commercial Spaces</span>
     <span class="mx-8">📞 Call +91-9851495495 for Emergency Services</span>
@@ -29,9 +29,9 @@
             <span>Services</span>
             <span class="material-icons text-sm">keyboard_arrow_down</span>
           </button>
-          <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+          <div class="absolute top-full left-0 mt-2 w-64  bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
             <a routerLink="/services" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors">
-              <div class="flex items-center space-x-2">
+              <div class="flex items-center space-x-2 ">
                 <span class="material-icons text-brand">home</span>
                 <span>Home Pest Control</span>
               </div>
@@ -68,7 +68,7 @@
 
     <!-- Mobile Menu -->
     <div class="md:hidden" [class.hidden]="!mobileMenuOpen">
-      <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
+      <div class="px-2 pt-2 pb-3 space-y-1 font-extrabold bg-white border-t">
         <div class="space-y-1">
           <div class="text-gray-700 font-medium px-3 py-2">Services</div>
           <a routerLink="/services" (click)="closeMobileMenu()" class="block px-6 py-2 text-gray-600 hover:text-brand">Home Pest Control</a>
