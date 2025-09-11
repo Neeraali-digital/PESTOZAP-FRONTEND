@@ -45,6 +45,11 @@ export class AdminSidebarComponent {
       route: '/admin/offers'
     },
     {
+      label: 'Advertisements',
+      icon: 'campaign',
+      route: '/admin/advertisements'
+    },
+    {
       label: 'Profile',
       icon: 'account_circle',
       route: '/admin/profile'

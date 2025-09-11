@@ -1,0 +1,98 @@
+<div class="p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">Advertisement Management</h1>
+    <button (click)="toggleAddForm()" class="bg-brand text-white px-4 py-2 rounded-lg hover:bg-brand-dark transition-colors">
+      <span class="material-icons mr-2">add</span>
+      Add Advertisement
+    </button>
+  </div>
+
+  <!-- Add/Edit Form -->
+  <div *ngIf="showAddForm" class="bg-white rounded-lg shadow-lg p-6 mb-6">
+    <h2 class="text-xl font-semibold mb-4">{{editingAd ? 'Edit' : 'Add'}} Advertisement</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+        <input type="text" [(ngModel)]="currentTitle"
+               class="w-full p-3 border border-gray-300 rounded-lg focus:border-brand focus:outline-none">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+        <input type="text" [(ngModel)]="currentDescription"
+               class="w-full p-3 border border-gray-300 rounded-lg focus:border-brand focus:outline-none">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Image</label>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*"
+               class="w-full p-3 border border-gray-300 rounded-lg focus:border-brand focus:outline-none">
+      </div>
+      
+      <div class="flex items-center">
+        <label class="flex items-center">
+          <input type="checkbox" [(ngModel)]="currentActive"
+                 class="mr-2">
+          <span class="text-sm font-medium text-gray-700">Active</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Image Preview -->
+    <div *ngIf="getCurrentImageUrl()" class="mt-4">
+      <label class="block text-sm font-medium text-gray-700 mb-2">Preview</label>
+      <img [src]="getCurrentImageUrl()" alt="Preview" class="w-32 h-20 object-cover rounded-lg">
+    </div>
+
+    <div class="flex space-x-4 mt-6">
+      <button (click)="saveAdvertisement()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
+        Save
+      </button>
+      <button (click)="toggleAddForm()" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- Advertisements List -->
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <table class="w-full">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr *ngFor="let ad of advertisements">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <img [src]="ad.imageUrl" [alt]="ad.title" class="w-16 h-10 object-cover rounded">
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ad.title}}</td>
+          <td class="px-6 py-4 text-sm text-gray-500">{{ad.description}}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <button (click)="toggleStatus(ad)" 
+                    [class]="'px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' + 
+                            (ad.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800')">
+              {{ad.isActive ? 'Active' : 'Inactive'}}
+            </button>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ad.createdAt | date:'short'}}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <button (click)="editAdvertisement(ad)" class="text-brand hover:text-brand-dark mr-3">
+              <span class="material-icons">edit</span>
+            </button>
+            <button (click)="deleteAdvertisement(ad.id)" class="text-red-600 hover:text-red-900">
+              <span class="material-icons">delete</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

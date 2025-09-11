@@ -1,3 +1,190 @@
+<!-- Advertising Slider -->
+<section class="h-[35vh] relative overflow-hidden">
+  <div class="relative w-full h-full">
+    <div class="absolute inset-0 flex transition-transform duration-500 ease-in-out" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
+      <div *ngFor="let ad of advertisements; let i = index" class="w-full h-full flex-shrink-0 relative">
+        <img [src]="ad.imageUrl" [alt]="ad.title" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+          <div class="text-center text-white">
+            <h3 class="text-2xl md:text-4xl font-bold mb-2">{{ad.title}}</h3>
+            <p class="text-lg">{{ad.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Slider Indicators -->
+    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <button *ngFor="let ad of advertisements; let i = index" 
+              (click)="goToSlide(i)"
+              [class]="'w-3 h-3 rounded-full transition-colors ' + (i === currentSlide ? 'bg-white' : 'bg-white/50')"></button>
+    </div>
+  </div>
+</section>
+
+<!-- Booking Service Section -->
+<section class="py-8 bg-gray-50">
+  <div class="max-w-4xl mx-auto px-4">
+    <!-- Service Type Buttons -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <button (click)="selectServiceType('pest-control')" 
+              [class]="'flex items-center justify-center p-4 rounded-lg border-2 transition-all ' + 
+                      (selectedServiceType === 'pest-control' ? 'border-brand bg-brand text-white' : 'border-gray-300 bg-white text-gray-700 hover:border-brand')">
+        <span class="material-icons mr-3 text-2xl">pest_control</span>
+        <span class="text-lg font-semibold">Pest Control</span>
+      </button>
+      <button (click)="navigateToBirdNetting()" 
+              class="flex items-center justify-center p-4 rounded-lg border-2 transition-all border-gray-300 bg-white text-gray-700 hover:border-brand hover:bg-brand hover:text-white">
+        <span class="material-icons mr-3 text-2xl">flutter_dash</span>
+        <span class="text-lg font-semibold">Bird Netting</span>
+      </button>
+    </div>
+
+    <!-- Filter Options -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <!-- Pest Type Filter -->
+      <select [(ngModel)]="selectedPestType" class="p-3 border border-gray-300 rounded-lg focus:border-brand focus:outline-none">
+        <option value="">Select Pest Type</option>
+        <option value="bedbug">Bedbug Control</option>
+        <option value="cockroach">Cockroach Control</option>
+        <option value="mosquito">Mosquito Control</option>
+        <option value="rodent">Rodent Control</option>
+        <option value="termite">Termite Control</option>
+        <option value="wood-borer">Wood Borer Control</option>
+      </select>
+
+      <!-- Property Type Filter -->
+      <select [(ngModel)]="selectedPropertyType" class="p-3 border border-gray-300 rounded-lg focus:border-brand focus:outline-none">
+        <option value="">Select Property Type</option>
+        <option value="1rk">1 RK</option>
+        <option value="1bhk">1 BHK</option>
+        <option value="2bhk">2 BHK</option>
+        <option value="3bhk">3 BHK</option>
+        <option value="4bhk">4 BHK</option>
+        <option value="5bhk">5 BHK</option>
+      </select>
+
+      <!-- Service Package Filter -->
+      <select [(ngModel)]="selectedServicePackage" class="p-3 border border-gray-300 rounded-lg focus:border-brand focus:outline-none">
+        <option value="">Select Services</option>
+        <option value="single">Single Service</option>
+        <option value="3-services-1year">3 Services 1 Year</option>
+        <option value="6-services-2years">6 Services 2 Years</option>
+      </select>
+    </div>
+
+    <!-- Premium Service Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Premium Recommended Card -->
+      <div class="relative bg-gradient-to-br from-brand/5 to-brand-light/10 rounded-xl border border-brand/20 overflow-hidden group hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1">
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 right-0 w-20 h-20 bg-brand/10 rounded-full -translate-y-10 translate-x-10"></div>
+        <div class="absolute bottom-0 left-0 w-16 h-16 bg-brand-light/20 rounded-full translate-y-8 -translate-x-8"></div>
+        
+        <div class="relative p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center space-x-2">
+              <div class="w-8 h-8 bg-brand rounded-lg flex items-center justify-center">
+                <span class="material-icons text-white text-sm">pest_control</span>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-gray-900">4D Premium Control</h3>
+                <p class="text-xs text-brand font-medium">Advanced Protection</p>
+              </div>
+            </div>
+            <span class="bg-brand text-white px-2 py-1 rounded-full text-xs font-semibold">
+              ★ Best
+            </span>
+          </div>
+
+          <div class="space-y-2 mb-5">
+            <div class="flex items-center text-xs text-gray-700">
+              <span class="w-1.5 h-1.5 bg-brand rounded-full mr-2"></span>
+              Gel + Spray Treatment
+            </div>
+            <div class="flex items-center text-xs text-gray-700">
+              <span class="w-1.5 h-1.5 bg-brand rounded-full mr-2"></span>
+              Cracks Sealing & Prevention
+            </div>
+            <div class="flex items-center text-xs text-gray-700">
+              <span class="w-1.5 h-1.5 bg-brand rounded-full mr-2"></span>
+              Eco Garbage Bags + Drain Clean
+            </div>
+            <div class="flex items-center text-xs text-brand font-semibold">
+              <span class="material-icons text-sm mr-2">add_circle</span>
+              FREE Ant Treatment
+            </div>
+          </div>
+
+          <div class="bg-white/80 backdrop-blur-sm rounded-lg p-3 mb-4 border border-brand/10">
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-gray-600">Package</span>
+              <span class="text-sm font-bold text-brand">3 Services • 1 Year</span>
+            </div>
+          </div>
+
+          <button class="w-full bg-brand hover:bg-brand-dark text-white py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg">
+            Get Quote Now
+          </button>
+          
+          <div class="mt-3 pt-3 border-t border-brand/10">
+            <p class="text-xs text-gray-500">📅 Last booked: Today 6:29 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Standard Card -->
+      <div class="relative bg-white rounded-xl border border-gray-200 overflow-hidden group hover:shadow-xl transition-all duration-300 hover:border-gray-300">
+        <div class="relative p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center space-x-2">
+              <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                <span class="material-icons text-gray-600 text-sm">pest_control</span>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-gray-900">Standard Control</h3>
+                <p class="text-xs text-gray-500 font-medium">Basic Protection</p>
+              </div>
+            </div>
+            <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-semibold">
+              Basic
+            </span>
+          </div>
+
+          <div class="space-y-2 mb-5">
+            <div class="flex items-center text-xs text-gray-700">
+              <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2"></span>
+              Gel + Spray Treatment
+            </div>
+            <div class="flex items-center text-xs text-gray-400">
+              <span class="material-icons text-sm mr-2">remove_circle</span>
+              No Additional Services
+            </div>
+            <div class="flex items-center text-xs text-amber-600">
+              <span class="material-icons text-sm mr-2">warning</span>
+              Limited Warranty
+            </div>
+          </div>
+
+          <div class="bg-gray-50 rounded-lg p-3 mb-4 border border-gray-100">
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-gray-600">Package</span>
+              <span class="text-sm font-bold text-gray-700">Single Service</span>
+            </div>
+          </div>
+
+          <button class="w-full bg-gray-200 hover:bg-gray-900 text-gray-700 hover:text-white py-2.5 rounded-lg font-semibold text-sm transition-all duration-300">
+            View Details
+          </button>
+          
+          <div class="mt-3 pt-3 border-t border-gray-100">
+            <p class="text-xs text-gray-500">📅 Last booked: Today 6:14 PM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Modern Hero Section with Glassmorphism -->
 <section class="relative min-h-screen flex items-center overflow-hidden">
   <!-- Background with gradient and shapes -->

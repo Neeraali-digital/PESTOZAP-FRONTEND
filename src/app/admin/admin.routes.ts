@@ -39,6 +39,10 @@ export const adminRoutes: Routes = [
       {
         path: 'profile',
         loadComponent: () => import('./pages/profile/admin-profile.component').then(m => m.AdminProfileComponent)
+      },
+      {
+        path: 'advertisements',
+        loadComponent: () => import('./pages/advertisements/admin-advertisements.component').then(m => m.AdminAdvertisementsComponent)
       }
     ]
   }

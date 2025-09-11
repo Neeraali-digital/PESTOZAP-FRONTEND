@@ -30,6 +30,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/offers/offers.component').then(m => m.OffersComponent)
   },
   {
+    path: 'bird-netting',
+    loadComponent: () => import('./pages/bird-netting/bird-netting.component').then(m => m.BirdNettingComponent)
+  },
+  {
     path: 'admin',
     loadChildren: () => import('./admin/admin.routes').then(m => m.adminRoutes)
   },
