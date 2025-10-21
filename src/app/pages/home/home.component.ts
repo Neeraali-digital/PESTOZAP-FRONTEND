@@ -60,6 +60,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   navigateToBirdNetting() {
-    this.router.navigate(['/bird-netting']);
+    console.log('hai');
+    
+    this.router.navigate(['bird-netting']);
   }
 }
