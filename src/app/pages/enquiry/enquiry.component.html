@@ -1,0 +1,230 @@
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center bg-black overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-brand/10 via-transparent to-brand/5"></div>
+  <div class="absolute top-1/4 left-1/3 w-96 h-96 bg-brand/10 rounded-full blur-3xl"></div>
+  
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-6xl lg:text-8xl font-black text-white mb-8 tracking-tight">
+        Get <span class="text-brand">Quote</span>
+      </h1>
+      <p class="text-xl lg:text-2xl text-gray-300 mb-16 max-w-4xl mx-auto">
+        Comprehensive quote request for your pest control needs
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Enquiry Form Section -->
+<section class="py-24 bg-white">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-black text-gray-900 mb-4">Request Your Quote</h2>
+      <p class="text-xl text-gray-600">Fill out the details below and we'll provide you with a customized quote</p>
+    </div>
+    
+    <form class="space-y-8" (ngSubmit)="onSubmit()" #enquiryForm="ngForm">
+      
+      <!-- Personal Information -->
+      <div class="bg-gray-50 rounded-3xl p-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Personal Information</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <input type="text" id="fullName" name="fullName" [(ngModel)]="formData.fullName" 
+                   placeholder="Full Name" required
+                   class="w-full px-6 py-4 bg-white border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand text-lg">
+          </div>
+          <div>
+            <input type="email" id="email" name="email" [(ngModel)]="formData.email" 
+                   placeholder="Email Address" required
+                   class="w-full px-6 py-4 bg-white border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand text-lg">
+          </div>
+          <div>
+            <input type="tel" id="phone" name="phone" [(ngModel)]="formData.phone" 
+                   placeholder="Phone Number" required
+                   class="w-full px-6 py-4 bg-white border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand text-lg">
+          </div>
+          <div>
+            <input type="text" id="address" name="address" [(ngModel)]="formData.address" 
+                   placeholder="Property Address" required
+                   class="w-full px-6 py-4 bg-white border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand text-lg">
+          </div>
+        </div>
+      </div>
+
+      <!-- Property Details -->
+      <div class="bg-gray-50 rounded-3xl p-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Property Details</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <select id="propertyType" name="propertyType" [(ngModel)]="formData.propertyType" required
+                    class="w-full px-6 py-4 bg-white border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand text-lg">
+              <option value="">Property Type</option>
+              <option value="1rk">1 RK</option>
+              <option value="1bhk">1 BHK</option>
+              <option value="2bhk">2 BHK</option>
+              <option value="3bhk">3 BHK</option>
+              <option value="4bhk">4 BHK</option>
+              <option value="5bhk">5+ BHK</option>
+              <option value="commercial">Commercial</option>
+            </select>
+          </div>
+          <div>
+            <input type="number" id="area" name="area" [(ngModel)]="formData.area" 
+                   placeholder="Area (sq ft)" min="1"
+                   class="w-full px-6 py-4 bg-white border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand text-lg">
+          </div>
+          <div>
+            <select id="buildingAge" name="buildingAge" [(ngModel)]="formData.buildingAge"
+                    class="w-full px-6 py-4 bg-white border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand text-lg">
+              <option value="">Building Age</option>
+              <option value="new">Less than 1 year</option>
+              <option value="1-5">1-5 years</option>
+              <option value="5-10">5-10 years</option>
+              <option value="10+">More than 10 years</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pest Problem -->
+      <div class="bg-gray-50 rounded-3xl p-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Pest Problem</h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input type="checkbox" [(ngModel)]="formData.pests.cockroach" name="cockroach" 
+                   class="w-5 h-5 text-brand rounded focus:ring-brand">
+            <span class="text-gray-700">Cockroaches</span>
+          </label>
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input type="checkbox" [(ngModel)]="formData.pests.termite" name="termite" 
+                   class="w-5 h-5 text-brand rounded focus:ring-brand">
+            <span class="text-gray-700">Termites</span>
+          </label>
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input type="checkbox" [(ngModel)]="formData.pests.rodent" name="rodent" 
+                   class="w-5 h-5 text-brand rounded focus:ring-brand">
+            <span class="text-gray-700">Rodents</span>
+          </label>
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input type="checkbox" [(ngModel)]="formData.pests.bedbug" name="bedbug" 
+                   class="w-5 h-5 text-brand rounded focus:ring-brand">
+            <span class="text-gray-700">Bed Bugs</span>
+          </label>
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input type="checkbox" [(ngModel)]="formData.pests.mosquito" name="mosquito" 
+                   class="w-5 h-5 text-brand rounded focus:ring-brand">
+            <span class="text-gray-700">Mosquitoes</span>
+          </label>
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input type="checkbox" [(ngModel)]="formData.pests.ant" name="ant" 
+                   class="w-5 h-5 text-brand rounded focus:ring-brand">
+            <span class="text-gray-700">Ants</span>
+          </label>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <select id="severity" name="severity" [(ngModel)]="formData.severity" required
+                    class="w-full px-6 py-4 bg-white border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand text-lg">
+              <option value="">Problem Severity</option>
+              <option value="mild">Mild - Occasional sightings</option>
+              <option value="moderate">Moderate - Regular sightings</option>
+              <option value="severe">Severe - Heavy infestation</option>
+            </select>
+          </div>
+          <div>
+            <select id="urgency" name="urgency" [(ngModel)]="formData.urgency"
+                    class="w-full px-6 py-4 bg-white border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand text-lg">
+              <option value="">Service Urgency</option>
+              <option value="emergency">Emergency - Within 24 hours</option>
+              <option value="urgent">Urgent - Within 3 days</option>
+              <option value="normal">Normal - Within a week</option>
+              <option value="flexible">Flexible - Anytime</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service Preferences -->
+      <div class="bg-gray-50 rounded-3xl p-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Service Preferences</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <select id="serviceType" name="serviceType" [(ngModel)]="formData.serviceType" required
+                    class="w-full px-6 py-4 bg-white border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand text-lg">
+              <option value="">Service Type</option>
+              <option value="single">Single Service</option>
+              <option value="3-services">3 Services (1 Year)</option>
+              <option value="6-services">6 Services (2 Years)</option>
+            </select>
+          </div>
+          <div>
+            <select id="preferredTime" name="preferredTime" [(ngModel)]="formData.preferredTime"
+                    class="w-full px-6 py-4 bg-white border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand text-lg">
+              <option value="">Preferred Time</option>
+              <option value="morning">Morning (8AM - 12PM)</option>
+              <option value="afternoon">Afternoon (12PM - 4PM)</option>
+              <option value="evening">Evening (4PM - 8PM)</option>
+              <option value="flexible">Flexible</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="bg-gray-50 rounded-3xl p-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Additional Information</h3>
+        <div>
+          <textarea id="additionalInfo" name="additionalInfo" rows="6" [(ngModel)]="formData.additionalInfo" 
+                    placeholder="Please describe your pest problem in detail, any specific concerns, or special requirements..."
+                    class="w-full px-6 py-4 bg-white border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand text-lg resize-none"></textarea>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-center">
+        <button type="submit" [disabled]="!enquiryForm.form.valid"
+                class="bg-brand hover:bg-brand-dark text-white py-4 px-12 rounded-full font-bold text-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+          Get My Quote
+        </button>
+        <p class="text-gray-500 mt-4">We'll contact you within 2 hours with your customized quote</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="py-24 bg-black">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl lg:text-5xl font-black text-white mb-6">Why Choose Pestozap?</h2>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="text-center">
+        <div class="w-20 h-20 bg-brand rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <span class="material-icons text-white text-3xl">verified</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-4">Licensed & Insured</h3>
+        <p class="text-white/70">Fully certified professionals with comprehensive insurance coverage</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="w-20 h-20 bg-brand rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <span class="material-icons text-white text-3xl">eco</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-4">Eco-Friendly</h3>
+        <p class="text-white/70">Safe, environmentally responsible pest control solutions</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="w-20 h-20 bg-brand rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <span class="material-icons text-white text-3xl">support_agent</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-4">24/7 Support</h3>
+        <p class="text-white/70">Round-the-clock customer support and emergency services</p>
+      </div>
+    </div>
+  </div>
+</section>

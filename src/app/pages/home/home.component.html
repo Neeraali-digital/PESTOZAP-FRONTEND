@@ -1,19 +1,22 @@
 <!-- Advertising Slider -->
-<section class="h-[40vh] relative overflow-hidden">
+<section class="h-[50vh] relative overflow-hidden bg-gray-100">
   <div class="relative w-full h-full">
     <div class="absolute inset-0 flex transition-transform duration-500 ease-in-out" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
       <div *ngFor="let ad of advertisements; let i = index" class="w-full h-full flex-shrink-0 relative">
-        <img [src]="ad.imageUrl" [alt]="ad.title" class="w-full h-full object-cover">
-        <div class="absolute inset-0  flex items-center justify-center">
-          <div class="text-center text-white">
-            <!-- <h3 class="text-2xl md:text-4xl font-ex mb-2 text-brand ">{{ad.title}}</h3>
-            <p class="text-lg text-brand">{{ad.description}}</p> -->
+        <div class="w-full h-full bg-gradient-to-r from-brand to-brand-dark flex items-center justify-center">
+          <div class="text-center text-white px-6">
+            <h3 class="text-3xl md:text-5xl font-black mb-4">50% OFF First Service</h3>
+            <p class="text-xl mb-6">Professional pest control at unbeatable prices</p>
+            <div class="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-6 py-3">
+              <span class="material-icons mr-2">local_offer</span>
+              <span class="font-bold">Use Code: FIRST50</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <!-- Slider Indicators -->
-    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
       <button *ngFor="let ad of advertisements; let i = index" 
               (click)="goToSlide(i)"
               [class]="'w-3 h-3 rounded-full transition-colors ' + (i === currentSlide ? 'bg-white' : 'bg-white/50')"></button>
@@ -21,538 +24,98 @@
   </div>
 </section>
 
-<!-- Booking Service Section -->
-<section class="py-8 bg-gray-50">
-  <div class="max-w-4xl mx-auto px-4">
-    <!-- Service Type Buttons -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-      <button (click)="selectServiceType('pest-control')" 
-              [class]="'flex items-center justify-center p-4 rounded-lg border-2 transition-all ' + 
-                      (selectedServiceType === 'pest-control' ? 'border-brand bg-brand text-white' : 'border-gray-300 bg-white text-gray-700 hover:border-brand')">
-        <span class="material-icons mr-3 text-2xl">pest_control</span>
-        <span class="text-lg font-semibold">Pest Control</span>
-      </button>
-      <button (click)="navigateToBirdNetting()" 
-              class="flex items-center justify-center p-4 rounded-lg border-2 transition-all border-gray-300 bg-white text-gray-700 hover:border-brand hover:bg-brand hover:text-white">
-        <span class="material-icons mr-3 text-2xl">flutter_dash</span>
-        <span class="text-lg font-semibold">Bird Netting</span>
-      </button>
-    </div>
-
-    <!-- Filter Options -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-      <!-- Pest Type Filter -->
-      <select [(ngModel)]="selectedPestType" class="p-3 border border-gray-300 rounded-lg focus:border-brand focus:outline-none">
-        <option value="">Select Pest Type</option>
-        <option value="bedbug">Bedbug Control</option>
-        <option value="cockroach">Cockroach Control</option>
-        <option value="mosquito">Mosquito Control</option>
-        <option value="rodent">Rodent Control</option>
-        <option value="termite">Termite Control</option>
-        <option value="wood-borer">Wood Borer Control</option>
-      </select>
-
-      <!-- Property Type Filter -->
-      <select [(ngModel)]="selectedPropertyType" class="p-3 border border-gray-300 rounded-lg focus:border-brand focus:outline-none">
-        <option value="">Select Property Type</option>
-        <option value="1rk">1 RK</option>
-        <option value="1bhk">1 BHK</option>
-        <option value="2bhk">2 BHK</option>
-        <option value="3bhk">3 BHK</option>
-        <option value="4bhk">4 BHK</option>
-        <option value="5bhk">5 BHK</option>
-      </select>
-
-      <!-- Service Package Filter -->
-      <select [(ngModel)]="selectedServicePackage" class="p-3 border border-gray-300 rounded-lg focus:border-brand focus:outline-none">
-        <option value="">Select Services</option>
-        <option value="single">Single Service</option>
-        <option value="3-services-1year">3 Services 1 Year</option>
-        <option value="6-services-2years">6 Services 2 Years</option>
-      </select>
-    </div>
-
-    <!-- Premium Service Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Premium Recommended Card -->
-      <div class="relative bg-gradient-to-br from-brand/5 to-brand-light/10 rounded-xl border border-brand/20 overflow-hidden group hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1">
-        <!-- Decorative Elements -->
-        <div class="absolute top-0 right-0 w-20 h-20 bg-brand/10 rounded-full -translate-y-10 translate-x-10"></div>
-        <div class="absolute bottom-0 left-0 w-16 h-16 bg-brand-light/20 rounded-full translate-y-8 -translate-x-8"></div>
-        
-        <div class="relative p-6">
-          <div class="flex items-start justify-between mb-4">
-            <div class="flex items-center space-x-2">
-              <div class="w-8 h-8 bg-brand rounded-lg flex items-center justify-center">
-                <span class="material-icons text-white text-sm">pest_control</span>
-              </div>
-              <div>
-                <h3 class="text-lg font-bold text-gray-900">4D Premium Control</h3>
-                <p class="text-xs text-brand font-medium">Advanced Protection</p>
-              </div>
-            </div>
-            <span class="bg-brand text-white px-2 py-1 rounded-full text-xs font-semibold">
-              ★ Best
-            </span>
-          </div>
-
-          <div class="space-y-2 mb-5">
-            <div class="flex items-center text-xs text-gray-700">
-              <span class="w-1.5 h-1.5 bg-brand rounded-full mr-2"></span>
-              Gel + Spray Treatment
-            </div>
-            <div class="flex items-center text-xs text-gray-700">
-              <span class="w-1.5 h-1.5 bg-brand rounded-full mr-2"></span>
-              Cracks Sealing & Prevention
-            </div>
-            <div class="flex items-center text-xs text-gray-700">
-              <span class="w-1.5 h-1.5 bg-brand rounded-full mr-2"></span>
-              Eco Garbage Bags + Drain Clean
-            </div>
-            <div class="flex items-center text-xs text-brand font-semibold">
-              <span class="material-icons text-sm mr-2">add_circle</span>
-              FREE Ant Treatment
-            </div>
-          </div>
-
-          <div class="bg-white/80 backdrop-blur-sm rounded-lg p-3 mb-4 border border-brand/10">
-            <div class="flex items-center justify-between">
-              <span class="text-xs text-gray-600">Package</span>
-              <span class="text-sm font-bold text-brand">3 Services • 1 Year</span>
-            </div>
-          </div>
-
-          <button class="w-full bg-brand hover:bg-brand-dark text-white py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg">
-            Get Quote Now
-          </button>
-          
-          <div class="mt-3 pt-3 border-t border-brand/10">
-            <p class="text-xs text-gray-500">📅 Last booked: Today 6:29 PM</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Standard Card -->
-      <div class="relative bg-white rounded-xl border border-gray-200 overflow-hidden group hover:shadow-xl transition-all duration-300 hover:border-gray-300">
-        <div class="relative p-6">
-          <div class="flex items-start justify-between mb-4">
-            <div class="flex items-center space-x-2">
-              <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-                <span class="material-icons text-gray-600 text-sm">pest_control</span>
-              </div>
-              <div>
-                <h3 class="text-lg font-bold text-gray-900">Standard Control</h3>
-                <p class="text-xs text-gray-500 font-medium">Basic Protection</p>
-              </div>
-            </div>
-            <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-semibold">
-              Basic
-            </span>
-          </div>
-
-          <div class="space-y-2 mb-5">
-            <div class="flex items-center text-xs text-gray-700">
-              <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2"></span>
-              Gel + Spray Treatment
-            </div>
-            <div class="flex items-center text-xs text-gray-400">
-              <span class="material-icons text-sm mr-2">remove_circle</span>
-              No Additional Services
-            </div>
-            <div class="flex items-center text-xs text-amber-600">
-              <span class="material-icons text-sm mr-2">warning</span>
-              Limited Warranty
-            </div>
-          </div>
-
-          <div class="bg-gray-50 rounded-lg p-3 mb-4 border border-gray-100 pb-5">
-            <div class="flex items-center justify-between">
-              <span class="text-xs text-gray-600">Package</span>
-              <span class="text-sm font-bold text-gray-700">Single Service</span>
-            </div>
-          </div>
-
-          <button class="w-full bg-gray-200 hover:bg-gray-900 text-gray-700 hover:text-white py-2.5 rounded-lg font-semibold text-sm transition-all duration-300">
-            View Details
-          </button>
-          
-          <div class="mt-3 pt-3 border-t border-gray-100">
-            <p class="text-xs text-gray-500">📅 Last booked: Today 6:14 PM</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Modern Hero Section with Glassmorphism -->
-<section class="relative min-h-screen flex items-center overflow-hidden">
-  <!-- Background with gradient and shapes -->
-  <div class="absolute inset-0 bg-gradient-to-br from-brand via-brand-light to-brand-dark"></div>
-  <div class="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
-  <div class="absolute bottom-20 right-10 w-96 h-96 bg-yellow-300/20 rounded-full blur-3xl"></div>
-  <div class="absolute top-1/2 left-1/3 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
-  
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-      <div class="text-white animate-fade-in">
-        <div class="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full mb-6">
-          <span class="material-icons text-yellow-300 mr-2">verified</span>
-          <span class="text-sm font-medium">Trusted by 10,000+ Customers</span>
-        </div>
-        
-        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-          Your Ultimate
-          <span class="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">
-            Pest Shield
-          </span>
-        </h1>
-        
-        <p class="text-xl mb-8 text-gray-100 leading-relaxed max-w-lg">
-          Advanced eco-friendly pest control solutions that protect your space while caring for the environment. 
-          Experience the future of pest management.
-        </p>
-        
-        <div class="flex flex-col sm:flex-row gap-4 mb-8">
-          <a routerLink="/enquiry" class="group relative px-8 py-4 bg-white text-brand font-semibold rounded-2xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-2xl">
-            <span class="flex items-center justify-center">
-              <span class="material-icons mr-2">rocket_launch</span>
-              Get Free Quote
-            </span>
-          </a>
-          <a routerLink="/services" class="group px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-2xl hover:bg-white/10 backdrop-blur-sm transition-all duration-300">
-            <span class="flex items-center justify-center">
-              <span class="material-icons mr-2">explore</span>
-              Explore Services
-            </span>
-          </a>
-        </div>
-        
-        <!-- Stats -->
-        <div class="grid grid-cols-3 gap-6 pt-8 border-t border-white/20">
-          <div class="text-center">
-            <div class="text-2xl font-bold text-yellow-300">24/7</div>
-            <div class="text-sm text-gray-300">Emergency Service</div>
-          </div>
-          <div class="text-center">
-            <div class="text-2xl font-bold text-yellow-300">100%</div>
-            <div class="text-sm text-gray-300">Eco-Friendly</div>
-          </div>
-          <div class="text-center">
-            <div class="text-2xl font-bold text-yellow-300">5★</div>
-            <div class="text-sm text-gray-300">Customer Rating</div>
-          </div>
-        </div>
+<!-- Hero Section -->
+<section class="relative bg-white py-20">
+  <div class="absolute inset-0 bg-gradient-to-br from-gray-50 to-white"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center">
+      <div class="inline-flex items-center px-6 py-3 bg-brand/10 text-brand rounded-full mb-8">
+        <span class="material-icons mr-2">verified</span>
+        <span class="font-semibold">Trusted by 10,000+ Customers</span>
       </div>
       
-      <!-- Modern 3D Card Design -->
-      <div class="relative animate-slide-up">
-        <div class="relative">
-
-          <!-- Main Card -->
-          <div class="backdrop-blur-xl bg-cover bg-center bg-black/40 bg-blend-overlay rounded-3xl p-8 border border-white/20 shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500"
-          style="background-image: url('../../../assets/pestControl.jpg')"
-          >
-            <div class="text-center">
-              <div class="w-24 h-24 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                <span class="material-icons text-4xl text-white">pest_control</span>
-              </div>
-              <h3 class="text-2xl font-bold text-white mb-3">Smart Protection</h3>
-              <p class="text-gray-200 mb-6">AI-powered pest detection and prevention systems</p>
-              <div class="flex justify-center space-x-4">
-                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                <div class="w-3 h-3 bg-yellow-400 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
-                <div class="w-3 h-3 bg-red-400 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
-              </div>
-            </div>
-          </div>
-          
-          
-          <!-- Floating Elements -->
-          <div class="absolute -top-4 -right-4 w-16 h-16 bg-yellow-300/30 rounded-full blur-xl animate-bounce-slow"></div>
-          <div class="absolute -bottom-6 -left-6 w-20 h-20 bg-white/20 rounded-full blur-xl animate-pulse"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Modern Features with Bento Grid -->
-<section class="py-20 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <div class="inline-flex items-center px-4 py-2 bg-brand/10 text-brand rounded-full mb-4">
-        <span class="material-icons mr-2">auto_awesome</span>
-        <span class="font-medium">Why Choose Us</span>
-      </div>
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-        Next-Gen Pest Control
-      </h2>
-      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-        Experience the perfect blend of technology and expertise in pest management
+      <h1 class="text-5xl lg:text-7xl font-black text-gray-900 mb-6 tracking-tight font-display">
+        PEST<span class="text-brand">OZAP</span>
+      </h1>
+      
+      <p class="text-xl lg:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto font-light">
+        Protect your place from pest with professional, eco-friendly solutions
       </p>
-    </div>
-    
-    <!-- Bento Grid Layout -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Large Feature Card -->
-      <div class="lg:col-span-2 bg-gradient-to-br from-brand to-brand-dark rounded-3xl p-8 text-white relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
+      
+      <!-- Service Selection -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+        <button (click)="selectServiceType('pest-control')" 
+                [class]="'px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 ' + 
+                        (selectedServiceType === 'pest-control' ? 'bg-brand text-white shadow-lg' : 'bg-gray-100 text-gray-700 hover:bg-gray-200')">
+          <span class="material-icons mr-2">pest_control</span>
+          Pest Control
+        </button>
+        <button (click)="navigateToBirdNetting()" 
+                class="px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200">
+          <span class="material-icons mr-2">flutter_dash</span>
+          Bird Netting
+        </button>
+      </div>
+      
+      <!-- Quick Quote Form -->
+      <div class="max-w-4xl mx-auto bg-white rounded-3xl p-8 shadow-2xl border border-gray-100 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-brand/5 rounded-full -translate-y-12 translate-x-12"></div>
         <div class="relative z-10">
-          <span class="material-icons text-6xl mb-4 text-yellow-300">security</span>
-          <h3 class="text-2xl font-bold mb-3">Advanced Protection System</h3>
-          <p class="text-gray-100 mb-6">Our cutting-edge technology ensures 99.9% pest elimination rate with eco-friendly solutions that are safe for your family and pets.</p>
-          <div class="flex items-center space-x-4">
-            <div class="flex items-center">
-              <span class="material-icons text-green-300 mr-1">check_circle</span>
-              <span class="text-sm">Licensed & Insured</span>
-            </div>
-            <div class="flex items-center">
-              <span class="material-icons text-green-300 mr-1">check_circle</span>
-              <span class="text-sm">24/7 Support</span>
-            </div>
+          <div class="text-center mb-8">
+            <h3 class="text-3xl font-black text-gray-900 mb-2 font-display">Get Instant Quote</h3>
+            <p class="text-gray-600">Fill details below for personalized pricing</p>
           </div>
-        </div>
-      </div>
-      
-      <!-- Eco-Friendly Card -->
-      <div class="bg-green-50 rounded-3xl p-8 border border-green-100 hover:shadow-xl transition-all duration-300">
-        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6">
-          <span class="material-icons text-2xl text-green-600">eco</span>
-        </div>
-        <h3 class="text-xl font-bold mb-3 text-gray-900">100% Eco-Friendly</h3>
-        <p class="text-gray-600">Safe for children, pets, and the environment. Our green solutions protect without compromise.</p>
-      </div>
-      
-      <!-- Emergency Service Card -->
-      <div class="bg-orange-50 rounded-3xl p-8 border border-orange-100 hover:shadow-xl transition-all duration-300">
-        <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mb-6">
-          <span class="material-icons text-2xl text-orange-600">support_agent</span>
-        </div>
-        <h3 class="text-xl font-bold mb-3 text-gray-900">24/7 Emergency</h3>
-        <p class="text-gray-600">Round-the-clock emergency response for urgent pest situations. We're always here when you need us.</p>
-      </div>
-      
-      <!-- Technology Card -->
-      <div class="lg:col-span-2 bg-blue-50 rounded-3xl p-8 border border-blue-100 hover:shadow-xl transition-all duration-300">
-        <div class="flex items-start space-x-6">
-          <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center flex-shrink-0">
-            <span class="material-icons text-2xl text-blue-600">psychology</span>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Smart Detection Technology</h3>
-            <p class="text-gray-600 mb-4">AI-powered pest identification and monitoring systems that detect problems before they become infestations.</p>
-            <div class="flex space-x-2">
-              <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">IoT Sensors</span>
-              <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Real-time Monitoring</span>
-              <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Predictive Analysis</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Enhanced Services Section -->
-<section class="py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <div class="inline-flex items-center px-4 py-2 bg-brand/10 text-brand rounded-full mb-4">
-        <span class="material-icons mr-2">home_repair_service</span>
-        <span class="font-medium">Our Services</span>
-      </div>
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-        Comprehensive Solutions
-      </h2>
-      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-        From residential homes to commercial spaces, we've got you covered
-      </p>
-    </div>
-    
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <!-- Home Pest Control -->
-      <div class="group relative">
-        <div class="absolute inset-0 bg-gradient-to-r from-brand/5 to-transparent rounded-3xl transform group-hover:scale-105 transition-transform duration-300"></div>
-        <div class="relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 group-hover:shadow-2xl transition-all duration-300">
-          <div class="flex items-center mb-6">
-            <div class="w-16 h-16 bg-gradient-to-br from-brand to-brand-dark rounded-2xl flex items-center justify-center mr-4">
-              <span class="material-icons text-2xl text-white">home</span>
-            </div>
-            <div>
-              <h3 class="text-2xl font-bold text-gray-900">Home Pest Control</h3>
-              <p class="text-brand font-medium">Residential Protection</p>
-            </div>
-          </div>
-          
-          <p class="text-gray-600 mb-6 leading-relaxed">
-            Comprehensive residential pest management designed to keep your family safe and your home pest-free with our advanced, eco-friendly solutions.
-          </p>
-          
-          <!-- Service Features -->
-          <div class="grid grid-cols-2 gap-4 mb-6">
-            <div class="flex items-center">
-              <span class="material-icons text-brand mr-2">check_circle</span>
-              <span class="text-sm text-gray-700">Cockroach Control</span>
-            </div>
-            <div class="flex items-center">
-              <span class="material-icons text-brand mr-2">check_circle</span>
-              <span class="text-sm text-gray-700">Rodent Management</span>
-            </div>
-            <div class="flex items-center">
-              <span class="material-icons text-brand mr-2">check_circle</span>
-              <span class="text-sm text-gray-700">Termite Protection</span>
-            </div>
-            <div class="flex items-center">
-              <span class="material-icons text-brand mr-2">check_circle</span>
-              <span class="text-sm text-gray-700">Bed Bug Treatment</span>
-            </div>
-          </div>
-          
-          <div class="flex items-center justify-between">
-            <a routerLink="/services" class="text-brand font-semibold hover:text-brand-dark transition-colors flex items-center">
-              Learn More
-              <span class="material-icons ml-1">arrow_forward</span>
-            </a>
-            <div class="text-right">
-              <div class="text-2xl font-bold text-brand">₹999</div>
-              <div class="text-sm text-gray-500">Starting from</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Commercial Pest Control -->
-      <div class="group relative">
-        <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent rounded-3xl transform group-hover:scale-105 transition-transform duration-300"></div>
-        <div class="relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 group-hover:shadow-2xl transition-all duration-300">
-          <div class="flex items-center mb-6">
-            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4">
-              <span class="material-icons text-2xl text-white">business</span>
-            </div>
-            <div>
-              <h3 class="text-2xl font-bold text-gray-900">Commercial Pest Control</h3>
-              <p class="text-blue-600 font-medium">Business Solutions</p>
-            </div>
-          </div>
-          
-          <p class="text-gray-600 mb-6 leading-relaxed">
-            Professional commercial pest management for businesses, restaurants, offices, and industrial facilities with minimal disruption to operations.
-          </p>
-          
-          <!-- Service Features -->
-          <div class="grid grid-cols-2 gap-4 mb-6">
-            <div class="flex items-center">
-              <span class="material-icons text-blue-600 mr-2">check_circle</span>
-              <span class="text-sm text-gray-700">Restaurant Services</span>
-            </div>
-            <div class="flex items-center">
-              <span class="material-icons text-blue-600 mr-2">check_circle</span>
-              <span class="text-sm text-gray-700">Office Buildings</span>
-            </div>
-            <div class="flex items-center">
-              <span class="material-icons text-blue-600 mr-2">check_circle</span>
-              <span class="text-sm text-gray-700">Warehouses</span>
-            </div>
-            <div class="flex items-center">
-              <span class="material-icons text-blue-600 mr-2">check_circle</span>
-              <span class="text-sm text-gray-700">Healthcare Facilities</span>
-            </div>
-          </div>
-          
-          <div class="flex items-center justify-between">
-            <a routerLink="/services" class="text-blue-600 font-semibold hover:text-blue-700 transition-colors flex items-center">
-              Learn More
-              <span class="material-icons ml-1">arrow_forward</span>
-            </a>
-            <div class="text-right">
-              <div class="text-2xl font-bold text-blue-600">₹2999</div>
-              <div class="text-sm text-gray-500">Starting from</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- YouTube Videos Section -->
-<section class="py-20 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <div class="inline-flex items-center px-4 py-2 bg-red-50 text-red-600 rounded-full mb-4">
-        <span class="material-icons mr-2">play_circle</span>
-        <span class="font-medium">Educational Content</span>
-      </div>
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-        Learn About Pest Control
-      </h2>
-      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-        Watch our expert videos to understand pest behavior and prevention techniques
-      </p>
-    </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Featured Video -->
-      <div class="lg:col-span-2">
-        <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
-          <div class="aspect-video bg-gray-900 relative group cursor-pointer">
-            <iframe 
-              class="w-full h-full" 
-              src="https://www.youtube.com/embed/uFK0t9DHu1Q" 
-              title="Professional Pest Control Techniques"
-              frameborder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowfullscreen>
-            </iframe>
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Professional Pest Control Techniques</h3>
-            <p class="text-gray-600 mb-4">Learn about modern pest control methods and how professionals handle different types of infestations.</p>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-4">
-                <span class="flex items-center text-sm text-gray-500">
-                  <span class="material-icons text-red-500 mr-1">play_circle</span>
-                  Watch Now
-                </span>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="relative group">
+              <select [(ngModel)]="selectedPestType" class="w-full bg-white border-0 rounded-xl px-6 py-4 text-gray-900 font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:shadow-2xl transition-all duration-300 appearance-none cursor-pointer">
+                <option value="" class="text-gray-400 font-normal">Select Pest Type</option>
+                <option value="cockroach" class="text-gray-900 font-medium py-2">Cockroach Control</option>
+                <option value="termite" class="text-gray-900 font-medium py-2">Termite Treatment</option>
+                <option value="rodent" class="text-gray-900 font-medium py-2">Rodent Control</option>
+                <option value="bedbug" class="text-gray-900 font-medium py-2">Bed Bug Treatment</option>
+                <option value="mosquito" class="text-gray-900 font-medium py-2">Mosquito Control</option>
+              </select>
+              <div class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                <div class="w-6 h-6 bg-brand/10 rounded-full flex items-center justify-center group-hover:bg-brand/20 transition-all duration-300">
+                  <span class="material-icons text-brand text-sm group-hover:rotate-180 transition-transform duration-300">keyboard_arrow_down</span>
+                </div>
               </div>
-              <span class="text-sm text-gray-500">Educational</span>
             </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Additional Videos -->
-      <div class="space-y-6">
-        <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="aspect-video bg-gray-900 relative">
-            <iframe 
-              class="w-full h-full" 
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-              title="Home Pest Prevention Tips"
-              frameborder="0" 
-              allowfullscreen>
-            </iframe>
-          </div>
-          <div class="p-4">
-            <h4 class="font-bold text-gray-900 mb-1">Home Pest Prevention</h4>
-            <p class="text-sm text-gray-600">Essential tips for keeping pests away</p>
-          </div>
-        </div>
-        
-        <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="aspect-video bg-gray-900 relative">
-            <iframe 
-              class="w-full h-full" 
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-              title="Commercial Pest Management"
-              frameborder="0" 
-              allowfullscreen>
-            </iframe>
-          </div>
-          <div class="p-4">
-            <h4 class="font-bold text-gray-900 mb-1">Commercial Solutions</h4>
-            <p class="text-sm text-gray-600">Business pest management strategies</p>
+            
+            <div class="relative group">
+              <select [(ngModel)]="selectedPropertyType" class="w-full bg-white border-0 rounded-xl px-6 py-4 text-gray-900 font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:shadow-2xl transition-all duration-300 appearance-none cursor-pointer">
+                <option value="" class="text-gray-400 font-normal">Property Type</option>
+                <option value="1bhk" class="text-gray-900 font-medium py-2">1 BHK</option>
+                <option value="2bhk" class="text-gray-900 font-medium py-2">2 BHK</option>
+                <option value="3bhk" class="text-gray-900 font-medium py-2">3 BHK</option>
+                <option value="4bhk" class="text-gray-900 font-medium py-2">4+ BHK</option>
+                <option value="commercial" class="text-gray-900 font-medium py-2">Commercial</option>
+              </select>
+              <div class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                <div class="w-6 h-6 bg-brand/10 rounded-full flex items-center justify-center group-hover:bg-brand/20 transition-all duration-300">
+                  <span class="material-icons text-brand text-sm group-hover:rotate-180 transition-transform duration-300">keyboard_arrow_down</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="relative group">
+              <select [(ngModel)]="selectedServicePackage" class="w-full bg-white border-0 rounded-xl px-6 py-4 text-gray-900 font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:shadow-2xl transition-all duration-300 appearance-none cursor-pointer">
+                <option value="" class="text-gray-400 font-normal">Service Package</option>
+                <option value="single" class="text-gray-900 font-medium py-2">Single Service</option>
+                <option value="3-services" class="text-gray-900 font-medium py-2">3 Services (1 Year)</option>
+                <option value="6-services" class="text-gray-900 font-medium py-2">6 Services (2 Years)</option>
+              </select>
+              <div class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                <div class="w-6 h-6 bg-brand/10 rounded-full flex items-center justify-center group-hover:bg-brand/20 transition-all duration-300">
+                  <span class="material-icons text-brand text-sm group-hover:rotate-180 transition-transform duration-300">keyboard_arrow_down</span>
+                </div>
+              </div>
+            </div>
+            
+            <button class="bg-gradient-to-r from-brand to-brand-dark hover:from-brand-dark hover:to-brand text-white font-black py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2">
+              <span class="material-icons">rocket_launch</span>
+              <span>Get Quote</span>
+            </button>
           </div>
         </div>
       </div>
@@ -560,51 +123,246 @@
   </div>
 </section>
 
-<!-- Modern CTA Section -->
-<section class="relative py-20 overflow-hidden">
-  <div class="absolute inset-0 bg-gradient-to-r from-brand via-brand-light to-brand-dark"></div>
-  <div class="absolute inset-0 bg-black/20"></div>
-  <div class="absolute top-0 left-0 w-full h-full">
-    <div class="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
-    <div class="absolute bottom-10 right-10 w-40 h-40 bg-yellow-300/20 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/2 left-1/2 w-24 h-24 bg-white/5 rounded-full blur-xl"></div>
-  </div>
-  
-  <div class="relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-    <div class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full mb-8">
-      <span class="material-icons text-yellow-300 mr-2">flash_on</span>
-      <span class="text-white font-medium">Limited Time Offer</span>
+<!-- Features Section -->
+<section class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl lg:text-5xl font-black text-gray-900 mb-6 font-display">Why Choose Pestozap?</h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">Professional pest control with guaranteed results and eco-friendly solutions</p>
     </div>
     
-    <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">
-      Ready for a 
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">
-        Pest-Free Life?
-      </span>
-    </h2>
-    
-    <p class="text-xl text-gray-100 mb-10 max-w-2xl mx-auto leading-relaxed">
-      Join thousands of satisfied customers who trust Pestozap for their pest control needs. 
-      Get your free consultation today and experience the difference.
-    </p>
-    
-    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-      <a routerLink="/enquiry" class="group px-10 py-5 bg-white text-brand font-bold rounded-2xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-2xl">
-        <span class="flex items-center">
-          <span class="material-icons mr-2">rocket_launch</span>
-          Get Free Quote Now
-          <span class="material-icons ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span>
-        </span>
-      </a>
-      
-      <div class="flex items-center space-x-4 text-white">
-        <div class="flex items-center">
-          <span class="material-icons text-green-300 mr-1">phone</span>
-          <span class="font-semibold">+91-9851495495</span>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="text-center group">
+        <div class="w-20 h-20 bg-brand/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-brand group-hover:scale-110 transition-all duration-300">
+          <span class="material-icons text-brand group-hover:text-white text-3xl">verified</span>
         </div>
-        <div class="w-2 h-2 bg-white/30 rounded-full"></div>
-        <span class="text-sm">24/7 Emergency Service</span>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">Licensed & Insured</h3>
+        <p class="text-gray-600">Fully certified professionals with comprehensive insurance coverage</p>
       </div>
+      
+      <div class="text-center group">
+        <div class="w-20 h-20 bg-brand/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-brand group-hover:scale-110 transition-all duration-300">
+          <span class="material-icons text-brand group-hover:text-white text-3xl">eco</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">Eco-Friendly</h3>
+        <p class="text-gray-600">Safe, environmentally responsible pest control solutions</p>
+      </div>
+      
+      <div class="text-center group">
+        <div class="w-20 h-20 bg-brand/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-brand group-hover:scale-110 transition-all duration-300">
+          <span class="material-icons text-brand group-hover:text-white text-3xl">support_agent</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">24/7 Support</h3>
+        <p class="text-gray-600">Round-the-clock customer support and emergency services</p>
+      </div>
+      
+      <div class="text-center group">
+        <div class="w-20 h-20 bg-brand/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-brand group-hover:scale-110 transition-all duration-300">
+          <span class="material-icons text-brand group-hover:text-white text-3xl">star</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">5-Star Rated</h3>
+        <p class="text-gray-600">Rated 5 stars by thousands of satisfied customers</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Grid -->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl lg:text-5xl font-black text-gray-900 mb-6 font-display">Our Services</h2>
+      <p class="text-xl text-gray-600">Comprehensive pest control solutions for every need</p>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Home Service -->
+      <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 group">
+        <div class="p-12">
+          <div class="flex items-center mb-6">
+            <div class="w-16 h-16 bg-brand rounded-2xl flex items-center justify-center mr-6">
+              <span class="material-icons text-white text-2xl">home</span>
+            </div>
+            <div>
+              <h3 class="text-3xl font-bold text-gray-900">Home Control</h3>
+              <p class="text-brand font-semibold">Residential Protection</p>
+            </div>
+          </div>
+          
+          <p class="text-gray-600 mb-8 text-lg leading-relaxed">
+            Complete residential pest protection for your family's safety and comfort with eco-friendly solutions.
+          </p>
+          
+          <div class="space-y-4 mb-8">
+            <div class="flex items-center text-gray-700">
+              <span class="material-icons text-brand mr-3">check_circle</span>
+              <span>Cockroach & Ant Control</span>
+            </div>
+            <div class="flex items-center text-gray-700">
+              <span class="material-icons text-brand mr-3">check_circle</span>
+              <span>Termite Treatment</span>
+            </div>
+            <div class="flex items-center text-gray-700">
+              <span class="material-icons text-brand mr-3">check_circle</span>
+              <span>Rodent Control</span>
+            </div>
+            <div class="flex items-center text-gray-700">
+              <span class="material-icons text-brand mr-3">check_circle</span>
+              <span>Bed Bug Treatment</span>
+            </div>
+          </div>
+          
+          <div class="flex items-center justify-between">
+            <a routerLink="/services" class="text-brand font-bold hover:text-brand-dark transition-colors flex items-center">
+              Learn More
+              <span class="material-icons ml-1">arrow_forward</span>
+            </a>
+            <div class="text-right">
+              <div class="text-2xl font-black text-brand">₹999</div>
+              <div class="text-sm text-gray-500">Starting from</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Commercial Service -->
+      <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 group">
+        <div class="p-12">
+          <div class="flex items-center mb-6">
+            <div class="w-16 h-16 bg-brand rounded-2xl flex items-center justify-center mr-6">
+              <span class="material-icons text-white text-2xl">business</span>
+            </div>
+            <div>
+              <h3 class="text-3xl font-bold text-gray-900">Commercial Control</h3>
+              <p class="text-brand font-semibold">Business Solutions</p>
+            </div>
+          </div>
+          
+          <p class="text-gray-600 mb-8 text-lg leading-relaxed">
+            Professional pest management for businesses, restaurants, and offices with minimal disruption.
+          </p>
+          
+          <div class="space-y-4 mb-8">
+            <div class="flex items-center text-gray-700">
+              <span class="material-icons text-brand mr-3">check_circle</span>
+              <span>Restaurant Solutions</span>
+            </div>
+            <div class="flex items-center text-gray-700">
+              <span class="material-icons text-brand mr-3">check_circle</span>
+              <span>Office Buildings</span>
+            </div>
+            <div class="flex items-center text-gray-700">
+              <span class="material-icons text-brand mr-3">check_circle</span>
+              <span>Warehouses</span>
+            </div>
+            <div class="flex items-center text-gray-700">
+              <span class="material-icons text-brand mr-3">check_circle</span>
+              <span>Healthcare Facilities</span>
+            </div>
+          </div>
+          
+          <div class="flex items-center justify-between">
+            <a routerLink="/services" class="text-brand font-bold hover:text-brand-dark transition-colors flex items-center">
+              Learn More
+              <span class="material-icons ml-1">arrow_forward</span>
+            </a>
+            <div class="text-right">
+              <div class="text-2xl font-black text-brand">₹2999</div>
+              <div class="text-sm text-gray-500">Starting from</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-20 bg-gray-900">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-black text-white mb-4">Trusted by Thousands</h2>
+      <p class="text-xl text-gray-300">Our numbers speak for themselves</p>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="text-center">
+        <div class="text-5xl font-black text-brand mb-2">1000+</div>
+        <div class="text-white/70 text-lg">Happy Clients</div>
+      </div>
+      <div class="text-center">
+        <div class="text-5xl font-black text-brand mb-2">10+</div>
+        <div class="text-white/70 text-lg">Years Experience</div>
+      </div>
+      <div class="text-center">
+        <div class="text-5xl font-black text-brand mb-2">24/7</div>
+        <div class="text-white/70 text-lg">Emergency Service</div>
+      </div>
+      <div class="text-center">
+        <div class="text-5xl font-black text-brand mb-2">100%</div>
+        <div class="text-white/70 text-lg">Satisfaction</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process Section -->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl lg:text-5xl font-black text-gray-900 mb-6 font-display">How We Work</h2>
+      <p class="text-xl text-gray-600">Simple, professional, and effective process</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="text-center">
+        <div class="w-16 h-16 bg-brand rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <span class="text-white text-2xl font-black">1</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">Free Inspection</h3>
+        <p class="text-gray-600">Thorough assessment of your property to identify pest issues</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="w-16 h-16 bg-brand rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <span class="text-white text-2xl font-black">2</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">Custom Plan</h3>
+        <p class="text-gray-600">Tailored treatment plan based on your specific needs</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="w-16 h-16 bg-brand rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <span class="text-white text-2xl font-black">3</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">Safe Treatment</h3>
+        <p class="text-gray-600">Eco-friendly treatment using safe, effective methods</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="w-16 h-16 bg-brand rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <span class="text-white text-2xl font-black">4</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">Follow-up</h3>
+        <p class="text-gray-600">Monitoring and maintenance for long-term results</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-brand">
+  <div class="max-w-4xl mx-auto text-center px-6 lg:px-8">
+    <h2 class="text-4xl lg:text-5xl font-black text-white mb-6 font-display">Ready to Eliminate Pests?</h2>
+    <p class="text-xl text-white/90 mb-12">Get professional pest control services today with our satisfaction guarantee</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a routerLink="/enquiry" class="bg-white text-brand px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+        <span class="material-icons mr-2">phone</span>
+        Get Free Quote
+      </a>
+      <a href="tel:+919851495495" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-brand transition-all duration-300 flex items-center justify-center">
+        <span class="material-icons mr-2">call</span>
+        Call: +91-9851495495
+      </a>
     </div>
   </div>
 </section>
