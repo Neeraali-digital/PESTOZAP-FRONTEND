@@ -471,3 +471,28 @@
     </div>
   </div>
 </section>
+
+<!-- Floating Action Buttons -->
+<div class="fixed right-4 bottom-20 z-50 flex flex-col space-y-3">
+  <!-- Call Button -->
+  <div class="group relative">
+    <a href="tel:+919851495495" class="w-14 h-14 bg-brand hover:bg-brand-dark text-white rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+      <span class="material-icons text-xl">phone</span>
+    </a>
+    <div class="absolute right-16 top-1/2 transform -translate-y-1/2 bg-gray-900 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+      Call Us
+      <div class="absolute right-0 top-1/2 transform translate-x-1 -translate-y-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+    </div>
+  </div>
+  
+  <!-- Offers Button -->
+  <div class="group relative">
+    <a routerLink="/offers" class="w-14 h-14 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+      <span class="material-icons text-xl">local_offer</span>
+    </a>
+    <div class="absolute right-16 top-1/2 transform -translate-y-1/2 bg-gray-900 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+      Show Offers
+      <div class="absolute right-0 top-1/2 transform translate-x-1 -translate-y-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+    </div>
+  </div>
+</div>
