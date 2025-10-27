@@ -13,13 +13,19 @@ import { AdvertisementService, Advertisement } from '../../services/advertisemen
 export class HomeComponent implements OnInit, OnDestroy {
   currentSlide = 0;
   slideInterval: any;
-  
+
   selectedServiceType = 'pest-control';
   selectedPestType = '';
   selectedPropertyType = '';
   selectedServicePackage = '';
 
   advertisements: Advertisement[] = [];
+
+  images = [
+    '../../../assets/ad1.png',
+    '../../../assets/ad2.png',
+    '../../../assets/ad3.png',
+  ]
 
   constructor(
     private advertisementService: AdvertisementService,
