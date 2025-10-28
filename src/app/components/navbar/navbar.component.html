@@ -40,43 +40,6 @@
 
       <!-- Desktop Menu -->
       <div class="hidden lg:flex items-center space-x-8">
-        <div class="relative group">
-          <button [class.text-brand]="isServicesActive()" class="flex items-center space-x-1 text-gray-700 hover:text-brand transition-colors font-semibold">
-            <span>Services</span>
-            <span class="material-icons text-sm">keyboard_arrow_down</span>
-          </button>
-          <div class="absolute top-full left-0 mt-3 w-72 bg-white rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-gray-100">
-            <div class="p-2">
-              <a routerLink="/services" class="flex items-center space-x-3 p-4 rounded-xl hover:bg-gray-50 hover:text-brand transition-all duration-300 group">
-                <div class="w-10 h-10 bg-brand/10 rounded-xl flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-all duration-300">
-                  <span class="material-icons text-brand group-hover:text-white">home</span>
-                </div>
-                <div>
-                  <div class="font-semibold">Home Control</div>
-                  <div class="text-sm text-gray-500">Residential pest protection</div>
-                </div>
-              </a>
-              <a routerLink="/services" class="flex items-center space-x-3 p-4 rounded-xl hover:bg-gray-50 hover:text-brand transition-all duration-300 group">
-                <div class="w-10 h-10 bg-brand/10 rounded-xl flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-all duration-300">
-                  <span class="material-icons text-brand group-hover:text-white">business</span>
-                </div>
-                <div>
-                  <div class="font-semibold">Commercial Control</div>
-                  <div class="text-sm text-gray-500">Business pest management</div>
-                </div>
-              </a>
-              <a routerLink="/bird-netting" class="flex items-center space-x-3 p-4 rounded-xl hover:bg-gray-50 hover:text-brand transition-all duration-300 group">
-                <div class="w-10 h-10 bg-brand/10 rounded-xl flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-all duration-300">
-                  <span class="material-icons text-brand group-hover:text-white">flutter_dash</span>
-                </div>
-                <div>
-                  <div class="font-semibold">Bird Netting</div>
-                  <div class="text-sm text-gray-500">Bird control solutions</div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
         <a routerLink="/about" [class.text-brand]="isActive('/about')" class="text-gray-700 hover:text-brand transition-colors font-semibold">About</a>
         <a routerLink="/blog" [class.text-brand]="isActive('/blog')" class="text-gray-700 hover:text-brand transition-colors font-semibold">Blog</a>
         <a routerLink="/our-community" [class.text-brand]="isActive('/our-community')" class="text-gray-700 hover:text-brand transition-colors font-semibold">Our Community</a>
