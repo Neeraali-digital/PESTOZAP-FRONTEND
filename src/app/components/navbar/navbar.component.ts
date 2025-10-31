@@ -22,7 +22,10 @@ export class NavbarComponent {
   }
 
   isActive(route: string): boolean {
-    return this.router.isActive(route, true);
+    if (route === '/') {
+      return this.router.url === '/' || this.router.url === '';
+    }
+    return this.router.url === route || this.router.url.startsWith(route + '/');
   }
 
   isServicesActive(): boolean {
