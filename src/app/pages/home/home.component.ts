@@ -65,9 +65,5 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.selectedServiceType = type;
   }
 
-  navigateToBirdNetting() {
-    console.log('hai');
-    
-    this.router.navigate(['bird-netting']);
-  }
+
 }

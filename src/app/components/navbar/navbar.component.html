@@ -42,7 +42,7 @@
       <div class="hidden lg:flex items-center space-x-8">
         <a routerLink="/about" [class.text-brand]="isActive('/about')" class="text-gray-700 hover:text-brand transition-colors font-semibold">About</a>
         <a routerLink="/blog" [class.text-brand]="isActive('/blog')" class="text-gray-700 hover:text-brand transition-colors font-semibold">Blog</a>
-        <a routerLink="/our-community" [class.text-brand]="isActive('/our-community')" class="text-gray-700 hover:text-brand transition-colors font-semibold">Our Community</a>
+        <a routerLink="/our-community" [class.text-brand]="isActive('/our-community')" class="text-gray-700 hover:text-brand transition-colors font-semibold">Community</a>
         <a routerLink="/offers" [class.text-brand]="isActive('/offers')" class="relative text-gray-700 hover:text-brand transition-colors font-semibold">
           <span>Offers</span>
           <span class="absolute -top-1 -right-2 w-3 h-3 bg-brand rounded-full animate-pulse"></span>
@@ -76,10 +76,7 @@
             <span class="material-icons text-brand">business</span>
             <span class="font-medium">Commercial Control</span>
           </a>
-          <a routerLink="/bird-netting" (click)="closeMobileMenu()" [class.text-brand]="isActive('/bird-netting')" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2">
-            <span class="material-icons text-brand">flutter_dash</span>
-            <span class="font-medium">Bird Netting</span>
-          </a>
+
         </div>
         <div class="border-t border-gray-100 pt-4 space-y-2">
           <a routerLink="/about" (click)="closeMobileMenu()" [class.text-brand]="isActive('/about')" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">About</a>

@@ -26,6 +26,6 @@ export class NavbarComponent {
   }
 
   isServicesActive(): boolean {
-    return this.isActive('/services') || this.isActive('/bird-netting');
+    return this.isActive('/services');
   }
 }
