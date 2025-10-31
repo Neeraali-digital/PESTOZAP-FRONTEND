@@ -26,7 +26,7 @@
 </section>
 
 <!-- Hero Section -->
-<section class="relative bg-gradient-to-br from-white via-gray-50 to-white py-12 md:py-20 lg:py-24 overflow-hidden">
+<section class="relative bg-gradient-to-br from-white via-gray-50 to-white py-5 md:py-6 lg:py-8 overflow-hidden">
   <!-- Background Pattern -->
   <div class="absolute inset-0 opacity-5">
     <div class="absolute top-10 left-10 w-20 h-20 bg-brand rounded-full animate-pulse"></div>
@@ -39,29 +39,41 @@
       <!-- Main Title -->
       <div class="mb-6 md:mb-8 flex justify-center flex-col">
         <img src="../../../assets/logo.png" alt="" class="h-16 object-contain">
-        <div class="flex flex-col items-center justify-center mt-4 space-x-2">
-          <div class="w-12 h-0.5 bg-brand"></div>
+        <!-- <div class="flex flex-col items-center justify-center mt-4 space-x-2">
+          <div class="w-16 h-0.5 bg-brand left-1"></div>
           <span class="material-icons text-brand text-2xl">pest_control</span>
-          <div class="w-12 h-0.5 bg-brand"></div>
-        </div>
+          <div class="w-24 h-0.5 bg-brand"></div>
+        </div> -->
       </div>
 
       <!-- Subtitle -->
-      <p class="text-base sm:text-lg lg:text-xl text-gray-600 mb-8 md:mb-12 max-w-4xl mx-auto font-light leading-relaxed px-4">
+      <p class="text-base sm:text-lg lg:text-xl text-gray-600 mb-4 md:mb-8 max-w-4xl mx-auto font-light leading-relaxed px-4">
         Protect your place from pest with professional, eco-friendly solutions
       </p>
 
       <!-- Service Tabs -->
-      <div class="flex justify-center mb-6 md:mb-8 px-4">
-        <div class="flex flex-col sm:flex-row bg-white rounded-2xl shadow-xl border border-gray-100 p-1 w-full max-w-md">
-          <button (click)="selectServiceType('pest-control')"
-                  [class]="'flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-lg transition-all duration-300 flex items-center justify-center mb-1 sm:mb-0 sm:mr-1 ' +
-                          (selectedServiceType === 'pest-control' ? 'bg-brand text-white shadow-lg transform scale-105' : 'bg-transparent text-gray-700 hover:bg-gray-50')">
-            <span class="material-icons mr-2 text-lg sm:text-xl">pest_control</span>
-            <span class="hidden sm:inline">Pest Control</span>
-            <span class="sm:hidden">Pest</span>
+      <div class="flex justify-center mb-4 px-4">
+        <div class="flex flex-col sm:flex-row bg-white rounded-xl shadow-lg border border-gray-100 p-0.5 w-full max-w-xl">
+          <button (click)="selectServiceType('residential-control')"
+                  [class]="'flex-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center mb-0.5 sm:mb-0 sm:mr-0.5 ' +
+                          (selectedServiceType === 'residential-control' ? 'bg-brand text-white shadow-md' : 'bg-transparent text-gray-700 hover:bg-gray-50')">
+            <span class="material-icons mr-1 text-sm sm:text-base">home</span>
+            Residential
           </button>
 
+          <button (click)="selectServiceType('home-control')"
+                  [class]="'flex-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center mb-0.5 sm:mb-0 sm:mr-0.5 ' +
+                          (selectedServiceType === 'home-control' ? 'bg-brand text-white shadow-md' : 'bg-transparent text-gray-700 hover:bg-gray-50')">
+            <span class="material-icons mr-1 text-sm sm:text-base">apartment</span>
+            Home
+          </button>
+
+          <button (click)="selectServiceType('amc')"
+                  [class]="'flex-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center mb-0.5 sm:mb-0 ' +
+                          (selectedServiceType === 'amc' ? 'bg-brand text-white shadow-md' : 'bg-transparent text-gray-700 hover:bg-gray-50')">
+            <span class="material-icons mr-1 text-sm sm:text-base">calendar_today</span>
+            AMC
+          </button>
         </div>
       </div>
 
@@ -111,105 +123,52 @@
 
       <!-- Pricing Cards -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto px-4">
-        <!-- Recommended Card -->
-        <div class="bg-gradient-to-br from-brand to-brand-dark rounded-2xl p-4 sm:p-6 shadow-xl text-white relative overflow-hidden transform hover:scale-105 transition-all duration-300">
-          <!-- Decorative Elements -->
-          <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full"></div>
-          <div class="absolute -bottom-5 -left-5 w-20 h-20 bg-white/5 rounded-full"></div>
-          
-          <div class="absolute top-4 right-4 bg-white text-brand px-3 py-1 rounded-full text-xs sm:text-sm font-bold animate-pulse">
+        <div *ngFor="let card of getCurrentPricingCards(); let i = index" [class]="i === 0 ? 'bg-gradient-to-br from-brand to-brand-dark rounded-2xl p-4 sm:p-6 shadow-xl text-white relative overflow-hidden transform hover:scale-105 transition-all duration-300' : 'bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-gray-100 hover:border-brand/20 transition-all duration-300 transform hover:scale-105'">
+          <!-- Decorative Elements for Recommended Card -->
+          <div *ngIf="card.isRecommended" class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full"></div>
+          <div *ngIf="card.isRecommended" class="absolute -bottom-5 -left-5 w-20 h-20 bg-white/5 rounded-full"></div>
+
+          <!-- Recommended Badge -->
+          <div *ngIf="card.isRecommended" class="absolute top-4 right-4 bg-white text-brand px-3 py-1 rounded-full text-xs sm:text-sm font-bold animate-pulse">
             RECOMMENDED
           </div>
-          
-          <div class="relative z-10 pt-5">
-            <h3 class="text-xl sm:text-2xl font-black mb-4 sm:mb-6 leading-tight">4D Cockroach Control and Ant Control</h3>
-            
-            <ul class="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
-              <li class="flex items-start">
-                <span class="w-2 h-2 sm:w-3 sm:h-3 bg-brand-light rounded-full mr-3 flex-shrink-0 mt-2"></span>
-                <span class="text-sm sm:text-base text-start">Advanced gel treatment for long-lasting <br/> results</span>
-              </li>
-              <li class="flex items-start">
-                <span class="w-2 h-2 sm:w-3 sm:h-3 bg-brand-light rounded-full mr-3 flex-shrink-0 mt-2"></span>
-                <span class="text-sm sm:text-base text-start">Complete elimination of cockroaches and <br/> ants</span>
-              </li>
-              <li class="flex items-start">
-                <span class="w-2 h-2 sm:w-3 sm:h-3 bg-brand-light rounded-full mr-3 flex-shrink-0 mt-2"></span>
-                <span class="text-sm sm:text-base">Safe for children and pets</span>
-              </li>
-              <li class="flex items-start">
-                <span class="w-2 h-2 sm:w-3 sm:h-3 bg-brand-light rounded-full mr-3 flex-shrink-0 mt-2"></span>
-                <span class="text-sm sm:text-base">Free follow-up service included</span>
-              </li>
-              <li class="flex items-start">
-                <span class="w-2 h-2 sm:w-3 sm:h-3 bg-brand-light rounded-full mr-3 flex-shrink-0 mt-2"></span>
-                <span class="text-sm sm:text-base">100% satisfaction guarantee</span>
-              </li>
-            </ul>
-            
-            <div class="flex items-center justify-center mb-6">
-              <div class="text-3xl sm:text-4xl font-black">₹2,499</div>
-              <div class="ml-2 text-sm opacity-75 line-through">₹3,999</div>
-            </div>
-            
-            <div class="space-y-3">
-              <button class="w-full bg-white/20 backdrop-blur-sm text-white py-3 px-6 rounded-2xl font-semibold hover:bg-white/30 transition-all duration-300 border border-white/30">
-                3 Services 1 Year
-              </button>
-              <a href="#" class="block text-center text-white/90 underline hover:text-white transition-colors text-sm">
-                Click Here To Read More
-              </a>
-              <button class="w-full bg-white text-brand py-3 px-6 rounded-2xl font-bold hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                Book Now
-              </button>
-            </div>
-            
-            <div class="text-xs sm:text-sm text-white/70 mt-4 text-center">
-              <span class="material-icons text-sm mr-1">schedule</span>
-              Last Booking on 15th Dec 2023
-            </div>
-          </div>
-        </div>
 
-        <!-- Standard Card -->
-        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-gray-100 hover:border-brand/20 transition-all duration-300 transform hover:scale-105">
-          <div class="relative pt-5">
-            <h3 class="text-xl sm:text-2xl font-black text-gray-900 mb-4 sm:mb-6">Standard Cockroach Control</h3>
-            
+          <div class="relative z-10 pt-5">
+            <h3 class="text-xl sm:text-2xl font-black mb-4 sm:mb-6 leading-tight" [class]="card.isRecommended ? 'text-white' : 'text-gray-900'">
+              {{ card.title }}
+            </h3>
+
             <ul class="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
-              <li class="flex items-start">
-                <span class="w-2 h-2 sm:w-3 sm:h-3 bg-brand rounded-full mr-3 flex-shrink-0 mt-2"></span>
-                <span class="text-sm sm:text-base text-gray-700">Effective spray treatment</span>
-              </li>
-              <li class="flex items-start">
-                <span class="w-2 h-2 sm:w-3 sm:h-3 bg-brand rounded-full mr-3 flex-shrink-0 mt-2"></span>
-                <span class="text-sm sm:text-base text-gray-700">Quick results within 24 hours</span>
-              </li>
-              <li class="flex items-start">
-                <span class="w-2 h-2 sm:w-3 sm:h-3 bg-brand rounded-full mr-3 flex-shrink-0 mt-2"></span>
-                <span class="text-sm sm:text-base text-gray-700">Professional service guarantee</span>
+              <li *ngFor="let feature of card.features" class="flex items-start">
+                <span class="w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-3 flex-shrink-0 mt-2" [class]="card.isRecommended ? 'bg-brand-light' : 'bg-brand'"></span>
+                <span class="text-sm sm:text-base text-start pt-0.5" [class]="card.isRecommended ? 'text-white' : 'text-gray-700'" [innerHTML]="feature"></span>
               </li>
             </ul>
-            
+
             <div class="flex items-center justify-center mb-6">
-              <div class="text-3xl sm:text-4xl font-black text-gray-900">₹1,499</div>
+              <div class="text-3xl sm:text-4xl font-black" [class]="card.isRecommended ? 'text-white' : 'text-gray-900'">
+                {{ card.price }}
+              </div>
+              <div *ngIf="card.originalPrice" class="ml-2 text-sm opacity-75 line-through" [class]="card.isRecommended ? 'text-white/75' : 'text-gray-500'">
+                {{ card.originalPrice }}
+              </div>
             </div>
-            
+
             <div class="space-y-3">
-              <button class="w-full bg-gray-100 text-gray-700 py-3 px-6 rounded-2xl font-semibold hover:bg-gray-200 transition-colors">
-                Single Service
+              <button class="w-full py-3 px-6 rounded-2xl font-semibold transition-all duration-300 border" [class]="card.isRecommended ? 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 border-white/30' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'">
+                {{ card.package }}
               </button>
-              <a href="#" class="block text-center text-brand underline hover:text-brand-dark transition-colors text-sm">
+              <a href="#" class="block text-center underline transition-colors text-sm" [class]="card.isRecommended ? 'text-white/90 hover:text-white' : 'text-brand hover:text-brand-dark'">
                 Click Here To Read More
               </a>
-              <button class="w-full bg-brand text-white py-3 px-6 rounded-2xl font-bold hover:bg-brand-dark transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              <button class="w-full py-3 px-6 rounded-2xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1" [class]="card.isRecommended ? 'bg-white text-brand hover:bg-gray-100' : 'bg-brand text-white hover:bg-brand-dark'">
                 Book Now
               </button>
             </div>
-            
-            <div class="text-xs sm:text-sm text-gray-500 mt-4 text-center">
+
+            <div class="text-xs sm:text-sm mt-4 text-center" [class]="card.isRecommended ? 'text-white/70' : 'text-gray-500'">
               <span class="material-icons text-sm mr-1">schedule</span>
-              Available Today
+              {{ card.lastBooking }}
             </div>
           </div>
         </div>
