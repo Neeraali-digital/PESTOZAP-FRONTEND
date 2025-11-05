@@ -93,6 +93,10 @@
     animation: marquee 30s linear infinite;
   }
   
+  .animate-marquee-fast {
+    animation: marquee 20s linear infinite;
+  }
+  
   @keyframes marquee {
     0% {
       transform: translateX(100%);
@@ -149,5 +153,77 @@
   
   .border-gradient {
     border-image: linear-gradient(45deg, #cc1f4a, #e63462) 1;
+  }
+  
+  .animate-gradient {
+    background: linear-gradient(-45deg, #f8fafc, #f1f5f9, #e2e8f0, #f8fafc);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+  }
+  
+  .pattern-dots {
+    background-image: radial-gradient(circle, rgba(204, 31, 74, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: patternMove 20s linear infinite;
+  }
+  
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  @keyframes patternMove {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 20px 20px;
+    }
+  }
+  
+  .hexagon {
+    width: 200px;
+    height: 115px;
+    position: relative;
+    margin: 57.5px auto;
+  }
+  
+  .hexagon:before,
+  .hexagon:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+  }
+  
+  .hexagon:before {
+    bottom: 100%;
+    border-bottom: 57.5px solid;
+  }
+  
+  .hexagon:after {
+    top: 100%;
+    border-top: 57.5px solid;
+  }
+  
+  .service-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
   }
 }
