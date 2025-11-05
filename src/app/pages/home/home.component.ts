@@ -66,31 +66,31 @@ export class HomeComponent implements OnInit, OnDestroy {
         lastBooking: 'Available Today'
       }
     ],
-    'home-control': [
+    'commercial-control': [
       {
-        title: 'Complete Home Protection Package',
+        title: 'Complete Commercial Protection Package',
         features: [
           'Cockroach, Ant & Termite Control',
           'Rodent and Bed Bug Treatment',
           'Eco-friendly solutions',
-          'Family-safe treatments',
+          'Business-safe treatments',
           '6-month protection guarantee'
         ],
-        price: '₹3,999',
-        originalPrice: '₹5,499',
+        price: '₹4,999',
+        originalPrice: '₹6,999',
         package: '6 Services 2 Years',
         isRecommended: true,
         lastBooking: 'Last Booking on 20th Dec 2023'
       },
       {
-        title: 'Essential Home Control',
+        title: 'Essential Commercial Control',
         features: [
           'Basic pest elimination',
           'Cockroach and ant control',
-          'Safe for residential areas',
+          'Safe for commercial areas',
           'Professional service'
         ],
-        price: '₹2,299',
+        price: '₹3,299',
         package: '3 Services 1 Year',
         lastBooking: 'Available Today'
       }

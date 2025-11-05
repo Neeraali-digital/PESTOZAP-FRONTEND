@@ -48,22 +48,22 @@
           </button>
           <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
             <div class="py-2">
-              <a routerLink="/services" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors">
-                <div class="flex items-center">
-                  <span class="material-icons text-brand mr-3">home</span>
+              <a routerLink="/services" fragment="residential" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors">
+                <div class="flex items-center justify-between">
                   <span class="font-medium">Residential Control</span>
+                  <span class="material-icons text-brand">chevron_right</span>
+                </div>
+              </a>
+              <a routerLink="/services" fragment="commercial" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors">
+                <div class="flex items-center justify-between">
+                  <span class="font-medium">Commercial Control</span>
+                  <span class="material-icons text-brand">chevron_right</span>
                 </div>
               </a>
               <a routerLink="/services" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors">
-                <div class="flex items-center">
-                  <span class="material-icons text-brand mr-3">apartment</span>
-                  <span class="font-medium">Home Control</span>
-                </div>
-              </a>
-              <a routerLink="/services" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors">
-                <div class="flex items-center">
-                  <span class="material-icons text-brand mr-3">calendar_today</span>
+                <div class="flex items-center justify-between">
                   <span class="font-medium">Annual Maintenance Contract</span>
+                  <span class="material-icons text-brand">chevron_right</span>
                 </div>
               </a>
             </div>
@@ -97,11 +97,11 @@
       <div class="py-4 space-y-2 border-t border-gray-100">
         <div class="space-y-2">
           <div class="text-gray-500 font-semibold px-4 py-2 text-sm uppercase tracking-wide">Services</div>
-          <a routerLink="/services" (click)="closeMobileMenu()" [class.text-brand]="isActive('/services')" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2">
+          <a routerLink="/services" fragment="residential" (click)="closeMobileMenu()" [class.text-brand]="isActive('/services')" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2">
             <span class="material-icons text-brand">home</span>
-            <span class="font-medium">Home Control</span>
+            <span class="font-medium">Residential Control</span>
           </a>
-          <a routerLink="/services" (click)="closeMobileMenu()" [class.text-brand]="isActive('/services')" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2">
+          <a routerLink="/services" fragment="commercial" (click)="closeMobileMenu()" [class.text-brand]="isActive('/services')" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2">
             <span class="material-icons text-brand">business</span>
             <span class="font-medium">Commercial Control</span>
           </a>
