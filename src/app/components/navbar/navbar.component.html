@@ -97,27 +97,54 @@
       <div class="py-4 space-y-2 border-t border-gray-100">
         <div class="space-y-2">
           <div class="text-gray-500 font-semibold px-4 py-2 text-sm uppercase tracking-wide">Services</div>
-          <a routerLink="/services" fragment="residential" (click)="closeMobileMenu()" [class.text-brand]="isActive('/services')" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2">
-            <span class="material-icons text-brand">home</span>
-            <span class="font-medium">Residential Control</span>
+          <a routerLink="/services" fragment="residential" (click)="closeMobileMenu()" [class.text-brand]="isActive('/services')" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2">
+            <div class="flex items-center space-x-3">
+              <span class="material-icons text-brand">home</span>
+              <span class="font-medium">Residential Control</span>
+            </div>
+            <span class="material-icons text-brand">chevron_right</span>
           </a>
-          <a routerLink="/services" fragment="commercial" (click)="closeMobileMenu()" [class.text-brand]="isActive('/services')" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2">
-            <span class="material-icons text-brand">business</span>
-            <span class="font-medium">Commercial Control</span>
+          <a routerLink="/services" fragment="commercial" (click)="closeMobileMenu()" [class.text-brand]="isActive('/services')" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2">
+            <div class="flex items-center space-x-3">
+              <span class="material-icons text-brand">business</span>
+              <span class="font-medium">Commercial Control</span>
+            </div>
+            <span class="material-icons text-brand">chevron_right</span>
           </a>
 
         </div>
         <div class="border-t border-gray-100 pt-4 space-y-2">
-          <a routerLink="/" (click)="closeMobileMenu()" routerLinkActive="text-brand" [routerLinkActiveOptions]="{exact: true}" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">Home</a>
-          <a routerLink="/services" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">Services</a>
-          <a routerLink="/about" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">About</a>
-          <a routerLink="/blog" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">Blog</a>
-          <a routerLink="/our-community" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">Our Community</a>
-          <a routerLink="/offers" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">
-            <span>Offers</span>
-            <span class="w-2 h-2 bg-brand rounded-full animate-pulse"></span>
+          <a routerLink="/" (click)="closeMobileMenu()" routerLinkActive="text-brand" [routerLinkActiveOptions]="{exact: true}" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">
+            <span>Home</span>
+            <span class="material-icons text-brand">chevron_right</span>
           </a>
-          <a routerLink="/contact" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">Contact</a>
+          <a routerLink="/services" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">
+            <span>Services</span>
+            <span class="material-icons text-brand">chevron_right</span>
+          </a>
+          <a routerLink="/about" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">
+            <span>About</span>
+            <span class="material-icons text-brand">chevron_right</span>
+          </a>
+          <a routerLink="/blog" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">
+            <span>Blog</span>
+            <span class="material-icons text-brand">chevron_right</span>
+          </a>
+          <a routerLink="/our-community" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">
+            <span>Our Community</span>
+            <span class="material-icons text-brand">chevron_right</span>
+          </a>
+          <a routerLink="/offers" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">
+            <div class="flex items-center space-x-2">
+              <span>Offers</span>
+              <span class="w-2 h-2 bg-brand rounded-full animate-pulse"></span>
+            </div>
+            <span class="material-icons text-brand">chevron_right</span>
+          </a>
+          <a routerLink="/contact" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">
+            <span>Contact</span>
+            <span class="material-icons text-brand">chevron_right</span>
+          </a>
         </div>
         <div class="border-t border-gray-100 pt-4">
           <a routerLink="/enquiry" (click)="closeMobileMenu()" class="block mx-2 bg-brand text-white px-4 py-3 rounded-xl font-bold text-center hover:bg-brand-dark transition-colors">

@@ -14,6 +14,13 @@ interface PricingCard {
   lastBooking?: string;
 }
 
+interface Review {
+  name: string;
+  location: string;
+  rating: number;
+  review: string;
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -23,6 +30,10 @@ interface PricingCard {
 export class HomeComponent implements OnInit, OnDestroy {
   currentSlide = 0;
   slideInterval: any;
+
+  currentReviewIndex = 0;
+  reviewInterval: any;
+  isReviewPaused = false;
 
   selectedServiceType = 'residential-control';
   selectedPestType = '';
@@ -36,6 +47,45 @@ export class HomeComponent implements OnInit, OnDestroy {
     '../../../assets/ad2.png',
     '../../../assets/ad3.png',
   ]
+
+  reviews: Review[] = [
+    {
+      name: 'Rajesh Sharma',
+      location: 'Mumbai',
+      rating: 5,
+      review: 'Excellent service! They completely eliminated our cockroach problem. Professional team and eco-friendly approach.'
+    },
+    {
+      name: 'Priya Kapoor',
+      location: 'Delhi',
+      rating: 5,
+      review: 'Quick response and effective treatment. No more termite issues in our office building. Highly recommended!'
+    },
+    {
+      name: 'Amit Mehta',
+      location: 'Bangalore',
+      rating: 5,
+      review: 'Professional service with guaranteed results. They solved our rodent problem permanently. Great value for money.'
+    },
+    {
+      name: 'Sunita Gupta',
+      location: 'Pune',
+      rating: 5,
+      review: 'Amazing bed bug treatment! Clean, safe, and effective. The team was punctual and professional throughout.'
+    },
+    {
+      name: 'Vikram Thakur',
+      location: 'Chennai',
+      rating: 5,
+      review: 'Best pest control service in the city! They handled our ant problem with care and professionalism. Highly satisfied.'
+    },
+    {
+      name: 'Neha Kumar',
+      location: 'Hyderabad',
+      rating: 5,
+      review: 'Outstanding mosquito control service. Our restaurant is now pest-free. Customer service is outstanding!'
+    }
+  ];
 
   pricingData: { [key: string]: PricingCard[] } = {
     'residential-control': [
@@ -138,11 +188,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.startSlideShow();
       }
     });
+    this.startReviewAutoSlide();
   }
 
   ngOnDestroy() {
     if (this.slideInterval) {
       clearInterval(this.slideInterval);
+    }
+    if (this.reviewInterval) {
+      clearInterval(this.reviewInterval);
     }
   }
 
@@ -166,6 +220,34 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getCurrentPricingCards(): PricingCard[] {
     return this.pricingData[this.selectedServiceType] || [];
+  }
+
+  startReviewAutoSlide() {
+    this.reviewInterval = setInterval(() => {
+      if (!this.isReviewPaused) {
+        this.nextReview();
+      }
+    }, 5000);
+  }
+
+  nextReview() {
+    this.currentReviewIndex = (this.currentReviewIndex + 1) % this.reviews.length;
+  }
+
+  previousReview() {
+    this.currentReviewIndex = this.currentReviewIndex === 0 ? this.reviews.length - 1 : this.currentReviewIndex - 1;
+  }
+
+  goToReview(index: number) {
+    this.currentReviewIndex = index;
+  }
+
+  pauseReview() {
+    this.isReviewPaused = true;
+  }
+
+  resumeReview() {
+    this.isReviewPaused = false;
   }
 
 }
