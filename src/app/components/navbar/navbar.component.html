@@ -76,6 +76,7 @@
           <span>Offers</span>
           <span class="absolute -top-1 -right-2 w-3 h-3 bg-brand rounded-full animate-pulse"></span>
         </a>
+        <a routerLink="/careers" routerLinkActive="text-brand" class="text-gray-700 hover:text-brand transition-colors font-semibold">Careers</a>
         <a routerLink="/contact" routerLinkActive="text-brand" class="text-gray-700 hover:text-brand transition-colors font-semibold">Contact</a>
       </div>
 
@@ -139,6 +140,10 @@
               <span>Offers</span>
               <span class="w-2 h-2 bg-brand rounded-full animate-pulse"></span>
             </div>
+            <span class="material-icons text-brand">chevron_right</span>
+          </a>
+          <a routerLink="/careers" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">
+            <span>Careers</span>
             <span class="material-icons text-brand">chevron_right</span>
           </a>
           <a routerLink="/contact" (click)="closeMobileMenu()" routerLinkActive="text-brand" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors rounded-xl mx-2 font-medium">
