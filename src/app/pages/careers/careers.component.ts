@@ -115,6 +115,14 @@ export class CareersComponent implements OnInit, OnDestroy {
     document.getElementById('positions')?.scrollIntoView({ behavior: 'smooth' });
   }
 
+  scrollToApplication(position?: string) {
+    if (position) {
+      this.selectedPosition = position;
+      this.applicationForm.patchValue({ position });
+    }
+    document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
   openApplicationModal(position: string) {
     this.selectedPosition = position;
     this.applicationForm.patchValue({ position });

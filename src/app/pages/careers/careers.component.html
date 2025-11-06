@@ -19,9 +19,9 @@
       <a href="#positions" (click)="scrollToPositions($event)" class="bg-white text-brand px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
         View Open Positions
       </a>
-      <a href="#apply" class="border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-brand transition-all duration-300">
+      <button (click)="scrollToApplication()" class="border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-brand transition-all duration-300">
         Apply Now
-      </a>
+      </button>
     </div>
   </div>
 </section>
@@ -141,7 +141,7 @@
                 </div>
               </div>
             </div>
-            <button (click)="openApplicationModal(position.title)" class="mt-4 lg:mt-0 bg-brand text-white px-6 py-3 rounded-full font-bold hover:bg-brand-dark transition-colors">
+            <button (click)="scrollToApplication(position.title)" class="mt-4 lg:mt-0 bg-brand text-white px-6 py-3 rounded-full font-bold hover:bg-brand-dark transition-colors">
               Apply Now
             </button>
           </div>
@@ -225,6 +225,75 @@
     </div>
   </div>
 </div>
+
+<!-- Application Section -->
+<section id="apply" class="py-20 bg-white relative overflow-hidden">
+  <div class="absolute top-0 right-0 w-72 h-72 opacity-5" [style.transform]="'translateY(' + scrollY * 0.3 + 'px)'">
+    <img src="../../../assets/bg1.png" alt="" class="w-full h-full object-cover rounded-full">
+  </div>
+  <div class="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl lg:text-5xl font-black text-gray-900 mb-6">Apply Now</h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">Ready to join our team? Fill out the application form below and start your career with Pestozap.</p>
+    </div>
+
+    <div class="bg-gray-50 rounded-3xl p-8">
+      <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Full Name *</label>
+            <input type="text" formControlName="fullName" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Email *</label>
+            <input type="email" formControlName="email" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-colors">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Phone *</label>
+            <input type="tel" formControlName="phone" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Position *</label>
+            <select formControlName="position" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-colors">
+              <option value="">Select Position</option>
+              <option *ngFor="let position of openPositions" [value]="position.title">{{ position.title }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-bold text-gray-700 mb-2">Years of Experience *</label>
+          <select formControlName="experience" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-colors">
+            <option value="">Select Experience</option>
+            <option value="0-1">0-1 years</option>
+            <option value="1-3">1-3 years</option>
+            <option value="3-5">3-5 years</option>
+            <option value="5+">5+ years</option>
+          </select>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-bold text-gray-700 mb-2">Resume/CV</label>
+          <input type="file" formControlName="resume" accept=".pdf,.doc,.docx" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-colors">
+        </div>
+
+        <div class="mb-8">
+          <label class="block text-sm font-bold text-gray-700 mb-2">Cover Letter</label>
+          <textarea formControlName="coverLetter" rows="4" placeholder="Tell us why you'd be a great fit for our team..." class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-colors resize-none"></textarea>
+        </div>
+
+        <div class="text-center">
+          <button type="submit" [disabled]="!applicationForm.valid" class="bg-brand text-white px-12 py-4 rounded-full font-bold text-lg hover:bg-brand-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            Submit Application
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
 
 <!-- Contact HR -->
 <section class="py-20 bg-gradient-to-r from-brand via-brand-dark to-brand relative overflow-hidden">

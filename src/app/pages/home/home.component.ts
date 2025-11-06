@@ -90,16 +90,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   pricingData: { [key: string]: PricingCard[] } = {
     'residential-control': [
       {
-        title: '4D Cockroach Control and Ant Control',
+        title: 'Residential Service',
         features: [
-          'Advanced gel treatment for long-lasting results',
-          'Complete elimination of cockroaches and ants',
-          'Safe for children and pets',
-          'Free follow-up service included',
-          '100% satisfaction guarantee'
+          'Gel Baiting & Residual Sprays, Odorless & Human Safe Chemicals',
+          'Larviciding, Residual Sprays, Fogging, Mosquito Repellent Diffuser',
+          'Rodent Stations, Glue boards, Snap Traps, Cages, Rodent Boxes',
+          'Drill-Fill-Seal, TERMATRACK',
+          'Net and Spikes Solutions, Aesthetic & Transparent Net',
+          'Microbial disinfection, Nano-Herbal Disinfection'
         ],
-        price: '₹2,499',
-        originalPrice: '₹3,999',
+        price: '₹5,499',
+        originalPrice: '₹6,999',
         package: '3 Services 1 Year',
         isRecommended: true,
         lastBooking: 'Last Booking on 15th Dec 2023'
@@ -118,16 +119,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     ],
     'commercial-control': [
       {
-        title: 'Complete Commercial Protection Package',
+        title: 'commercial Service',
         features: [
-          'Cockroach, Ant & Termite Control',
-          'Rodent and Bed Bug Treatment',
-          'Eco-friendly solutions',
-          'Business-safe treatments',
-          '6-month protection guarantee'
+          'Gel Baiting & Residual Sprays, Odorless & Human Safe Chemicals',
+          'Larviciding, Residual Sprays, Fogging, Mosquito Repellent Diffuser',
+          'Rodent Stations, Glue boards, Snap Traps, Cages, Rodent Boxes',
+          'Drill-Fill-Seal, TERMATRACK',
+          'Net and Spikes Solutions, Aesthetic & Transparent Net',
+          'Microbial disinfection, Nano-Herbal Disinfection'
         ],
-        price: '₹4,999',
-        originalPrice: '₹6,999',
+        price: '₹7,999',
+        originalPrice: '₹9,999',
         package: '6 Services 2 Years',
         isRecommended: true,
         lastBooking: 'Last Booking on 20th Dec 2023'
@@ -145,32 +147,34 @@ export class HomeComponent implements OnInit, OnDestroy {
         lastBooking: 'Available Today'
       }
     ],
-    'amc': [
+    'offers': [
       {
-        title: 'Premium AMC Package',
+        title: 'Commercial Offers',
         features: [
-          'Monthly pest monitoring',
-          'Emergency pest control',
-          'Priority booking',
-          'Dedicated account manager',
-          'Comprehensive coverage'
+          '50% Off First Service for Offices',
+          'Free Inspection for Commercial Properties',
+          'Bulk Discount for Multiple Services',
+          'Priority Scheduling for Businesses',
+          'Eco-Friendly Treatments Included'
         ],
-        price: '₹8,999',
-        originalPrice: '₹12,999',
-        package: 'Annual Contract',
+        price: '₹7,999',
+        originalPrice: '₹9,999',
+        package: 'Commercial Package',
         isRecommended: true,
-        lastBooking: 'Last Booking on 10th Dec 2023'
+        lastBooking: 'Last Booking on 15th Dec 2023'
       },
       {
-        title: 'Standard AMC Package',
+        title: 'Residential Offers',
         features: [
-          'Quarterly pest control',
-          'Regular inspections',
-          'Emergency response',
-          'Cost-effective solution'
+          '30% Off Annual Maintenance Contract',
+          'Free Home Inspection',
+          'Family Discount for Multiple Services',
+          'Safe Treatments for Homes with Kids',
+          'Guaranteed Pest-Free Guarantee'
         ],
-        price: '₹4,999',
-        package: 'Annual Contract',
+        price: '₹5,499',
+        originalPrice: '₹6,999',
+        package: 'Residential Package',
         lastBooking: 'Available Today'
       }
     ]
