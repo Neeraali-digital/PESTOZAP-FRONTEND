@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,10 +9,11 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './careers.component.html'
 })
-export class CareersComponent {
+export class CareersComponent implements OnInit, OnDestroy {
   applicationForm: FormGroup;
   showModal = false;
   selectedPosition = '';
+  scrollY = 0;
 
   openPositions = [
     {
@@ -92,6 +93,21 @@ export class CareersComponent {
       resume: [''],
       coverLetter: ['']
     });
+  }
+
+  ngOnInit() {
+    this.updateScrollY();
+  }
+
+  ngOnDestroy() {}
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.updateScrollY();
+  }
+
+  private updateScrollY() {
+    this.scrollY = window.pageYOffset;
   }
 
   scrollToPositions(event: Event) {

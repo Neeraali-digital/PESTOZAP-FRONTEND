@@ -1,8 +1,12 @@
 <!-- Hero Section -->
 <section class="relative py-24 bg-gradient-to-br from-brand via-brand-dark to-black overflow-hidden">
   <div class="absolute inset-0 bg-black/20"></div>
-  <div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-48 translate-x-48"></div>
-  <div class="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full translate-y-32 -translate-x-32"></div>
+  <div class="absolute top-0 right-0 w-96 h-96 opacity-10 -translate-y-48 translate-x-48" [style.transform]="'translateY(' + scrollY * 0.3 + 'px) translateX(192px)'">
+    <img src="../../../assets/bg1.png" alt="" class="w-full h-full object-cover rounded-full">
+  </div>
+  <div class="absolute bottom-0 left-0 w-64 h-64 opacity-5 translate-y-32 -translate-x-32" [style.transform]="'translateY(' + scrollY * -0.2 + 'px) translateX(-128px)'">
+    <img src="../../../assets/bg2.png" alt="" class="w-full h-full object-cover rounded-full">
+  </div>
   
   <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
     <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
@@ -23,8 +27,13 @@
 </section>
 
 <!-- Why Work With Us -->
-<section class="py-10 bg-gray-50 flex justify-center">
-  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+<section class="py-20 bg-gray-50 relative overflow-hidden">
+  <div class="absolute top-0 left-0 w-80 h-80 opacity-5" [style.transform]="'translateY(' + scrollY * 0.4 + 'px)'">
+    <img src="../../../assets/bg3.png" alt="" class="w-full h-full object-cover">
+  </div>
+  <div class="absolute bottom-0 right-0 w-60 h-60 bg-brand/5 rounded-full" [style.transform]="'translateY(' + scrollY * -0.3 + 'px)'">
+  </div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
     <div class="text-center mb-16">
       <h2 class="text-4xl lg:text-5xl font-black text-gray-900 mb-6">Why Work With Us?</h2>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto">We're not just a pest control company - we're a team dedicated to protecting communities and building careers</p>
@@ -43,8 +52,12 @@
 </section>
 
 <!-- Company Culture -->
-<section class="py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+<section class="py-20 bg-white relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-gray-50/50 via-white to-brand/5"></div>
+  <div class="absolute top-16 right-16 w-72 h-72 opacity-10" [style.transform]="'translateY(' + scrollY * 0.2 + 'px) rotate(12deg)'">
+    <img src="../../../assets/bg1.png" alt="" class="w-full h-full object-cover rounded-3xl">
+  </div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       <div>
         <h2 class="text-4xl lg:text-5xl font-black text-gray-900 mb-8">Our Culture</h2>
@@ -84,9 +97,9 @@
       <div class="relative">
         <div class="bg-gradient-to-br from-brand/10 to-brand/5 rounded-3xl p-8 h-96 flex items-center justify-center">
           <div class="text-center">
-            <span class="material-icons text-brand text-9xl mb-4">work</span>
-            <h3 class="text-2xl font-bold text-gray-900">Join Our Mission</h3>
-            <p class="text-gray-600 mt-2">Protect communities, one home at a time</p>
+            <!-- <span class="material-icons text-brand text-9xl mb-4">work</span> -->
+            <h3 class="text-2xl font-bold text-gray-900">office images slides</h3>
+            <!-- <p class="text-gray-600 mt-2">Protect communities, one home at a time</p> -->
           </div>
         </div>
       </div>
@@ -95,8 +108,13 @@
 </section>
 
 <!-- Open Positions -->
-<section id="positions" class="py-20 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+<section id="positions" class="py-20 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden">
+  <div class="absolute top-0 left-1/3 w-96 h-96 opacity-5" [style.transform]="'translateY(' + scrollY * 0.5 + 'px)'">
+    <img src="../../../assets/bg2.png" alt="" class="w-full h-full object-cover rounded-full">
+  </div>
+  <div class="absolute bottom-0 right-0 w-48 h-48 bg-brand/10 rounded-full animate-pulse" [style.transform]="'translateY(' + scrollY * -0.4 + 'px)'">
+  </div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
     <div class="text-center mb-16">
       <h2 class="text-4xl lg:text-5xl font-black text-gray-900 mb-6">Open Positions</h2>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto">Discover exciting career opportunities in the pest control industry</p>
@@ -209,8 +227,14 @@
 </div>
 
 <!-- Contact HR -->
-<section class="py-20 bg-brand">
-  <div class="max-w-4xl mx-auto text-center px-6 lg:px-8">
+<section class="py-20 bg-gradient-to-r from-brand via-brand-dark to-brand relative overflow-hidden">
+  <div class="absolute inset-0 bg-black/10"></div>
+  <div class="absolute top-0 left-0 w-64 h-64 opacity-10" [style.transform]="'translateY(' + scrollY * 0.3 + 'px)'">
+    <img src="../../../assets/bg3.png" alt="" class="w-full h-full object-cover rounded-full">
+  </div>
+  <div class="absolute bottom-0 right-0 w-80 h-80 bg-white/5 rounded-full -translate-y-40 translate-x-40" [style.transform]="'translateY(' + scrollY * -0.2 + 'px)'">
+  </div>
+  <div class="max-w-4xl mx-auto text-center px-6 lg:px-8 relative z-10">
     <h2 class="text-4xl lg:text-5xl font-black text-white mb-6">Questions About Careers?</h2>
     <p class="text-xl text-white/90 mb-8">
       Our HR team is here to help you with any questions about career opportunities at Pestozap.
