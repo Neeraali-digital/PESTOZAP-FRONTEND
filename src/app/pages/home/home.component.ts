@@ -222,6 +222,82 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   selectServiceType(type: string) {
     this.selectedServiceType = type;
+    // Reset selections when service type changes
+    this.selectedPestType = '';
+    this.selectedPropertyType = '';
+    this.selectedServicePackage = '';
+    this.squareFeet = '';
+  }
+
+  onServiceChange(event: any) {
+    this.selectedPestType = event.target.value;
+    this.updatePricingCard();
+  }
+
+  onPropertyTypeChange(event: any) {
+    this.selectedPropertyType = event.target.value;
+    this.updatePricingCard();
+  }
+
+  onServicePackageChange(event: any) {
+    this.selectedServicePackage = event.target.value;
+    this.updatePricingCard();
+  }
+
+  updatePricingCard() {
+    // Update the first card based on selections
+    const cards = this.pricingData[this.selectedServiceType];
+    if (cards && cards.length > 0) {
+      const firstCard = cards[0];
+      if (this.selectedPestType) {
+        firstCard.features = this.getPestSpecificFeatures(this.selectedPestType);
+      }
+      if (this.selectedServiceType === 'residential-control' && this.selectedPropertyType) {
+        firstCard.title = `Residential Service (${this.selectedPropertyType.toUpperCase()})`;
+      } else if (this.selectedServiceType === 'commercial-control') {
+        firstCard.title = 'Commercial Service';
+      }
+      if (this.selectedServicePackage) {
+        firstCard.package = this.selectedServicePackage === 'single' ? 'Single Service' :
+                           this.selectedServicePackage === '3-services' ? '3 Services (1 Year)' :
+                           '6 Services (2 Years)';
+      }
+    }
+  }
+
+  getPestSpecificFeatures(pestType: string): string[] {
+    const pestFeatures: { [key: string]: string[] } = {
+      'cockroach': [
+        'Treatment: Gel Baiting & Residual Sprays',
+        'Chemicals: Odorless & Human Safe Chemicals',
+        'Areas Covered: Work Stations, Meeting & Conference Rooms, Kitchen & Cafeteria, Vending Machines, Utilities, Restrooms, Drains'
+      ],
+      'mosquito': [
+        'Treatment: Larviciding, Residual Sprays, Fogging',
+        'Products: Mosquito Repellent Diffuser',
+        'Areas Covered: Inside Office Spaces, Potted Plants, Utilities, Overhead Tanks, Common Passages, Entry/Exits'
+      ],
+      'rodent': [
+        'Treatment: Rodent Stations, Glue boards, Snap Traps, Cages',
+        'Products: Rodent Boxes',
+        'Areas Covered: Stores, Food Handling Area, HVAC system, FAS (Fire Alarm System), Electric conduits, Plumbing ducts, Dropped Ceilings, Raised Flooring'
+      ],
+      'termite': [
+        'Treatment: Drill-Fill-Seal',
+        'Method: TERMATRACK',
+        'Areas Covered: Electrical/Plumbing ducts, Wooden Furniture, Dropped Ceiling, Raised Flooring, Lift pits, Wall n floor junctions'
+      ],
+      'bird': [
+        'Treatment: Net and Spikes Solutions',
+        'Products: Aesthetic & Transparent Net',
+        'Areas Covered: Ducts, Parapets & Ledges, AC exhausts, Vents, Window AC, External Facade'
+      ],
+      'disinfection': [
+        'Treatment: Microbial disinfection, Nano-Herbal Disinfection',
+        'Benefits: Kills 99.99% microbial organisms, SteriCare for Properties, Silver Nano for All common touch points'
+      ]
+    };
+    return pestFeatures[pestType] || [];
   }
 
   getCurrentPricingCards(): PricingCard[] {

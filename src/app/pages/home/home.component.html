@@ -80,7 +80,7 @@
       <!-- Dropdown Filters -->
       <div *ngIf="selectedServiceType !== 'offers'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 max-w-4xl mx-auto mb-8 md:mb-12 px-4">
         <div class="relative group">
-          <select class="w-full bg-white border-2 border-gray-200 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 text-gray-900 font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:border-brand focus:shadow-2xl transition-all duration-300 appearance-none cursor-pointer text-sm sm:text-base">
+          <select (change)="onServiceChange($event)" [(ngModel)]="selectedPestType" class="w-full bg-white border-2 border-gray-200 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 text-gray-900 font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:border-brand focus:shadow-2xl transition-all duration-300 appearance-none cursor-pointer text-sm sm:text-base">
             <option value="" disabled selected>Select Service</option>
             <option value="cockroach">COCKROACHES & ANTS</option>
             <option value="mosquito">MOSQUITOES</option>
@@ -97,7 +97,7 @@
         </div>
 
         <div class="relative group" *ngIf="selectedServiceType !== 'commercial-control'">
-          <select class="w-full bg-white border-2 border-gray-200 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 text-gray-900 font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:border-brand focus:shadow-2xl transition-all duration-300 appearance-none cursor-pointer text-sm sm:text-base">
+          <select (change)="onPropertyTypeChange($event)" [(ngModel)]="selectedPropertyType" class="w-full bg-white border-2 border-gray-200 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 text-gray-900 font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:border-brand focus:shadow-2xl transition-all duration-300 appearance-none cursor-pointer text-sm sm:text-base">
             <option value="" disabled selected>Select Property Type</option>
             <option value="1bhk">1 BHK</option>
             <option value="2bhk">2 BHK</option>
@@ -111,11 +111,12 @@
         </div>
 
         <div class="relative group" *ngIf="selectedServiceType === 'commercial-control'">
-          <input type="text" [(ngModel)]="squareFeet" placeholder="Enter square feet" class="w-full bg-white border-2 border-gray-200 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 text-gray-900 font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:border-brand focus:shadow-2xl transition-all duration-300 text-sm sm:text-base">
+          <input type="text" [(ngModel)]="squareFeet" placeholder="Enter square feet" class="w-full bg-white border-2 border-gray-200 rounded-2xl px-4 sm:px-6 pr-16 py-3 sm:py-4 text-gray-900 font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:border-brand focus:shadow-2xl transition-all duration-300 text-sm sm:text-base">
+          <span class="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-semibold text-sm sm:text-base">sq ft</span>
         </div>
 
         <div class="relative group sm:col-span-2 lg:col-span-1">
-          <select class="w-full bg-white border-2 border-gray-200 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 text-gray-900 font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:border-brand focus:shadow-2xl transition-all duration-300 appearance-none cursor-pointer text-sm sm:text-base">
+          <select (change)="onServicePackageChange($event)" [(ngModel)]="selectedServicePackage" class="w-full bg-white border-2 border-gray-200 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 text-gray-900 font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:border-brand focus:shadow-2xl transition-all duration-300 appearance-none cursor-pointer text-sm sm:text-base">
             <option value="" disabled selected>Select Service Package</option>
             <option value="single">Single Service</option>
             <option value="3-services">3 Services (1 Year)</option>
