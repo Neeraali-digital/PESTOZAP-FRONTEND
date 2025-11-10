@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   selectedPestType = '';
   selectedPropertyType = '';
   selectedServicePackage = '';
+  squareFeet = '';
 
   advertisements: Advertisement[] = [];
 
@@ -100,8 +101,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           'Net and Spikes Solutions, Aesthetic & Transparent Net',
           'Microbial disinfection, Nano-Herbal Disinfection'
         ],
-        price: '₹5,499',
-        originalPrice: '₹6,999',
+        price: 'Price/-',
+        originalPrice: 'Price/-',
         package: '3 Services 1 Year',
         isRecommended: true,
         lastBooking: 'Last Booking on 15th Dec 2023'
@@ -113,7 +114,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           'Quick results within 24 hours',
           'Professional service guarantee'
         ],
-        price: '₹1,499',
+        price: 'Price/-',
         package: 'Single Service',
         lastBooking: 'Available Today'
       }
@@ -129,8 +130,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           'Net and Spikes Solutions, Aesthetic & Transparent Net',
           'Microbial disinfection, Nano-Herbal Disinfection'
         ],
-        price: '₹7,999',
-        originalPrice: '₹9,999',
+        price: 'Price/-',
+        originalPrice: 'Price/-',
         package: '6 Services 2 Years',
         isRecommended: true,
         lastBooking: 'Last Booking on 20th Dec 2023'
@@ -143,7 +144,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           'Safe for commercial areas',
           'Professional service'
         ],
-        price: '₹3,299',
+        price: 'Price/-',
         package: '3 Services 1 Year',
         lastBooking: 'Available Today'
       }
@@ -158,8 +159,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           'Priority Scheduling for Businesses',
           'Eco-Friendly Treatments Included'
         ],
-        price: '₹7,999',
-        originalPrice: '₹9,999',
+        price: 'Price/-',
+        originalPrice: 'Price/-',
         package: 'Commercial Package',
         isRecommended: true,
         lastBooking: 'Last Booking on 15th Dec 2023'
@@ -173,8 +174,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           'Safe Treatments for Homes with Kids',
           'Guaranteed Pest-Free Guarantee'
         ],
-        price: '₹5,499',
-        originalPrice: '₹6,999',
+        price: 'Price/-',
+        originalPrice: 'Price/-',
         package: 'Residential Package',
         lastBooking: 'Available Today'
       }
