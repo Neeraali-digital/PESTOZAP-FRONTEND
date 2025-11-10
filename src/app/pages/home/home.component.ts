@@ -25,7 +25,8 @@ interface Review {
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
   currentSlide = 0;

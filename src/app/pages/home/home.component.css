@@ -1,0 +1,53 @@
+/* Custom Animations */
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-10px) rotate(5deg); 
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-15px) rotate(-5deg); 
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+/* Bottom blur effect for background image */
+.bg-image-blur img {
+  mask: linear-gradient(to bottom, black 70%, transparent 100%);
+  -webkit-mask: linear-gradient(to bottom, black 70%, transparent 100%);
+}
+
+.bg-image-blur::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background-image: inherit;
+  background-size: inherit;
+  background-position: inherit;
+  filter: blur(4px);
+  pointer-events: none;
+  mask: linear-gradient(to top, black 100%, transparent 0%);
+  -webkit-mask: linear-gradient(to top, black 100%, transparent 0%);
+}
