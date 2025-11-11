@@ -50,6 +50,10 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
+  refreshData() {
+    this.loadDashboardData();
+  }
+
   processDashboardData() {
     if (!this.dashboardData) return;
 
