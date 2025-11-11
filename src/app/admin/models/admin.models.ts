@@ -11,14 +11,38 @@ export interface AdminUser {
 }
 
 export interface DashboardStats {
-  total_users: number;
-  total_posts: number;
-  total_enquiries: number;
-  total_reviews: number;
-  total_offers: number;
-  recent_users: number;
-  recent_posts: number;
-  recent_enquiries: number;
+  stats: {
+    total_revenue: number;
+    revenue_change: number;
+    active_users: number;
+    total_users: number;
+    total_enquiries: number;
+    new_enquiries: number;
+    total_reviews: number;
+    approved_reviews: number;
+    total_offers: number;
+    active_offers: number;
+    customer_satisfaction: number;
+  };
+  recent_activities: Array<{
+    action: string;
+    time: string;
+    type: string;
+  }>;
+  charts: {
+    revenue: {
+      labels: string[];
+      data: number[];
+    };
+    services: {
+      labels: string[];
+      data: number[];
+    };
+    traffic: {
+      labels: string[];
+      data: number[];
+    };
+  };
 }
 
 export interface BlogPost {

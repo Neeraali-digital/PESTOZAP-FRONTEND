@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AdminApiService } from '../../services/admin-api.service';
+import { User } from '../../models/admin.models';
 
 @Component({
   selector: 'app-admin-users',
@@ -9,41 +11,83 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './admin-users.component.html',
   styleUrls: ['./admin-users.component.css']
 })
-export class AdminUsersComponent {
+export class AdminUsersComponent implements OnInit {
   searchTerm = '';
   statusFilter = '';
   showModal = false;
   modalMode = 'create';
   selectedUser: any = {};
-  
-  users = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active', role: 'Customer', joinDate: '2024-01-15', phone: '+1234567890' },
-    { id: 2, name: 'Sarah Smith', email: 'sarah@example.com', status: 'active', role: 'Premium Customer', joinDate: '2024-02-20', phone: '+1234567891' },
-    { id: 3, name: 'Mike Johnson', email: 'mike@example.com', status: 'inactive', role: 'Customer', joinDate: '2024-03-10', phone: '+1234567892' }
-  ];
+
+  users: User[] = [];
+  isLoading = true;
+  error: string | null = null;
+  currentPage = 1;
+  totalPages = 1;
+  totalCount = 0;
+
+  ngOnInit() {
+    this.loadUsers();
+  }
+
+  loadUsers(page = 1) {
+    this.isLoading = true;
+    this.error = null;
+
+    const params: any = { page };
+    if (this.searchTerm) params.search = this.searchTerm;
+
+    this.adminApiService.getUsers(params).subscribe({
+      next: (response) => {
+        this.users = response.results;
+        this.totalCount = response.count;
+        this.totalPages = Math.ceil(response.count / 20);
+        this.currentPage = page;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading users:', error);
+        this.error = 'Failed to load users';
+        this.isLoading = false;
+      }
+    });
+  }
 
   get filteredUsers() {
-    return this.users.filter(user => 
-      user.name.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
-      (this.statusFilter === '' || user.status === this.statusFilter)
+    return this.users.filter(user =>
+      user.first_name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      user.last_name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
   get activeUsersCount() {
-    return this.users.filter(u => u.status === 'active').length;
+    return this.users.filter(u => u.is_active).length;
   }
 
   get inactiveUsersCount() {
-    return this.users.filter(u => u.status === 'inactive').length;
+    return this.users.filter(u => !u.is_active).length;
   }
 
   get totalUsersCount() {
-    return this.users.length;
+    return this.totalCount;
+  }
+
+  onSearchChange() {
+    this.loadUsers(1);
+  }
+
+  onPageChange(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.loadUsers(page);
+    }
   }
 
   openModal(mode: string, user?: any) {
     this.modalMode = mode;
-    this.selectedUser = mode === 'create' ? { status: 'active', role: 'Customer' } : { ...user };
+    this.selectedUser = mode === 'create' ? {
+      is_active: true,
+      is_verified: false
+    } : { ...user };
     this.showModal = true;
   }
 
@@ -54,19 +98,45 @@ export class AdminUsersComponent {
 
   saveUser() {
     if (this.modalMode === 'create') {
-      this.selectedUser.id = Date.now();
-      this.selectedUser.joinDate = new Date().toISOString().split('T')[0];
-      this.users.push(this.selectedUser);
+      // Create new user
+      this.adminApiService.createUser(this.selectedUser).subscribe({
+        next: () => {
+          this.closeModal();
+          this.loadUsers(this.currentPage);
+        },
+        error: (error: any) => {
+          console.error('Error creating user:', error);
+          alert('Failed to create user');
+        }
+      });
     } else {
-      const index = this.users.findIndex(u => u.id === this.selectedUser.id);
-      if (index !== -1) this.users[index] = this.selectedUser;
+      // Update existing user
+      this.adminApiService.updateUser(this.selectedUser.id, this.selectedUser).subscribe({
+        next: () => {
+          this.closeModal();
+          this.loadUsers(this.currentPage);
+        },
+        error: (error: any) => {
+          console.error('Error updating user:', error);
+          alert('Failed to update user');
+        }
+      });
     }
-    this.closeModal();
   }
 
   deleteUser(id: number) {
     if (confirm('Are you sure you want to delete this user?')) {
-      this.users = this.users.filter(u => u.id !== id);
+      this.adminApiService.deleteUser(id).subscribe({
+        next: () => {
+          this.loadUsers(this.currentPage);
+        },
+        error: (error: any) => {
+          console.error('Error deleting user:', error);
+          alert('Failed to delete user');
+        }
+      });
     }
   }
+
+  constructor(private adminApiService: AdminApiService) {}
 }

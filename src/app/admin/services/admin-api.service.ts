@@ -22,7 +22,7 @@ export class AdminApiService {
 
   // Dashboard
   getDashboardStats(): Observable<DashboardStats> {
-    return this.http.get<DashboardStats>(`${this.API_URL}/admin/dashboard/stats/`);
+    return this.http.get<DashboardStats>(`${this.API_URL}/dashboard/stats/`);
   }
 
   // Blog Management
@@ -87,12 +87,16 @@ export class AdminApiService {
     return this.http.get<User>(`${this.API_URL}/admin/users/${id}/`);
   }
 
+  createUser(user: Partial<User>): Observable<User> {
+    return this.http.post<User>(`${this.API_URL}/admin/users/`, user);
+  }
+
   updateUser(id: number, user: Partial<User>): Observable<User> {
-    return this.http.put<User>(`${this.API_URL}/admin/users/${id}/`, user);
+    return this.http.put<User>(`${this.API_URL}/admin/users/${id}/update/`, user);
   }
 
   deleteUser(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.API_URL}/admin/users/${id}/`);
+    return this.http.delete<void>(`${this.API_URL}/admin/users/${id}/delete/`);
   }
 
   // Review Management

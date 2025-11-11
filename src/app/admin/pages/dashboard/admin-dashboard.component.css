@@ -1,4 +1,54 @@
 .dashboard{padding:0;background:#f8f9fa}
+
+/* Loading and Error States */
+.loading-container, .error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.loading-spinner {
+  text-align: center;
+  color: #667eea;
+}
+
+.loading-spinner i {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  text-align: center;
+  color: #f44336;
+}
+
+.error-message i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.error-message h3 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
 .dashboard-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding:2rem;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:16px;color:white}
 .header-content h1{margin:0 0 0.5rem;font-size:2rem;font-weight:700}
 .header-content p{margin:0;opacity:0.9}
