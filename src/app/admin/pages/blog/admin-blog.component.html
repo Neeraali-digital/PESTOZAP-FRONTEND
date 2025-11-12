@@ -51,9 +51,9 @@
 
   <!-- Posts Grid -->
   <div class="posts-grid">
-    <div class="post-card" *ngFor="let post of filteredPosts">
+    <div class="post-card" *ngFor="let post of blogPosts">
       <div class="post-image">
-        <img [src]="post.image" [alt]="post.title">
+        <img [src]="post.image || post.featured_image" [alt]="post.title">
         <div class="post-status" [class]="'status-' + post.status">{{post.status}}</div>
         <div class="post-category">{{post.category}}</div>
       </div>
@@ -63,11 +63,11 @@
         <div class="post-meta">
           <div class="meta-item">
             <i class="fas fa-calendar"></i>
-            <span>{{post.date}}</span>
+            <span>{{post.date || (post.created_at | date:'short')}}</span>
           </div>
           <div class="meta-item">
             <i class="fas fa-eye"></i>
-            <span>{{post.views}} views</span>
+            <span>{{post.views || post.views_count || 0}} views</span>
           </div>
           <div class="meta-item">
             <i class="fas fa-user"></i>

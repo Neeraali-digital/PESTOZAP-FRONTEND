@@ -52,6 +52,7 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   featured_image?: string;
+  image?: string;
   author: {
     id: number;
     username: string;
@@ -69,10 +70,12 @@ export interface BlogPost {
   status: 'draft' | 'published' | 'archived';
   is_featured: boolean;
   views_count: number;
+  views?: number;
   likes_count: number;
   created_at: string;
   updated_at: string;
   published_at?: string;
+  date?: string;
 }
 
 export interface Category {
@@ -99,13 +102,17 @@ export interface Review {
     full_name: string;
     email: string;
   };
+  customer_name?: string;
   rating: number;
   title: string;
   content: string;
+  comment?: string;
   service_type: string;
+  status: 'pending' | 'approved' | 'rejected';
   is_approved: boolean;
   is_featured: boolean;
   created_at: string;
+  date?: string;
 }
 
 export interface Enquiry {

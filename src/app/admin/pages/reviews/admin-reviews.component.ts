@@ -1,10 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AdminApiService } from '../../services/admin-api.service';
+import { Review } from '../../models/admin.models';
 
 @Component({
   selector: 'app-admin-reviews',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, HttpClientModule],
+  providers: [AdminApiService],
   template: `
     <div class="reviews-page">
       <div class="page-header">
@@ -27,9 +32,9 @@ import { CommonModule } from '@angular/common';
         <div class="review-card" *ngFor="let review of reviews">
           <div class="review-header">
             <div class="reviewer-info">
-              <div class="reviewer-avatar">{{review.name.charAt(0)}}</div>
+              <div class="reviewer-avatar">{{(review.customer_name || review.user.full_name || 'U').charAt(0)}}</div>
               <div class="reviewer-details">
-                <div class="reviewer-name">{{review.name}}</div>
+                <div class="reviewer-name">{{review.customer_name || review.user.full_name || 'Anonymous'}}</div>
                 <div class="review-date">{{review.date}}</div>
               </div>
             </div>
@@ -42,7 +47,7 @@ import { CommonModule } from '@angular/common';
             </div>
           </div>
           <div class="review-content">
-            <p>{{review.comment}}</p>
+            <p>{{review.comment || review.content}}</p>
           </div>
           <div class="review-actions">
             <button class="action-btn reply">
@@ -86,33 +91,93 @@ import { CommonModule } from '@angular/common';
     .action-btn:hover{transform:translateY(-1px)}
   `]
 })
-export class AdminReviewsComponent {
-  reviews = [
-    {
-      name: 'Sarah Johnson',
-      rating: 5,
-      comment: 'Excellent service! The team was professional and thorough. Highly recommend for pest control needs.',
-      date: '2 days ago'
-    },
-    {
-      name: 'Mike Davis',
-      rating: 4,
-      comment: 'Good service overall. Arrived on time and solved our ant problem effectively.',
-      date: '1 week ago'
-    },
-    {
-      name: 'Emily Chen',
-      rating: 5,
-      comment: 'Outstanding work! They eliminated our termite issue completely. Very satisfied with the results.',
-      date: '2 weeks ago'
+export class AdminReviewsComponent implements OnInit {
+  reviews: Review[] = [];
+  loading = false;
+  error = '';
+  searchTerm = '';
+  statusFilter = '';
+  currentPage = 1;
+  totalCount = 0;
+  pageSize = 10;
+
+  constructor(private adminApiService: AdminApiService) {}
+
+  ngOnInit() {
+    this.loadReviews();
+  }
+
+  loadReviews() {
+    this.loading = true;
+    this.error = '';
+    
+    const params = {
+      page: this.currentPage,
+      page_size: this.pageSize,
+      search: this.searchTerm,
+      status: this.statusFilter
+    };
+
+    this.adminApiService.getReviews(params).subscribe({
+      next: (response) => {
+        this.reviews = response.results;
+        this.totalCount = response.count;
+        this.loading = false;
+      },
+      error: (error) => {
+        this.error = 'Failed to load reviews';
+        this.loading = false;
+        console.error('Error loading reviews:', error);
+      }
+    });
+  }
+
+  onSearch() {
+    this.currentPage = 1;
+    this.loadReviews();
+  }
+
+  onFilterChange() {
+    this.currentPage = 1;
+    this.loadReviews();
+  }
+
+  updateReviewStatus(id: number, status: string) {
+    const validStatus = status as 'pending' | 'approved' | 'rejected';
+    this.adminApiService.updateReview(id, { status: validStatus }).subscribe({
+      next: () => {
+        this.loadReviews();
+      },
+      error: (error) => {
+        console.error('Error updating review:', error);
+      }
+    });
+  }
+
+  deleteReview(id: number) {
+    if (confirm('Are you sure you want to delete this review?')) {
+      this.adminApiService.deleteReview(id).subscribe({
+        next: () => {
+          this.loadReviews();
+        },
+        error: (error) => {
+          console.error('Error deleting review:', error);
+        }
+      });
     }
-  ];
+  }
 
   getStars(rating: number): number[] {
-    return Array(rating).fill(0);
+    return Array(Math.floor(rating)).fill(0);
   }
 
   getEmptyStars(rating: number): number[] {
-    return Array(5 - rating).fill(0);
+    return Array(5 - Math.floor(rating)).fill(0);
+  }
+
+  get averageRating(): number {
+    if (this.reviews.length === 0) return 0;
+    const sum = this.reviews.reduce((acc, review) => acc + review.rating, 0);
+    return Math.round((sum / this.reviews.length) * 10) / 10;
   }
 }

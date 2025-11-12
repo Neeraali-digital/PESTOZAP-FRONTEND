@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { AdminApiService } from '../../services/admin-api.service';
 import { Enquiry } from '../../models/admin.models';
 
 @Component({
   selector: 'app-admin-enquiries',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HttpClientModule],
+  providers: [AdminApiService],
   template: `
     <div class="enquiries-page">
       <!-- Loading State -->

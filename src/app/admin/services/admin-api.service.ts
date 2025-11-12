@@ -12,9 +12,7 @@ import {
   User 
 } from '../models/admin.models';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AdminApiService {
   private readonly API_URL = 'http://localhost:8000/api/v1';
 

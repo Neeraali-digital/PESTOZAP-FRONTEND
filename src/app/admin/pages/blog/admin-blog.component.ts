@@ -1,55 +1,84 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AdminApiService } from '../../services/admin-api.service';
+import { BlogPost, Category } from '../../models/admin.models';
 
 @Component({
   selector: 'app-admin-blog',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HttpClientModule],
+  providers: [AdminApiService],
   templateUrl: './admin-blog.component.html',
   styleUrls: ['./admin-blog.component.css']
 })
-export class AdminBlogComponent {
+export class AdminBlogComponent implements OnInit {
   searchTerm = '';
   statusFilter = '';
   showModal = false;
   modalMode = 'create';
   selectedPost: any = {};
+  loading = false;
+  error = '';
+  currentPage = 1;
+  totalCount = 0;
+  pageSize = 10;
   
-  blogPosts = [
-    {
-      id: 1,
-      title: 'Top 10 Pest Control Tips for Homeowners',
-      excerpt: 'Learn effective strategies to keep your home pest-free year-round with these expert tips.',
-      content: 'Full content here...',
-      image: 'https://via.placeholder.com/300x200',
-      status: 'published',
-      category: 'Tips',
-      author: 'Admin',
-      date: '2024-01-15',
-      views: 245
-    },
-    {
-      id: 2,
-      title: 'Understanding Termite Damage',
-      excerpt: 'How to identify and prevent costly termite damage to your property.',
-      content: 'Full content here...',
-      image: 'https://via.placeholder.com/300x200',
-      status: 'draft',
-      category: 'Education',
-      author: 'Admin',
-      date: '2024-01-10',
-      views: 0
-    }
-  ];
+  blogPosts: BlogPost[] = [];
+  categories: Category[] = [];
 
-  categories = ['Tips', 'Education', 'News', 'Services'];
+  constructor(private adminApiService: AdminApiService) {}
 
-  get filteredPosts() {
-    return this.blogPosts.filter(post => 
-      post.title.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
-      (this.statusFilter === '' || post.status === this.statusFilter)
-    );
+  ngOnInit() {
+    this.loadBlogPosts();
+    this.loadCategories();
+  }
+
+  loadBlogPosts() {
+    this.loading = true;
+    this.error = '';
+    
+    const params = {
+      page: this.currentPage,
+      page_size: this.pageSize,
+      search: this.searchTerm,
+      status: this.statusFilter
+    };
+
+    this.adminApiService.getBlogPosts(params).subscribe({
+      next: (response) => {
+        this.blogPosts = response.results;
+        this.totalCount = response.count;
+        this.loading = false;
+      },
+      error: (error) => {
+        this.error = 'Failed to load blog posts';
+        this.loading = false;
+        console.error('Error loading blog posts:', error);
+      }
+    });
+  }
+
+  loadCategories() {
+    this.adminApiService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (error) => {
+        console.error('Error loading categories:', error);
+      }
+    });
+  }
+
+  onSearch() {
+    this.currentPage = 1;
+    this.loadBlogPosts();
+  }
+
+  onFilterChange() {
+    this.currentPage = 1;
+    this.loadBlogPosts();
   }
 
   get publishedCount() {
@@ -61,7 +90,7 @@ export class AdminBlogComponent {
   }
 
   get totalViews() {
-    return this.blogPosts.reduce((sum, p) => sum + p.views, 0);
+    return this.blogPosts.reduce((sum, p) => sum + (p.views || p.views_count || 0), 0);
   }
 
   openModal(mode: string, post?: any) {
@@ -82,24 +111,49 @@ export class AdminBlogComponent {
 
   savePost() {
     if (this.modalMode === 'create') {
-      this.selectedPost.id = Date.now();
-      this.selectedPost.date = new Date().toISOString().split('T')[0];
-      this.blogPosts.push(this.selectedPost);
+      this.adminApiService.createBlogPost(this.selectedPost).subscribe({
+        next: () => {
+          this.loadBlogPosts();
+          this.closeModal();
+        },
+        error: (error) => {
+          console.error('Error creating blog post:', error);
+        }
+      });
     } else {
-      const index = this.blogPosts.findIndex(p => p.id === this.selectedPost.id);
-      if (index !== -1) this.blogPosts[index] = this.selectedPost;
+      this.adminApiService.updateBlogPost(this.selectedPost.id, this.selectedPost).subscribe({
+        next: () => {
+          this.loadBlogPosts();
+          this.closeModal();
+        },
+        error: (error) => {
+          console.error('Error updating blog post:', error);
+        }
+      });
     }
-    this.closeModal();
   }
 
   deletePost(id: number) {
     if (confirm('Are you sure you want to delete this post?')) {
-      this.blogPosts = this.blogPosts.filter(p => p.id !== id);
+      this.adminApiService.deleteBlogPost(id).subscribe({
+        next: () => {
+          this.loadBlogPosts();
+        },
+        error: (error) => {
+          console.error('Error deleting blog post:', error);
+        }
+      });
     }
   }
 
   publishPost(id: number) {
-    const post = this.blogPosts.find(p => p.id === id);
-    if (post) post.status = 'published';
+    this.adminApiService.updateBlogPost(id, { status: 'published' }).subscribe({
+      next: () => {
+        this.loadBlogPosts();
+      },
+      error: (error) => {
+        console.error('Error publishing blog post:', error);
+      }
+    });
   }
 }
