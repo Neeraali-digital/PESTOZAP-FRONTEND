@@ -1,11 +1,17 @@
 import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './components/layout/admin-layout.component';
 import { AdminDashboardComponent } from './pages/dashboard/admin-dashboard.component';
+import { AdminAuthGuard } from './guards/admin-auth.guard';
 
 export const adminRoutes: Routes = [
   {
+    path: 'login',
+    loadComponent: () => import('./pages/login/admin-login.component').then(m => m.AdminLoginComponent)
+  },
+  {
     path: '',
     component: AdminLayoutComponent,
+    canActivate: [AdminAuthGuard],
     children: [
       {
         path: '',
@@ -35,6 +41,10 @@ export const adminRoutes: Routes = [
       {
         path: 'offers',
         loadChildren: () => import('./pages/offers/offers-admin.routes').then(m => m.offersAdminRoutes)
+      },
+      {
+        path: 'careers',
+        loadComponent: () => import('./pages/careers/admin-careers.component').then(m => m.AdminCareersComponent)
       },
       {
         path: 'profile',

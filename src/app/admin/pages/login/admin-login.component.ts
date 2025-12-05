@@ -15,6 +15,7 @@ export class AdminLoginComponent {
   loginForm: FormGroup;
   loading = false;
   error = '';
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -34,11 +35,13 @@ export class AdminLoginComponent {
 
       this.authService.login(this.loginForm.value).subscribe({
         next: () => {
+          this.loading = false;
           this.router.navigate(['/admin/dashboard']);
         },
         error: (error) => {
           this.loading = false;
-          this.error = error.error?.detail || 'Login failed. Please check your credentials.';
+          console.error('Login error:', error);
+          this.error = error.error?.detail || error.message || 'Login failed. Please check your credentials.';
         }
       });
     }

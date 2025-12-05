@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AdvertisementService, Advertisement } from '../../services/advertisement.service';
 
 interface PricingCard {
@@ -16,15 +17,16 @@ interface PricingCard {
 
 interface Review {
   name: string;
-  location: string;
+  location?: string;
   rating: number;
-  review: string;
+  review?: string;
+  comment?: string;
 }
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, HttpClientModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -50,44 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     '../../../assets/ad3.png',
   ]
 
-  reviews: Review[] = [
-    {
-      name: 'Rajesh Sharma',
-      location: 'Mumbai',
-      rating: 5,
-      review: 'Excellent service! They completely eliminated our cockroach problem. Professional team and eco-friendly approach.'
-    },
-    {
-      name: 'Priya Kapoor',
-      location: 'Delhi',
-      rating: 5,
-      review: 'Quick response and effective treatment. No more termite issues in our office building. Highly recommended!'
-    },
-    {
-      name: 'Amit Mehta',
-      location: 'Bangalore',
-      rating: 5,
-      review: 'Professional service with guaranteed results. They solved our rodent problem permanently. Great value for money.'
-    },
-    {
-      name: 'Sunita Gupta',
-      location: 'Pune',
-      rating: 5,
-      review: 'Amazing bed bug treatment! Clean, safe, and effective. The team was punctual and professional throughout.'
-    },
-    {
-      name: 'Vikram Thakur',
-      location: 'Chennai',
-      rating: 5,
-      review: 'Best pest control service in the city! They handled our ant problem with care and professionalism. Highly satisfied.'
-    },
-    {
-      name: 'Neha Kumar',
-      location: 'Hyderabad',
-      rating: 5,
-      review: 'Outstanding mosquito control service. Our restaurant is now pest-free. Customer service is outstanding!'
-    }
-  ];
+  reviews: Review[] = [];
 
   pricingData: { [key: string]: PricingCard[] } = {
     'residential-control': [
@@ -184,7 +149,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private advertisementService: AdvertisementService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -194,7 +160,23 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.startSlideShow();
       }
     });
+    this.loadReviews();
     this.startReviewAutoSlide();
+  }
+
+  loadReviews() {
+    this.http.get<any>('http://localhost:8000/api/v1/reviews/?is_approved=true').subscribe({
+      next: (response) => {
+        const apiReviews = (response.results || response).map((r: any) => ({
+          name: r.name,
+          location: 'Verified Customer',
+          rating: r.rating,
+          review: r.comment
+        }));
+        this.reviews = apiReviews.length > 0 ? apiReviews : [];
+      },
+      error: (error) => console.error('Error loading reviews:', error)
+    });
   }
 
   ngOnDestroy() {

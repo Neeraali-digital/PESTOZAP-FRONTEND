@@ -27,9 +27,7 @@ export class AdminDashboardComponent implements OnInit {
   stats: any[] = [];
   recentActivities: any[] = [];
 
-  ngOnInit() {
-    this.loadDashboardData();
-  }
+  constructor(private adminApiService: AdminApiService) {}
 
   loadDashboardData() {
     this.isLoading = true;
@@ -207,5 +205,7 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  constructor(private adminApiService: AdminApiService) {}
+  ngOnInit() {
+    this.loadDashboardData();
+  }
 }

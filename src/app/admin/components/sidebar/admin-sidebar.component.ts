@@ -40,6 +40,11 @@ export class AdminSidebarComponent {
       route: '/admin/enquiries'
     },
     {
+      label: 'Careers',
+      icon: 'work',
+      route: '/admin/careers'
+    },
+    {
       label: 'Offers',
       icon: 'local_offer',
       route: '/admin/offers'

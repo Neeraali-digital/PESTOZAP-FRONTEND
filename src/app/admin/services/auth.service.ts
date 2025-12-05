@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { AdminUser } from '../models/admin.models';
 
@@ -26,14 +26,19 @@ export class AdminAuthService {
           if (response.access) {
             localStorage.setItem('admin_access_token', response.access);
             localStorage.setItem('admin_refresh_token', response.refresh);
-            this.getCurrentUser().subscribe();
           }
+        }),
+        switchMap((response: any) => {
+          if (response.access) {
+            return this.getCurrentUser();
+          }
+          throw new Error('No access token received');
         })
       );
   }
 
   getCurrentUser(): Observable<AdminUser> {
-    return this.http.get<AdminUser>(`${this.API_URL}/users/profile/`)
+    return this.http.get<AdminUser>(`${this.API_URL}/auth/users/me/`)
       .pipe(
         tap(user => {
           if (user.is_staff || user.is_superuser) {
