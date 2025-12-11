@@ -39,6 +39,45 @@ export class HomeComponent implements OnInit, OnDestroy {
   reviewInterval: any;
   isReviewPaused = false;
 
+  logos: string[] = [
+    '../../../assets/logo/36 web logos pestozap-01.png',
+    '../../../assets/logo/36 web logos pestozap-02.png',
+    '../../../assets/logo/36 web logos pestozap-03.png',
+    '../../../assets/logo/36 web logos pestozap-04.png',
+    '../../../assets/logo/36 web logos pestozap-05.png',
+    '../../../assets/logo/36 web logos pestozap-06.png',
+    '../../../assets/logo/36 web logos pestozap-07.png',
+    '../../../assets/logo/36 web logos pestozap-08.png',
+    '../../../assets/logo/36 web logos pestozap-09.png',
+    '../../../assets/logo/36 web logos pestozap-10.png',
+    '../../../assets/logo/36 web logos pestozap-11.png',
+    '../../../assets/logo/36 web logos pestozap-12.png',
+    '../../../assets/logo/36 web logos pestozap-13.png',
+    '../../../assets/logo/36 web logos pestozap-14.png',
+    '../../../assets/logo/36 web logos pestozap-15.png',
+    '../../../assets/logo/36 web logos pestozap-16.png',
+    '../../../assets/logo/36 web logos pestozap-17.png',
+    '../../../assets/logo/36 web logos pestozap-18.png',
+    '../../../assets/logo/36 web logos pestozap-19.png',
+    '../../../assets/logo/36 web logos pestozap-20.png',
+    '../../../assets/logo/36 web logos pestozap-21.png',
+    '../../../assets/logo/36 web logos pestozap-22.png',
+    '../../../assets/logo/36 web logos pestozap-23.png',
+    '../../../assets/logo/36 web logos pestozap-24.png',
+    '../../../assets/logo/36 web logos pestozap-26.png',
+    '../../../assets/logo/36 web logos pestozap-27.png',
+    '../../../assets/logo/36 web logos pestozap-28.png',
+    '../../../assets/logo/36 web logos pestozap-29.png',
+    '../../../assets/logo/36 web logos pestozap-30.png',
+    '../../../assets/logo/36 web logos pestozap-31.png',
+    '../../../assets/logo/36 web logos pestozap-32.png',
+    '../../../assets/logo/36 web logos pestozap-33.png',
+    '../../../assets/logo/36 web logos pestozap-35.png',
+    '../../../assets/logo/36 web logos pestozap-37.png'
+  ];
+  currentLogoIndex = 0;
+  logoInterval: any;
+
   selectedServiceType = 'residential-control';
   selectedPestType = '';
   selectedPropertyType = '';
@@ -163,6 +202,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
     this.loadReviews();
     this.startReviewAutoSlide();
+    this.startLogoCycle();
   }
 
   loadReviews() {
@@ -194,6 +234,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     if (this.reviewInterval) {
       clearInterval(this.reviewInterval);
+    }
+    if (this.logoInterval) {
+      clearInterval(this.logoInterval);
     }
   }
 
@@ -321,6 +364,45 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   resumeReview() {
     this.isReviewPaused = false;
+  }
+
+  startLogoCycle() {
+    this.logoInterval = setInterval(() => {
+      this.currentLogoIndex = (this.currentLogoIndex + 1) % this.logos.length;
+    }, 4000);
+  }
+
+  getCurrentLogos(): string[] {
+    const currentLogos: string[] = [];
+    for (let i = 0; i < 18; i++) {
+      const index = (this.currentLogoIndex + i) % this.logos.length;
+      currentLogos.push(this.logos[index]);
+    }
+    return currentLogos;
+  }
+
+  getBorderRadius(index: number): string {
+    const radii = [
+      '60% 40% 30% 70% / 60% 30% 70% 40%',
+      '40% 60% 70% 30% / 40% 70% 30% 60%',
+      '70% 30% 60% 40% / 30% 60% 40% 70%',
+      '30% 70% 40% 60% / 70% 40% 60% 30%',
+      '50% 50% 30% 70% / 50% 50% 70% 30%',
+      '65% 35% 45% 55% / 35% 65% 55% 45%',
+      '45% 55% 65% 35% / 55% 45% 35% 65%',
+      '35% 65% 55% 45% / 65% 35% 45% 55%',
+      '55% 45% 35% 65% / 45% 55% 65% 35%',
+      '40% 60% 50% 50% / 60% 40% 50% 50%',
+      '70% 30% 50% 50% / 30% 70% 50% 50%',
+      '50% 50% 40% 60% / 50% 50% 60% 40%',
+      '60% 40% 70% 30% / 40% 60% 30% 70%',
+      '40% 60% 30% 70% / 60% 40% 70% 30%',
+      '70% 30% 40% 60% / 30% 70% 60% 40%',
+      '30% 70% 60% 40% / 70% 30% 40% 60%',
+      '50% 50% 70% 30% / 50% 50% 30% 70%',
+      '65% 35% 55% 45% / 35% 65% 45% 55%'
+    ];
+    return radii[index] || '50%';
   }
 
 }
