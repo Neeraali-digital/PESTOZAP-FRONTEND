@@ -220,203 +220,44 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Review Card 1 -->
-      <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+      <div *ngFor="let review of reviews; let i = index" class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
         <div class="flex items-center mb-6">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Rajesh Kumar" class="w-12 h-12 rounded-full object-cover mr-4 border-2 border-brand">
+          <img *ngIf="review.image" [src]="getImageUrl(review)" [alt]="review.name" class="w-12 h-12 rounded-full object-cover mr-4 border-2 border-brand">
+          <img *ngIf="!review.image" [src]="'https://randomuser.me/api/portraits/' + (i % 2 === 0 ? 'men' : 'women') + '/' + (32 + i * 7) + '.jpg?nat=in'" 
+               [alt]="review.name" 
+               class="w-12 h-12 rounded-full object-cover mr-4 border-2 border-brand">
           <div>
-            <div class="font-bold text-gray-900">Rajesh Kumar</div>
-            <div class="text-sm text-gray-500">Home Owner</div>
+            <div class="font-bold text-gray-900">{{ review.name }}</div>
+            <div class="text-sm text-gray-500">{{ review.location || 'Verified Customer' }}</div>
           </div>
         </div>
 
         <div class="flex items-center mb-4">
           <div class="flex space-x-1">
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
+            <span *ngFor="let star of [1,2,3,4,5]" 
+                  class="material-icons text-yellow-400 text-sm"
+                  [class.text-gray-300]="star > review.rating">star</span>
           </div>
-          <span class="ml-2 text-sm text-gray-500">5.0</span>
+          <span class="ml-2 text-sm text-gray-500">{{ review.rating }}.0</span>
         </div>
 
         <p class="text-gray-600 leading-relaxed">
-          "Outstanding service! The team was professional, arrived on time, and completely eliminated our cockroach problem. Highly recommend Pestozap for anyone needing pest control."
+          "{{ review.comment }}"
         </p>
 
         <div class="mt-6 pt-6 border-t border-gray-100">
           <div class="flex items-center text-sm text-gray-500">
             <span class="material-icons text-sm mr-1">event</span>
-            <span>2 weeks ago</span>
+            <span>{{ review.created_at ? getTimeAgo(review.created_at) : 'Recently' }}</span>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Review Card 2 -->
-      <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-        <div class="flex items-center mb-6">
-          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" alt="Priya Sharma" class="w-12 h-12 rounded-full object-cover mr-4 border-2 border-brand">
-          <div>
-            <div class="font-bold text-gray-900">Priya Sharma</div>
-            <div class="text-sm text-gray-500">Restaurant Owner</div>
-          </div>
-        </div>
-
-        <div class="flex items-center mb-4">
-          <div class="flex space-x-1">
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-          </div>
-          <span class="ml-2 text-sm text-gray-500">5.0</span>
-        </div>
-
-        <p class="text-gray-600 leading-relaxed">
-          "For our restaurant, hygiene is everything. Pestozap provided excellent commercial pest control services. Safe, effective, and our customers have noticed the difference!"
-        </p>
-
-        <div class="mt-6 pt-6 border-t border-gray-100">
-          <div class="flex items-center text-sm text-gray-500">
-            <span class="material-icons text-sm mr-1">event</span>
-            <span>1 month ago</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Review Card 3 -->
-      <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-        <div class="flex items-center mb-6">
-          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Amit Patel" class="w-12 h-12 rounded-full object-cover mr-4 border-2 border-brand">
-          <div>
-            <div class="font-bold text-gray-900">Amit Patel</div>
-            <div class="text-sm text-gray-500">Property Manager</div>
-          </div>
-        </div>
-
-        <div class="flex items-center mb-4">
-          <div class="flex space-x-1">
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-          </div>
-          <span class="ml-2 text-sm text-gray-500">5.0</span>
-        </div>
-
-        <p class="text-gray-600 leading-relaxed">
-          "Managing multiple residential properties, we needed a reliable pest control partner. Pestozap has been exceptional with their scheduled services and quick response times."
-        </p>
-
-        <div class="mt-6 pt-6 border-t border-gray-100">
-          <div class="flex items-center text-sm text-gray-500">
-            <span class="material-icons text-sm mr-1">event</span>
-            <span>3 weeks ago</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Review Card 4 -->
-      <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-        <div class="flex items-center mb-6">
-          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face" alt="Sneha Gupta" class="w-12 h-12 rounded-full object-cover mr-4 border-2 border-brand">
-          <div>
-            <div class="font-bold text-gray-900">Sneha Gupta</div>
-            <div class="text-sm text-gray-500">Mother of 2</div>
-          </div>
-        </div>
-
-        <div class="flex items-center mb-4">
-          <div class="flex space-x-1">
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-          </div>
-          <span class="ml-2 text-sm text-gray-500">5.0</span>
-        </div>
-
-        <p class="text-gray-600 leading-relaxed">
-          "As a mom, safety is my top priority. Pestozap used eco-friendly methods that were completely safe for my children and pets. The service was thorough and effective."
-        </p>
-
-        <div class="mt-6 pt-6 border-t border-gray-100">
-          <div class="flex items-center text-sm text-gray-500">
-            <span class="material-icons text-sm mr-1">event</span>
-            <span>1 week ago</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Review Card 5 -->
-      <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-        <div class="flex items-center mb-6">
-          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face" alt="Vikram Singh" class="w-12 h-12 rounded-full object-cover mr-4 border-2 border-brand">
-          <div>
-            <div class="font-bold text-gray-900">Vikram Singh</div>
-            <div class="text-sm text-gray-500">Facility Manager</div>
-          </div>
-        </div>
-
-        <div class="flex items-center mb-4">
-          <div class="flex space-x-1">
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-          </div>
-          <span class="ml-2 text-sm text-gray-500">5.0</span>
-        </div>
-
-        <p class="text-gray-600 leading-relaxed">
-          "For our office complex, we needed comprehensive pest management. Pestozap delivered with their integrated approach. No more pest issues and great value for money."
-        </p>
-
-        <div class="mt-6 pt-6 border-t border-gray-100">
-          <div class="flex items-center text-sm text-gray-500">
-            <span class="material-icons text-sm mr-1">event</span>
-            <span>2 months ago</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Review Card 6 -->
-      <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-        <div class="flex items-center mb-6">
-          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face" alt="Mrs. Kapoor" class="w-12 h-12 rounded-full object-cover mr-4 border-2 border-brand">
-          <div>
-            <div class="font-bold text-gray-900">Mrs. Kapoor</div>
-            <div class="text-sm text-gray-500">Senior Citizen</div>
-          </div>
-        </div>
-
-        <div class="flex items-center mb-4">
-          <div class="flex space-x-1">
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-            <span class="material-icons text-yellow-400 text-sm">star</span>
-          </div>
-          <span class="ml-2 text-sm text-gray-500">5.0</span>
-        </div>
-
-        <p class="text-gray-600 leading-relaxed">
-          "Living alone, I was worried about pest control services. The Pestozap team was courteous, explained everything clearly, and made me feel completely comfortable throughout the process."
-        </p>
-
-        <div class="mt-6 pt-6 border-t border-gray-100">
-          <div class="flex items-center text-sm text-gray-500">
-            <span class="material-icons text-sm mr-1">event</span>
-            <span>4 weeks ago</span>
-          </div>
-        </div>
-      </div>
+    <!-- Empty State -->
+    <div *ngIf="reviews.length === 0" class="text-center py-12">
+      <span class="material-icons text-6xl text-gray-300 mb-4">rate_review</span>
+      <p class="text-gray-500 text-lg">No reviews available yet</p>
     </div>
   </div>
 </section>

@@ -1,0 +1,254 @@
+<div class="reviews-container">
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-left">
+      <div class="icon-wrapper">
+        <span class="material-icons">rate_review</span>
+      </div>
+      <div>
+        <h1>Reviews Management</h1>
+        <p>Manage customer testimonials and ratings</p>
+      </div>
+    </div>
+    <button class="btn-add" (click)="openModal()">
+      <span class="material-icons">add</span>
+      Add Review
+    </button>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <span class="material-icons">star</span>
+      </div>
+      <div class="stat-content">
+        <h3>{{ totalReviews }}</h3>
+        <p>Total Reviews</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+        <span class="material-icons">check_circle</span>
+      </div>
+      <div class="stat-content">
+        <h3>{{ approvedCount }}</h3>
+        <p>Approved</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+        <span class="material-icons">home</span>
+      </div>
+      <div class="stat-content">
+        <h3>{{ homeCount }}</h3>
+        <p>Home Page</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+        <span class="material-icons">groups</span>
+      </div>
+      <div class="stat-content">
+        <h3>{{ communityCount }}</h3>
+        <p>Community Page</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-section">
+    <div class="search-box">
+      <span class="material-icons">search</span>
+      <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Search reviews...">
+    </div>
+    <select [(ngModel)]="statusFilter" (change)="onFilterChange()" class="filter-select">
+      <option value="">All Status</option>
+      <option value="true">Approved</option>
+      <option value="false">Pending</option>
+    </select>
+    <select [(ngModel)]="locationFilter" (change)="onFilterChange()" class="filter-select">
+      <option value="">All Locations</option>
+      <option value="home">Home Page</option>
+      <option value="community">Community Page</option>
+      <option value="both">Both Pages</option>
+    </select>
+  </div>
+
+  <!-- Reviews Grid -->
+  <div class="reviews-grid" *ngIf="!loading">
+    <div *ngFor="let review of reviews" class="review-card">
+      <div class="card-header">
+        <div class="user-info">
+          <img *ngIf="review.image" [src]="getImageUrl(review)" [alt]="review.name" class="avatar-img">
+          <div *ngIf="!review.image" class="avatar">{{ review.name.charAt(0).toUpperCase() }}</div>
+          <div>
+            <h3>{{ review.name }}</h3>
+            <p class="email">{{ review.email }}</p>
+            <p class="location-text" *ngIf="review.location">
+              <span class="material-icons">location_on</span>
+              {{ review.location }}
+            </p>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="action-btn edit" (click)="editReview(review)" title="Edit">
+            <span class="material-icons">edit</span>
+          </button>
+          <button class="action-btn delete" (click)="deleteReview(review.id!)" title="Delete">
+            <span class="material-icons">delete</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="rating-section">
+        <div class="stars">
+          <span *ngFor="let star of [1,2,3,4,5]" 
+                class="material-icons star"
+                [class.filled]="star <= review.rating">star</span>
+        </div>
+        <span class="rating-text">{{ review.rating }}.0</span>
+      </div>
+
+      <p class="comment">{{ review.comment }}</p>
+
+      <div class="card-footer">
+        <div class="badges">
+          <span class="badge" [class.approved]="review.is_approved" [class.pending]="!review.is_approved">
+            <span class="material-icons">{{ review.is_approved ? 'check_circle' : 'schedule' }}</span>
+            {{ review.is_approved ? 'Approved' : 'Pending' }}
+          </span>
+          <span class="badge featured" *ngIf="review.is_featured">
+            <span class="material-icons">star</span>
+            Featured
+          </span>
+          <span class="badge location" [ngClass]="review.display_location">
+            <span class="material-icons">{{ getLocationIcon(review.display_location) }}</span>
+            {{ getLocationLabel(review.display_location) }}
+          </span>
+        </div>
+        <div class="quick-actions">
+          <button class="quick-btn" (click)="toggleApproval(review)" 
+                  [title]="review.is_approved ? 'Unapprove' : 'Approve'">
+            <span class="material-icons">{{ review.is_approved ? 'visibility_off' : 'visibility' }}</span>
+          </button>
+          <button class="quick-btn" (click)="toggleFeatured(review)"
+                  [title]="review.is_featured ? 'Unfeature' : 'Feature'">
+            <span class="material-icons">{{ review.is_featured ? 'star' : 'star_border' }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading reviews...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && reviews.length === 0" class="empty-state">
+    <span class="material-icons">rate_review</span>
+    <h3>No reviews found</h3>
+    <p>Start by adding your first review</p>
+    <button class="btn-add" (click)="openModal()">
+      <span class="material-icons">add</span>
+      Add Review
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ editingReview ? 'Edit Review' : 'Add New Review' }}</h2>
+        <button class="close-btn" (click)="closeModal()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+
+      <form [formGroup]="reviewForm" (ngSubmit)="saveReview()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Customer Name *</label>
+            <input type="text" formControlName="name" class="form-control" placeholder="Enter name">
+            <span class="error" *ngIf="reviewForm.get('name')?.invalid && reviewForm.get('name')?.touched">
+              Name is required
+            </span>
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" formControlName="email" class="form-control" placeholder="Enter email">
+            <span class="error" *ngIf="reviewForm.get('email')?.invalid && reviewForm.get('email')?.touched">
+              Valid email is required
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Location (Optional)</label>
+          <input type="text" formControlName="location" class="form-control" placeholder="e.g., Mumbai, India">
+        </div>
+
+        <div class="form-group">
+          <label>Reviewer Image (Optional)</label>
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" class="form-control">
+          <small class="text-muted">Max size: 2MB. Formats: JPG, PNG, GIF</small>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Rating *</label>
+            <div class="rating-input">
+              <button type="button" *ngFor="let star of [1,2,3,4,5]"
+                      class="star-btn"
+                      [class.active]="star <= reviewForm.get('rating')?.value"
+                      (click)="setRating(star)">
+                <span class="material-icons">star</span>
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Display Location *</label>
+            <select formControlName="display_location" class="form-control">
+              <option value="home">Home Page</option>
+              <option value="community">Community Page</option>
+              <option value="both">Both Pages</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Review Comment *</label>
+          <textarea formControlName="comment" class="form-control" rows="4" 
+                    placeholder="Write the review..."></textarea>
+          <span class="error" *ngIf="reviewForm.get('comment')?.invalid && reviewForm.get('comment')?.touched">
+            Comment is required
+          </span>
+        </div>
+
+        <div class="form-row checkbox-row">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="is_approved">
+            <span class="checkmark"></span>
+            <span>Approve this review</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="is_featured">
+            <span class="checkmark"></span>
+            <span>Feature this review</span>
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn-save" [disabled]="!reviewForm.valid || saving">
+            <span *ngIf="!saving">{{ editingReview ? 'Update' : 'Create' }} Review</span>
+            <span *ngIf="saving">Saving...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

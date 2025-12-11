@@ -107,15 +107,23 @@ export class AdminApiService {
         }
       });
     }
-    return this.http.get<{ results: Review[], count: number }>(`${this.API_URL}/admin/reviews/`, { params: httpParams });
+    return this.http.get<{ results: Review[], count: number }>(`${this.API_URL}/reviews/`, { params: httpParams });
+  }
+
+  getReview(id: number): Observable<Review> {
+    return this.http.get<Review>(`${this.API_URL}/reviews/${id}/`);
+  }
+
+  createReview(review: Partial<Review>): Observable<Review> {
+    return this.http.post<Review>(`${this.API_URL}/reviews/`, review);
   }
 
   updateReview(id: number, review: Partial<Review>): Observable<Review> {
-    return this.http.put<Review>(`${this.API_URL}/admin/reviews/${id}/`, review);
+    return this.http.put<Review>(`${this.API_URL}/reviews/${id}/`, review);
   }
 
   deleteReview(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.API_URL}/admin/reviews/${id}/`);
+    return this.http.delete<void>(`${this.API_URL}/reviews/${id}/`);
   }
 
   // Enquiry Management

@@ -18,6 +18,7 @@ interface PricingCard {
 interface Review {
   name: string;
   location?: string;
+  image?: string;
   rating: number;
   review?: string;
   comment?: string;
@@ -165,11 +166,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   loadReviews() {
-    this.http.get<any>('http://localhost:8000/api/v1/reviews/?is_approved=true').subscribe({
+    this.http.get<any>('http://localhost:8000/api/v1/reviews/?is_approved=true&display_location=home').subscribe({
       next: (response) => {
         const apiReviews = (response.results || response).map((r: any) => ({
           name: r.name,
-          location: 'Verified Customer',
+          location: r.location || 'Verified Customer',
+          image: r.image,
           rating: r.rating,
           review: r.comment
         }));
@@ -177,6 +179,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       },
       error: (error) => console.error('Error loading reviews:', error)
     });
+  }
+
+  getImageUrl(review: Review): string {
+    if (review.image) {
+      return review.image.startsWith('http') ? review.image : `http://localhost:8000${review.image}`;
+    }
+    return '';
   }
 
   ngOnDestroy() {

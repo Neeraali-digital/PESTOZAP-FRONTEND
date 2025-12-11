@@ -97,22 +97,16 @@ export interface Tag {
 
 export interface Review {
   id: number;
-  user: {
-    id: number;
-    full_name: string;
-    email: string;
-  };
-  customer_name?: string;
+  name: string;
+  email: string;
+  location?: string;
+  image?: string;
   rating: number;
-  title: string;
-  content: string;
-  comment?: string;
-  service_type: string;
-  status: 'pending' | 'approved' | 'rejected';
+  comment: string;
   is_approved: boolean;
   is_featured: boolean;
+  display_location: 'home' | 'community' | 'both';
   created_at: string;
-  date?: string;
 }
 
 export interface Enquiry {
