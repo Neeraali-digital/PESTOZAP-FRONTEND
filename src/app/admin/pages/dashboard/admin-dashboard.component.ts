@@ -37,8 +37,11 @@ export class AdminDashboardComponent implements OnInit {
       next: (data: DashboardStats) => {
         this.dashboardData = data;
         this.processDashboardData();
-        this.initCharts();
         this.isLoading = false;
+        // Initialize charts after view has been updated
+        setTimeout(() => {
+          this.initCharts();
+        }, 100);
       },
       error: (error) => {
         console.error('Error loading dashboard data:', error);
