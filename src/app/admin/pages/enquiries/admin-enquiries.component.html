@@ -1,0 +1,233 @@
+<div class="enquiries-page">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner">
+      <svg class="animate-spin h-12 w-12 text-blue-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <p>Loading enquiries...</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="error-container">
+    <div class="error-message">
+      <h3>{{ error }}</h3>
+      <button (click)="loadEnquiries(1)" class="btn-retry">Retry</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!isLoading && !error">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="header-content">
+        <h1>Enquiries & Contacts</h1>
+        <p>Manage customer enquiries and contact messages</p>
+      </div>
+      <!-- s -->
+    </div>
+
+    <!-- Type Tabs -->
+    <div class="type-tabs">
+      <button
+        class="tab-btn"
+        [class.active]="typeFilter === 'enquiry'"
+        (click)="setTypeFilter('enquiry')">
+        Enquiries
+      </button>
+      <button
+        class="tab-btn"
+        [class.active]="typeFilter === 'contact'"
+        (click)="setTypeFilter('contact')">
+        Contact Messages
+      </button>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon new">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div class="stat-number">{{ newEnquiriesCount }}</div>
+        <div class="stat-label">New</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon progress">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div class="stat-number">{{ inProgressCount }}</div>
+        <div class="stat-label">In Progress</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon resolved">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div class="stat-number">{{ resolvedCount }}</div>
+        <div class="stat-label">Resolved</div>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input
+          type="text"
+          placeholder="Search enquiries..."
+          [(ngModel)]="searchTerm"
+          (input)="onSearchChange()">
+      </div>
+      <select
+        class="filter-select"
+        [(ngModel)]="statusFilter"
+        (change)="onFilterChange()">
+        <option value="">All Status</option>
+        <option value="new">New</option>
+        <option value="contacted">Contacted</option>
+        <option value="closed">Closed</option>
+      </select>
+      <select
+        class="filter-select"
+        [(ngModel)]="serviceFilter"
+        (change)="onFilterChange()">
+        <option value="">All Services</option>
+        <option value="residential">Residential</option>
+        <option value="commercial">Commercial</option>
+        <option value="industrial">Industrial</option>
+      </select>
+    </div>
+
+    <!-- Enquiries List -->
+    <div class="enquiries-list">
+      <div
+        *ngFor="let enquiry of filteredEnquiries"
+        class="enquiry-card"
+        [class.priority-high]="enquiry.priority === 'high'"
+        [class.priority-medium]="enquiry.priority === 'medium'"
+        [class.priority-low]="enquiry.priority === 'low'">
+        <div class="enquiry-header">
+          <div class="enquiry-info">
+            <h3>{{ enquiry.name }}</h3>
+            <div class="enquiry-meta">
+              <span><i class="fas fa-envelope"></i> {{ enquiry.email }}</span>
+              <span><i class="fas fa-phone"></i> {{ enquiry.phone }}</span>
+              <span><i class="fas fa-calendar"></i> {{ enquiry.created_at | date:'short' }}</span>
+            </div>
+          </div>
+          <div class="enquiry-badges">
+            <span class="status-badge" [class]="'status-' + enquiry.status">{{ enquiry.status }}</span>
+            <span class="priority-badge" [class]="'priority-' + enquiry.priority">{{ enquiry.priority }}</span>
+          </div>
+        </div>
+        <div class="enquiry-content">
+          <p>{{ enquiry.message | slice:0:150 }}{{ enquiry.message.length > 150 ? '...' : '' }}</p>
+        </div>
+        <div class="contact-info">
+          <span><strong>Service:</strong> {{ enquiry.service_type }}</span>
+          <span><strong>Type:</strong> {{ enquiry.property_type }}</span>
+        </div>
+        <div class="enquiry-actions">
+          <button class="action-btn details" (click)="openModal(enquiry)">
+            <i class="fas fa-eye"></i> View Details
+          </button>
+          <button
+            class="action-btn progress"
+            (click)="updateStatus(enquiry.id, enquiry.status === 'new' ? 'contacted' : enquiry.status === 'contacted' ? 'closed' : 'new')">
+            <i class="fas fa-arrow-right"></i> {{ enquiry.status === 'new' ? 'Mark Contacted' : enquiry.status === 'contacted' ? 'Mark Closed' : 'Reopen' }}
+          </button>
+          <button class="action-btn delete" (click)="deleteEnquiry(enquiry.id)">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="totalPages > 1" class="pagination">
+      <button
+        class="page-btn"
+        [disabled]="currentPage === 1"
+        (click)="onPageChange(currentPage - 1)">
+        Previous
+      </button>
+      <div class="page-info">
+        Page {{ currentPage }} of {{ totalPages }}
+      </div>
+      <button
+        class="page-btn"
+        [disabled]="currentPage === totalPages"
+        (click)="onPageChange(currentPage + 1)">
+        Next
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for viewing enquiry details -->
+<div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Enquiry Details</h2>
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body" *ngIf="selectedEnquiry">
+      <div class="details-grid">
+        <div class="detail-item">
+          <strong>ID:</strong> {{ selectedEnquiry.id }}
+        </div>
+        <div class="detail-item">
+          <strong>Type:</strong> {{ selectedEnquiry.type }}
+        </div>
+        <div class="detail-item">
+          <strong>Name:</strong> {{ selectedEnquiry.name }}
+        </div>
+        <div class="detail-item">
+          <strong>Email:</strong> {{ selectedEnquiry.email }}
+        </div>
+        <div class="detail-item">
+          <strong>Phone:</strong> {{ selectedEnquiry.phone }}
+        </div>
+        <div class="detail-item" *ngIf="selectedEnquiry.subject">
+          <strong>Subject:</strong> {{ selectedEnquiry.subject }}
+        </div>
+        <div class="detail-item">
+          <strong>Service Type:</strong> {{ selectedEnquiry.service_type }}
+        </div>
+        <div class="detail-item">
+          <strong>Property Type:</strong> {{ selectedEnquiry.property_type }}
+        </div>
+        <div class="detail-item">
+          <strong>Pest Types:</strong> {{ selectedEnquiry.pest_types?.join(', ') || 'N/A' }}
+        </div>
+        <div class="detail-item">
+          <strong>Address:</strong> {{ selectedEnquiry.address }}
+        </div>
+        <div class="detail-item full-width">
+          <strong>Message:</strong>
+          <p>{{ selectedEnquiry.message }}</p>
+        </div>
+        <div class="detail-item">
+          <strong>Status:</strong> {{ selectedEnquiry.status }}
+        </div>
+        <div class="detail-item">
+          <strong>Priority:</strong> {{ selectedEnquiry.priority }}
+        </div>
+        <div class="detail-item">
+          <strong>Created At:</strong> {{ selectedEnquiry.created_at | date:'medium' }}
+        </div>
+        <div class="detail-item">
+          <strong>Updated At:</strong> {{ selectedEnquiry.updated_at | date:'medium' }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

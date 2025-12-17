@@ -30,12 +30,13 @@ export class ContactComponent {
       this.isSubmitting = true;
       
       const enquiryData = {
+        type: 'contact',
         customer_name: this.formData.name,
         email: this.formData.email,
         phone: this.formData.phone,
         service_type: this.formData.service,
         message: this.formData.message || 'No message provided',
-        subject: `Enquiry from ${this.formData.name}`,
+        subject: `Contact Message from ${this.formData.name}`,
         status: 'new',
         priority: 'medium'
       };

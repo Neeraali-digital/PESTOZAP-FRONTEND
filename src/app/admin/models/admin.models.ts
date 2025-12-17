@@ -111,9 +111,11 @@ export interface Review {
 
 export interface Enquiry {
   id: number;
+  type: 'contact' | 'enquiry';
   name: string;
   email: string;
   phone: string;
+  subject?: string;
   service_type: string;
   property_type: string;
   pest_types: string[];
