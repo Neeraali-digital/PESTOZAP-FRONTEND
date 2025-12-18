@@ -165,48 +165,11 @@
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
-      <!-- Real Brand Logos -->
-      <div class="flex items-center justify-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
-        <div class="text-center">
-          <img src="https://logos-world.net/wp-content/uploads/2020/11/Tata-Logo.png" alt="need logo" class="w-16 h-16 object-contain mx-auto mb-3 grayscale hover:grayscale-0 transition-all duration-300">
-          <div class="text-sm font-semibold text-gray-700">Tata Group</div>
+        <div *ngFor="let logoPath of displayedLogos" class="flex items-center justify-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
+            <div class="text-center w-full h-full flex items-center justify-center">
+                <img [src]="logoPath" [alt]="getLogoName(logoPath)" class="w-full h-full object-contain mx-auto transition-all duration-300">
+            </div>
         </div>
-      </div>
-
-      <div class="flex items-center justify-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
-        <div class="text-center">
-          <img src="https://logos-world.net/wp-content/uploads/2020/11/Reliance-Industries-Logo.png" alt="need logo" class="w-16 h-16 object-contain mx-auto mb-3 grayscale hover:grayscale-0 transition-all duration-300">
-          <div class="text-sm font-semibold text-gray-700">Reliance</div>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
-        <div class="text-center">
-          <img src="https://logos-world.net/wp-content/uploads/2020/11/HDFC-Bank-Logo.png" alt="HDFC Bank" class="w-16 h-16 object-contain mx-auto mb-3 grayscale hover:grayscale-0 transition-all duration-300">
-          <div class="text-sm font-semibold text-gray-700">HDFC Bank</div>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
-        <div class="text-center">
-          <img src="https://logos-world.net/wp-content/uploads/2020/11/ITC-Limited-Logo.png" alt="need logo" class="w-16 h-16 object-contain mx-auto mb-3 grayscale hover:grayscale-0 transition-all duration-300">
-          <div class="text-sm font-semibold text-gray-700">ITC Limited</div>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
-        <div class="text-center">
-          <img src="https://logos-world.net/wp-content/uploads/2020/11/Marriott-International-Logo.png" alt="Marriott" class="w-16 h-16 object-contain mx-auto mb-3 grayscale hover:grayscale-0 transition-all duration-300">
-          <div class="text-sm font-semibold text-gray-700">Marriott</div>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
-        <div class="text-center">
-          <img src="https://logos-world.net/wp-content/uploads/2020/11/Apollo-Hospitals-Logo.png" alt="need " class="w-16 h-16 object-contain mx-auto mb-3 grayscale hover:grayscale-0 transition-all duration-300">
-          <div class="text-sm font-semibold text-gray-700">Apollo Hospitals</div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
