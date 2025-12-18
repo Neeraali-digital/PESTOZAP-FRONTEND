@@ -1,19 +1,19 @@
 <!-- Hero Section -->
-<section class="relative min-h-screen flex items-center bg-black overflow-hidden">
+<section class="relative py-20 flex items-center bg-black overflow-hidden">
   <div class="absolute inset-0 bg-gradient-to-br from-brand/10 via-transparent to-brand/5"></div>
   <div class="absolute top-1/4 right-1/3 w-96 h-96 bg-brand/10 rounded-full blur-3xl animate-pulse"></div>
-  
+
   <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
     <div class="text-center">
       <div class="inline-flex items-center bg-brand/20 backdrop-blur-lg border border-brand/30 rounded-full px-6 py-3 mb-8">
         <span class="material-icons text-brand mr-2">local_offer</span>
         <span class="text-white font-medium">Limited Time Offers</span>
       </div>
-      
+
       <h1 class="text-6xl lg:text-8xl font-black text-white mb-8 tracking-tight">
         Special <span class="text-brand">Deals</span>
       </h1>
-      
+
       <p class="text-xl lg:text-2xl text-gray-300 mb-16 max-w-4xl mx-auto">
         Save big on professional pest control services
       </p>
@@ -32,25 +32,25 @@
         Don't miss out on these amazing savings opportunities
       </p>
     </div>
-    
+
     <!-- Featured Offer -->
-    <div class="bg-gradient-to-br from-brand to-brand-dark rounded-3xl p-12 text-white mb-16 relative overflow-hidden">
+    <div class="bg-gradient-to-br from-brand to-brand-dark rounded-3xl p-12 text-white mb-16 relative overflow-hidden" *ngIf="featuredOffer && !isLoading">
       <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
       <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
-          <div class="inline-flex items-center bg-white/20 rounded-full px-4 py-2 mb-6">
-            <span class="material-icons mr-2">star</span>
-            <span class="font-semibold">Featured Deal</span>
+          <div class="inline-flex items-center bg-white/20 backdrop-blur-lg border border-brand/30 rounded-full px-6 py-3 mb-8">
+            <span class="material-icons text-brand mr-2">local_offer</span>
+            <span class="text-white font-medium">Featured Deal</span>
           </div>
-          <h3 class="text-4xl font-black mb-4">50% OFF First Service</h3>
-          <p class="text-xl text-white/90 mb-8">Get professional pest control at half the price. Perfect for new customers looking to experience our premium service quality.</p>
+          <h3 class="text-4xl font-black mb-4">{{ featuredOffer.title }}</h3>
+          <p class="text-xl text-white/90 mb-8">{{ featuredOffer.description }}</p>
           <div class="flex items-center space-x-6 mb-8">
             <div class="text-center">
-              <div class="text-3xl font-black">FIRST50</div>
+              <div class="text-3xl font-black">{{ featuredOffer.code }}</div>
               <div class="text-sm text-white/70">Promo Code</div>
             </div>
             <div class="text-center">
-              <div class="text-3xl font-black">Dec 31</div>
+              <div class="text-3xl font-black">{{ featuredOffer.valid_to | date:'MMM dd' }}</div>
               <div class="text-sm text-white/70">Valid Until</div>
             </div>
           </div>
@@ -66,58 +66,60 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Other Offers -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div class="bg-gray-50 rounded-3xl p-8 group hover:bg-brand transition-all duration-500">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" *ngIf="otherOffers.length > 0 && !isLoading">
+      <div class="bg-gray-50 rounded-3xl p-8 group hover:bg-brand transition-all duration-500" *ngFor="let offer of otherOffers">
         <div class="flex items-center justify-between mb-6">
-          <h3 class="text-2xl font-bold text-gray-900 group-hover:text-white transition-colors duration-500">Annual Package</h3>
-          <span class="bg-brand group-hover:bg-white text-white group-hover:text-brand px-4 py-2 rounded-full font-bold transition-all duration-500">30% OFF</span>
+          <h3 class="text-2xl font-bold text-gray-900 group-hover:text-white transition-colors duration-500">{{ offer.title }}</h3>
+          <span class="bg-brand group-hover:bg-white text-white group-hover:text-brand px-4 py-2 rounded-full font-bold transition-all duration-500">{{ getDiscountDisplay(offer) }}</span>
         </div>
-        <p class="text-gray-600 group-hover:text-white/90 mb-6 transition-colors duration-500">Complete year-round protection with quarterly treatments and emergency support.</p>
+        <p class="text-gray-600 group-hover:text-white/90 mb-6 transition-colors duration-500">{{ offer.description }}</p>
         <div class="space-y-3 mb-8">
           <div class="flex items-center text-gray-700 group-hover:text-white/90 transition-colors duration-500">
             <span class="material-icons mr-3 text-brand group-hover:text-white">check</span>
-            4 Scheduled Treatments
+            Code: {{ offer.code }}
           </div>
           <div class="flex items-center text-gray-700 group-hover:text-white/90 transition-colors duration-500">
             <span class="material-icons mr-3 text-brand group-hover:text-white">check</span>
-            24/7 Emergency Support
+            Valid until: {{ offer.valid_to | date:'MMM dd, yyyy' }}
           </div>
-          <div class="flex items-center text-gray-700 group-hover:text-white/90 transition-colors duration-500">
+          <div class="flex items-center text-gray-700 group-hover:text-white/90 transition-colors duration-500" *ngIf="offer.services && offer.services.length > 0">
             <span class="material-icons mr-3 text-brand group-hover:text-white">check</span>
-            Free Re-treatments
+            Services: {{ offer.services.join(', ') }}
           </div>
         </div>
         <a routerLink="/enquiry" class="inline-flex items-center bg-brand group-hover:bg-white text-white group-hover:text-brand px-6 py-3 rounded-full font-bold transition-all duration-500">
           Get Quote
         </a>
       </div>
-      
-      <div class="bg-gray-50 rounded-3xl p-8 group hover:bg-brand transition-all duration-500">
-        <div class="flex items-center justify-between mb-6">
-          <h3 class="text-2xl font-bold text-gray-900 group-hover:text-white transition-colors duration-500">Referral Bonus</h3>
-          <span class="bg-brand group-hover:bg-white text-white group-hover:text-brand px-4 py-2 rounded-full font-bold transition-all duration-500">₹500</span>
-        </div>
-        <p class="text-gray-600 group-hover:text-white/90 mb-6 transition-colors duration-500">Refer friends and family and earn rewards for every successful referral.</p>
-        <div class="space-y-3 mb-8">
-          <div class="flex items-center text-gray-700 group-hover:text-white/90 transition-colors duration-500">
-            <span class="material-icons mr-3 text-brand group-hover:text-white">check</span>
-            ₹500 per referral
-          </div>
-          <div class="flex items-center text-gray-700 group-hover:text-white/90 transition-colors duration-500">
-            <span class="material-icons mr-3 text-brand group-hover:text-white">check</span>
-            No limit on referrals
-          </div>
-          <div class="flex items-center text-gray-700 group-hover:text-white/90 transition-colors duration-500">
-            <span class="material-icons mr-3 text-brand group-hover:text-white">check</span>
-            Instant credit
-          </div>
-        </div>
-        <a routerLink="/contact" class="inline-flex items-center bg-brand group-hover:bg-white text-white group-hover:text-brand px-6 py-3 rounded-full font-bold transition-all duration-500">
-          Learn More
-        </a>
+    </div>
+
+    <!-- No offers message -->
+    <div class="text-center py-16" *ngIf="offers.length === 0 && !isLoading && !error">
+      <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <span class="material-icons text-4xl text-gray-400">local_offer</span>
       </div>
+      <h3 class="text-2xl font-bold text-gray-900 mb-4">No Active Offers</h3>
+      <p class="text-gray-600">Check back later for new offers and promotions.</p>
+    </div>
+
+    <!-- Loading State -->
+    <div class="text-center py-16" *ngIf="isLoading">
+      <div class="animate-spin w-12 h-12 border-4 border-brand border-t-transparent rounded-full mx-auto mb-6"></div>
+      <p class="text-gray-600">Loading offers...</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="text-center py-16" *ngIf="error && !isLoading">
+      <div class="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <span class="material-icons text-4xl text-red-500">error</span>
+      </div>
+      <h3 class="text-2xl font-bold text-gray-900 mb-4">Failed to Load Offers</h3>
+      <p class="text-gray-600 mb-6">{{ error }}</p>
+      <button (click)="loadOffers()" class="bg-brand text-white px-6 py-3 rounded-full font-bold hover:bg-brand-dark transition-colors">
+        Try Again
+      </button>
     </div>
   </div>
 </section>
@@ -128,21 +130,21 @@
     <h2 class="text-4xl lg:text-5xl font-black text-white mb-6">
       Don't Miss Future Offers
     </h2>
-    
+
     <p class="text-xl text-white/70 mb-12 max-w-2xl mx-auto">
       Subscribe to our newsletter and be the first to know about new deals and exclusive discounts.
     </p>
-    
+
     <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto mb-8">
-      <input 
-        type="email" 
+      <input
+        type="email"
         placeholder="Enter your email address"
         class="flex-1 px-6 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-brand">
       <button class="px-8 py-4 bg-brand text-white font-bold rounded-2xl hover:bg-brand-dark transition-all duration-300 transform hover:scale-105">
         Subscribe
       </button>
     </div>
-    
+
     <p class="text-sm text-white/50">
       Join 5,000+ customers who save with our exclusive offers
     </p>

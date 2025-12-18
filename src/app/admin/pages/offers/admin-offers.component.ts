@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminApiService } from '../../services/admin-api.service';
+import { Offer } from '../../models/admin.models';
 
 @Component({
   selector: 'app-admin-offers',
@@ -12,65 +13,39 @@ import { AdminApiService } from '../../services/admin-api.service';
   templateUrl: './admin-offers.component.html',
   styleUrls: ['./admin-offers.component.css']
 })
-export class AdminOffersComponent {
+export class AdminOffersComponent implements OnInit {
   searchTerm = '';
   statusFilter = '';
   showModal = false;
   modalMode = 'create';
-  selectedOffer: any = {};
-  
-  offers = [
-    {
-      id: 1,
-      title: 'Summer Special - 30% Off',
-      description: 'Get 30% off on all residential pest control services this summer.',
-      discount: 30,
-      discountType: 'percentage',
-      code: 'SUMMER30',
-      validFrom: '2024-06-01',
-      validTo: '2024-08-31',
-      status: 'active',
-      usageLimit: 100,
-      usedCount: 25,
-      services: ['residential', 'termite'],
-      image: 'https://via.placeholder.com/300x200'
-    },
-    {
-      id: 2,
-      title: 'New Customer Discount',
-      description: 'First-time customers get $50 off their initial service.',
-      discount: 50,
-      discountType: 'fixed',
-      code: 'NEWCUST50',
-      validFrom: '2024-01-01',
-      validTo: '2024-12-31',
-      status: 'active',
-      usageLimit: 200,
-      usedCount: 78,
-      services: ['residential', 'commercial'],
-      image: 'https://via.placeholder.com/300x200'
-    },
-    {
-      id: 3,
-      title: 'Winter Maintenance Deal',
-      description: 'Special winter rates for ongoing pest maintenance.',
-      discount: 25,
-      discountType: 'percentage',
-      code: 'WINTER25',
-      validFrom: '2023-12-01',
-      validTo: '2024-02-29',
-      status: 'expired',
-      usageLimit: 50,
-      usedCount: 45,
-      services: ['maintenance'],
-      image: 'https://via.placeholder.com/300x200'
-    }
-  ];
+  selectedOffer: Partial<Offer> = {};
+  offers: Offer[] = [];
+  loading = false;
+  submitting = false;
+  formErrors: any = {};
 
   serviceTypes = ['residential', 'commercial', 'termite', 'rodent', 'inspection', 'maintenance'];
 
+  ngOnInit() {
+    this.loadOffers();
+  }
+
+  loadOffers() {
+    this.loading = true;
+    this.adminApiService.getOffers().subscribe({
+      next: (response) => {
+        this.offers = response.results;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading offers:', error);
+        this.loading = false;
+      }
+    });
+  }
+
   get filteredOffers() {
-    return this.offers.filter(offer => 
+    return this.offers.filter(offer =>
       offer.title.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
       (this.statusFilter === '' || offer.status === this.statusFilter)
     );
@@ -85,16 +60,18 @@ export class AdminOffersComponent {
   }
 
   get totalUsage() {
-    return this.offers.reduce((sum, o) => sum + o.usedCount, 0);
+    return this.offers.reduce((sum, o) => sum + o.used_count, 0);
   }
 
-  openModal(mode: string, offer?: any) {
+  openModal(mode: string, offer?: Offer) {
     this.modalMode = mode;
-    this.selectedOffer = mode === 'create' ? { 
-      status: 'active', 
-      discountType: 'percentage',
+    this.formErrors = {};
+    this.selectedOffer = mode === 'create' ? {
+      status: 'active',
+      discount_type: 'percentage',
       services: [],
-      usedCount: 0
+      used_count: 0,
+      description: ''
     } : { ...offer };
     this.showModal = true;
   }
@@ -104,27 +81,96 @@ export class AdminOffersComponent {
     this.selectedOffer = {};
   }
 
-  saveOffer() {
-    if (this.modalMode === 'create') {
-      this.selectedOffer.id = Date.now();
-      this.offers.push(this.selectedOffer);
-    } else {
-      const index = this.offers.findIndex(o => o.id === this.selectedOffer.id);
-      if (index !== -1) this.offers[index] = this.selectedOffer;
+  validateForm(): boolean {
+    this.formErrors = {};
+    let isValid = true;
+
+    if (!this.selectedOffer.title) {
+      this.formErrors.title = 'Title is required.';
+      isValid = false;
     }
-    this.closeModal();
+    if (!this.selectedOffer.discount) {
+      this.formErrors.discount = 'Discount is required.';
+      isValid = false;
+    }
+    if (!this.selectedOffer.code) {
+      this.formErrors.code = 'Code is required.';
+      isValid = false;
+    }
+    if (!this.selectedOffer.valid_from) {
+      this.formErrors.valid_from = 'Valid from date is required.';
+      isValid = false;
+    }
+    if (!this.selectedOffer.valid_to) {
+      this.formErrors.valid_to = 'Valid to date is required.';
+      isValid = false;
+    }
+    if (!this.selectedOffer.description) {
+      this.formErrors.description = 'Description is required.';
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  saveOffer() {
+    if (!this.validateForm()) {
+      return;
+    }
+
+    this.submitting = true;
+    if (this.modalMode === 'create') {
+      this.adminApiService.createOffer(this.selectedOffer as Partial<Offer>).subscribe({
+        next: (response) => {
+          this.loadOffers();
+          this.closeModal();
+          this.submitting = false;
+        },
+        error: (error) => {
+          console.error('Error creating offer:', error);
+          this.submitting = false;
+        }
+      });
+    } else {
+      this.adminApiService.partialUpdateOffer(this.selectedOffer.id!, this.selectedOffer).subscribe({
+        next: (response) => {
+          this.loadOffers();
+          this.closeModal();
+          this.submitting = false;
+        },
+        error: (error) => {
+          console.error('Error updating offer:', error);
+          this.submitting = false;
+        }
+      });
+    }
   }
 
   deleteOffer(id: number) {
     if (confirm('Are you sure you want to delete this offer?')) {
-      this.offers = this.offers.filter(o => o.id !== id);
+      this.adminApiService.deleteOffer(id).subscribe({
+        next: (response) => {
+          this.loadOffers();
+        },
+        error: (error) => {
+          console.error('Error deleting offer:', error);
+        }
+      });
     }
   }
 
   toggleOfferStatus(id: number) {
     const offer = this.offers.find(o => o.id === id);
     if (offer) {
-      offer.status = offer.status === 'active' ? 'inactive' : 'active';
+      const newStatus = offer.status === 'active' ? 'inactive' : 'active';
+      this.adminApiService.partialUpdateOffer(id, { status: newStatus }).subscribe({
+        next: (response) => {
+          this.loadOffers();
+        },
+        error: (error) => {
+          console.error('Error updating offer status:', error);
+        }
+      });
     }
   }
 
@@ -141,4 +187,6 @@ export class AdminOffersComponent {
       this.selectedOffer.services.push(service);
     }
   }
+
+  constructor(private adminApiService: AdminApiService) {}
 }

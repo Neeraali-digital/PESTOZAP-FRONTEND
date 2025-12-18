@@ -157,23 +157,27 @@ export class AdminApiService {
         }
       });
     }
-    return this.http.get<{ results: Offer[], count: number }>(`${this.API_URL}/admin/offers/`, { params: httpParams });
+    return this.http.get<{ results: Offer[], count: number }>(`${this.API_URL}/offers/`, { params: httpParams });
   }
 
   getOffer(id: number): Observable<Offer> {
-    return this.http.get<Offer>(`${this.API_URL}/admin/offers/${id}/`);
+    return this.http.get<Offer>(`${this.API_URL}/offers/${id}/`);
   }
 
   createOffer(offer: Partial<Offer>): Observable<Offer> {
-    return this.http.post<Offer>(`${this.API_URL}/admin/offers/`, offer);
+    return this.http.post<Offer>(`${this.API_URL}/offers/`, offer);
   }
 
-  updateOffer(id: number, offer: Partial<Offer>): Observable<Offer> {
-    return this.http.put<Offer>(`${this.API_URL}/admin/offers/${id}/`, offer);
+  updateOffer(id: number, offer: Offer): Observable<Offer> {
+    return this.http.put<Offer>(`${this.API_URL}/offers/${id}/`, offer);
+  }
+
+  partialUpdateOffer(id: number, offer: Partial<Offer>): Observable<Offer> {
+    return this.http.patch<Offer>(`${this.API_URL}/offers/${id}/`, offer);
   }
 
   deleteOffer(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.API_URL}/admin/offers/${id}/`);
+    return this.http.delete<void>(`${this.API_URL}/offers/${id}/`);
   }
 
   // File Upload

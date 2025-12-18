@@ -131,17 +131,18 @@ export interface Offer {
   id: number;
   title: string;
   description: string;
-  discount_percentage: number;
-  discount_amount?: number;
+  discount: number;
+  discount_type: 'percentage' | 'fixed';
   code: string;
   image?: string;
   valid_from: string;
-  valid_until: string;
-  is_active: boolean;
+  valid_to: string;
+  status: 'active' | 'inactive' | 'expired';
   usage_limit?: number;
   used_count: number;
-  terms_conditions: string;
+  services: string[];
   created_at: string;
+  updated_at: string;
 }
 
 export interface User {

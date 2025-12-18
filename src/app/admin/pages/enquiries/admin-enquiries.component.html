@@ -133,7 +133,7 @@
         </div>
         <div class="contact-info">
           <span><strong>Service:</strong> {{ enquiry.service_type }}</span>
-          <span><strong>Type:</strong> {{ enquiry.property_type }}</span>
+          <span><strong>Type:</strong> {{ enquiry.type }}</span>
         </div>
         <div class="enquiry-actions">
           <button class="action-btn details" (click)="openModal(enquiry)">
@@ -206,7 +206,7 @@
           <strong>Property Type:</strong> {{ selectedEnquiry.property_type }}
         </div>
         <div class="detail-item">
-          <strong>Pest Types:</strong> {{ selectedEnquiry.pest_types?.join(', ') || 'N/A' }}
+          <strong>Pest Types:</strong> {{ selectedEnquiry.pest_types.join(', ') || 'N/A' }}
         </div>
         <div class="detail-item">
           <strong>Address:</strong> {{ selectedEnquiry.address }}
