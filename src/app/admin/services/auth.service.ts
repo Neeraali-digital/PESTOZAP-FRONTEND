@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { AdminUser } from '../models/admin.models';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminAuthService {
-  private readonly API_URL = 'http://localhost:8000/api/v1';
+  private readonly API_URL = environment.apiUrl;
   private currentUserSubject = new BehaviorSubject<AdminUser | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 

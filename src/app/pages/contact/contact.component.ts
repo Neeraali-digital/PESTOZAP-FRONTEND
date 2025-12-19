@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-contact',
@@ -11,8 +12,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent {
-  private apiUrl = 'http://localhost:8000/api/v1/enquiries/';
-  
+  private apiUrl = `${environment.apiUrl}/enquiries/`;
+
   formData = {
     name: '',
     email: '',
@@ -23,12 +24,12 @@ export class ContactComponent {
 
   isSubmitting = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   onSubmit() {
     if (this.isFormValid() && !this.isSubmitting) {
       this.isSubmitting = true;
-      
+
       const enquiryData = {
         type: 'contact',
         customer_name: this.formData.name,
@@ -57,8 +58,8 @@ export class ContactComponent {
   }
 
   private isFormValid(): boolean {
-    return !!(this.formData.name && this.formData.email && 
-             this.formData.phone && this.formData.service);
+    return !!(this.formData.name && this.formData.email &&
+      this.formData.phone && this.formData.service);
   }
 
   private resetForm() {

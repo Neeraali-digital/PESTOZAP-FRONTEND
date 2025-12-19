@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-enquiry',
@@ -11,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './enquiry.component.html'
 })
 export class EnquiryComponent implements OnInit {
-  private apiUrl = 'http://localhost:8000/api/v1/enquiries/';
+  private apiUrl = `${environment.apiUrl}/enquiries/`;
 
   formData = {
     fullName: '',

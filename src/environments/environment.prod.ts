@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-production-api-url.com/api/v1'
+  baseUrl: 'https://api.pestozap.com',
+  apiUrl: 'https://api.pestozap.com/api/v1'
 };

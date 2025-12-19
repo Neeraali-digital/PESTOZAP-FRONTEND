@@ -4,6 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AdvertisementService, Advertisement } from '../../services/advertisement.service';
+import { environment } from '../../../environments/environment';
 
 interface PricingCard {
   title: string;
@@ -146,9 +147,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // Selection States
   selectedCategory: 'residential' | 'commercial' = 'residential';
-  selectedServiceType: 'one-time' | 'amc' = 'amc'; 
+  selectedServiceType: 'one-time' | 'amc' = 'amc';
   selectedPropertySize: '2bhk' | '3bhk' | '4bhk' | 'villa' = '2bhk';
-  selectedPestType: string = ''; 
+  selectedPestType: string = '';
   selectedCommercialArea: string = 'Up to 1,000 sq.ft';
 
   displayCards: PricingCard[] = [];
@@ -185,7 +186,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   loadReviews() {
-    this.http.get<any>('http://localhost:8000/api/v1/reviews/?is_approved=true&display_location=home').subscribe({
+    this.http.get<any>(`${environment.apiUrl}/reviews/?is_approved=true&display_location=home`).subscribe({
       next: (response) => {
         const apiReviews = (response.results || response).map((r: any) => ({
           name: r.name,
@@ -202,7 +203,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getImageUrl(review: Review): string {
     if (review.image) {
-      return review.image.startsWith('http') ? review.image : `http://localhost:8000${review.image}`;
+      return review.image.startsWith('http') ? review.image : `${environment.baseUrl}${review.image}`;
     }
     return '';
   }

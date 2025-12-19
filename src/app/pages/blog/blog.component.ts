@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-blog',
@@ -10,8 +11,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   templateUrl: './blog.component.html'
 })
 export class BlogComponent implements OnInit, OnDestroy {
-  private apiUrl = 'http://localhost:8000/api/v1/blog/posts/';
-  
+  private apiUrl = `${environment.apiUrl}/blog/posts/`;
+
   blogs: any[] = [];
   featuredBlogs: any[] = [];
   currentFeaturedIndex = 0;
@@ -20,7 +21,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   loading = false;
   carouselInterval: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.loadBlogs();
@@ -39,7 +40,7 @@ export class BlogComponent implements OnInit, OnDestroy {
       next: (response) => {
         const posts = response.results || response;
         const publishedPosts = posts.filter((post: any) => post.status === 'published');
-        
+
         this.blogs = publishedPosts.map((post: any) => ({
           id: post.id,
           title: post.title,
@@ -53,9 +54,9 @@ export class BlogComponent implements OnInit, OnDestroy {
           author: post.author?.full_name || post.author?.first_name || 'Admin',
           is_featured: post.is_featured
         }));
-        
+
         this.featuredBlogs = this.blogs.filter(blog => blog.is_featured);
-        
+
         this.loading = false;
       },
       error: (error) => {
@@ -82,7 +83,7 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   getImageUrl(imageUrl: string): string {
     if (imageUrl) {
-      return imageUrl.startsWith('http') ? imageUrl : `http://localhost:8000${imageUrl}`;
+      return imageUrl.startsWith('http') ? imageUrl : `${environment.baseUrl}${imageUrl}`;
     }
     return '';
   }
@@ -100,7 +101,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   }
 
   prevFeatured() {
-    this.currentFeaturedIndex = this.currentFeaturedIndex === 0 ? 
+    this.currentFeaturedIndex = this.currentFeaturedIndex === 0 ?
       this.featuredBlogs.length - 1 : this.currentFeaturedIndex - 1;
   }
 

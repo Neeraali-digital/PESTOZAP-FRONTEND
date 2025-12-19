@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 interface Review {
   id?: number;
@@ -25,8 +26,8 @@ interface Review {
   styleUrls: ['./admin-reviews.component.css']
 })
 export class AdminReviewsComponent implements OnInit {
-  private apiUrl = 'http://localhost:8000/api/v1/reviews/';
-  
+  private apiUrl = `${environment.apiUrl}/reviews/`;
+
   reviews: Review[] = [];
   showModal = false;
   editingReview: Review | null = null;
@@ -146,7 +147,7 @@ export class AdminReviewsComponent implements OnInit {
 
   getImageUrl(review: Review): string {
     if (review.image) {
-      return review.image.startsWith('http') ? review.image : `http://localhost:8000${review.image}`;
+      return review.image.startsWith('http') ? review.image : `${environment.baseUrl}${review.image}`;
     }
     return '';
   }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 interface Job {
   id: number;
@@ -22,7 +23,7 @@ interface Job {
   templateUrl: './careers.component.html'
 })
 export class CareersComponent implements OnInit, OnDestroy {
-  private apiUrl = 'http://localhost:8000/api/v1/careers/jobs/';
+  private apiUrl = `${environment.apiUrl}/careers/jobs/`;
 
   applicationForm: FormGroup;
   showModal = false;
@@ -139,7 +140,7 @@ export class CareersComponent implements OnInit, OnDestroy {
         formData.append('resume', this.resumeFile);
       }
 
-      this.http.post('http://localhost:8000/api/v1/careers/applications/', formData).subscribe({
+      this.http.post(`${environment.apiUrl}/careers/applications/`, formData).subscribe({
         next: () => {
           alert('Application submitted successfully!');
           this.closeModal();

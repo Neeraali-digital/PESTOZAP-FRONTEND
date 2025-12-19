@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 interface Review {
   name: string;
@@ -67,7 +68,7 @@ export class OurCommunityComponent implements OnInit, OnDestroy {
   private readonly ROTATION_INTERVAL_MS = 3000;
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.loadReviews();
@@ -97,7 +98,7 @@ export class OurCommunityComponent implements OnInit, OnDestroy {
   }
 
   loadReviews() {
-    this.http.get<any>('http://localhost:8000/api/v1/reviews/?is_approved=true&display_location=community').subscribe({
+    this.http.get<any>(`${environment.apiUrl}/reviews/?is_approved=true&display_location=community`).subscribe({
       next: (response) => {
         this.reviews = response.results || response;
       },
@@ -110,7 +111,7 @@ export class OurCommunityComponent implements OnInit, OnDestroy {
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - date.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays === 1) return '1 day ago';
     if (diffDays < 7) return `${diffDays} days ago`;
     if (diffDays < 14) return '1 week ago';
@@ -121,7 +122,7 @@ export class OurCommunityComponent implements OnInit, OnDestroy {
 
   getImageUrl(review: Review): string {
     if (review.image) {
-      return review.image.startsWith('http') ? review.image : `http://localhost:8000${review.image}`;
+      return review.image.startsWith('http') ? review.image : `${environment.baseUrl}${review.image}`;
     }
     return '';
   }

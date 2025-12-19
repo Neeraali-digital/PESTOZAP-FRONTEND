@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 import { AdminApiService } from '../../services/admin-api.service';
 import { AlertService } from '../../../shared/services/alert.service';
@@ -30,7 +31,7 @@ export class AdminBlogComponent implements OnInit {
   pageSize = 10;
   selectedFile: File | null = null;
   maxFileSize = 3 * 1024 * 1024; // 3MB
-  
+
   blogPosts: BlogPost[] = [];
   categories = [
     { id: 1, name: 'Tips & Tricks' },
@@ -44,7 +45,7 @@ export class AdminBlogComponent implements OnInit {
   constructor(
     private adminApiService: AdminApiService,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadBlogPosts();
@@ -53,7 +54,7 @@ export class AdminBlogComponent implements OnInit {
   loadBlogPosts() {
     this.loading = true;
     this.error = '';
-    
+
     const params = {
       page: this.currentPage,
       page_size: this.pageSize,
@@ -102,7 +103,7 @@ export class AdminBlogComponent implements OnInit {
   openModal(mode: string, post?: any) {
     this.modalMode = mode;
     if (mode === 'create') {
-      this.selectedPost = { 
+      this.selectedPost = {
         status: 'draft',
         category: 1,
         is_featured: false,
@@ -116,7 +117,7 @@ export class AdminBlogComponent implements OnInit {
         const foundCategory = this.categories.find(c => c.name === categoryName);
         categoryId = foundCategory ? foundCategory.id : 1;
       }
-      this.selectedPost = { 
+      this.selectedPost = {
         ...post,
         category: categoryId
       };
@@ -138,7 +139,7 @@ export class AdminBlogComponent implements OnInit {
 
   getImageUrl(post: any): string {
     if (post.featured_image) {
-      return post.featured_image.startsWith('http') ? post.featured_image : `http://localhost:8000${post.featured_image}`;
+      return post.featured_image.startsWith('http') ? post.featured_image : `${environment.baseUrl}${post.featured_image}`;
     }
     return '';
   }

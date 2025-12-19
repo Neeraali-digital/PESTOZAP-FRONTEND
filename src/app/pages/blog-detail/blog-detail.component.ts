@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-blog-detail',
@@ -76,13 +77,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 export class BlogDetailComponent implements OnInit {
   blog: any = null;
   loading = true;
-  private apiUrl = 'http://localhost:8000/api/v1/blog/posts/';
+  private apiUrl = `${environment.apiUrl}/blog/posts/`;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit() {
     const slug = this.route.snapshot.paramMap.get('slug');
@@ -116,7 +117,7 @@ export class BlogDetailComponent implements OnInit {
 
   getImageUrl(imageUrl: string): string {
     if (imageUrl) {
-      return imageUrl.startsWith('http') ? imageUrl : `http://localhost:8000${imageUrl}`;
+      return imageUrl.startsWith('http') ? imageUrl : `${environment.baseUrl}${imageUrl}`;
     }
     return '';
   }
