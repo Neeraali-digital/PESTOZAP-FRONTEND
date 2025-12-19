@@ -12,17 +12,13 @@ import { AdminAuthService } from '../../services/auth.service';
 export class AdminSidebarComponent {
   @Input() isOpen = true;
 
+  // Menu items - Users and Profile tabs hidden
   menuItems = [
     {
       label: 'Dashboard',
       icon: 'dashboard',
       route: '/admin/dashboard',
       active: true
-    },
-    {
-      label: 'Users',
-      icon: 'people',
-      route: '/admin/users'
     },
     {
       label: 'Blog Posts',
@@ -53,18 +49,13 @@ export class AdminSidebarComponent {
       label: 'Advertisements',
       icon: 'campaign',
       route: '/admin/advertisements'
-    },
-    {
-      label: 'Profile',
-      icon: 'account_circle',
-      route: '/admin/profile'
     }
   ];
 
   constructor(
     private authService: AdminAuthService,
     private router: Router
-  ) {}
+  ) { }
 
   logout() {
     this.authService.logout();

@@ -138,19 +138,23 @@ export interface Review {
 export interface Enquiry {
   id: number;
   type: 'contact' | 'enquiry';
-  name: string;
+  name: string; // backend sends customer_name, we might need to map it or interface is wrong?
+  customer_name?: string; // Add this just in case
   email: string;
   phone: string;
   subject?: string;
   service_type: string;
   property_type: string;
-  pest_types: string[];
+  pests: string[]; // Renamed from pest_types to match backend
   address: string;
   message: string;
   status: 'new' | 'contacted' | 'quoted' | 'converted' | 'closed';
   priority: 'low' | 'medium' | 'high';
   created_at: string;
   updated_at: string;
+  package_name?: string;
+  quoted_price?: string;
+  area?: string;
 }
 
 export interface Offer {

@@ -78,11 +78,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentLogoIndex = 0;
   logoInterval: any;
 
-  selectedServiceType = 'residential-control';
-  selectedPestType = '';
-  selectedPropertyType = '';
-  selectedServicePackage = '';
-  squareFeet = '';
 
   advertisements: Advertisement[] = [];
 
@@ -94,104 +89,87 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   reviews: Review[] = [];
 
-  pricingData: { [key: string]: PricingCard[] } = {
-    'residential-control': [
-      {
-        title: 'Residential Service',
-        features: [
-          'Gel Baiting & Residual Sprays, Odorless & Human Safe Chemicals',
-          'Larviciding, Residual Sprays, Fogging, Mosquito Repellent Diffuser',
-          'Rodent Stations, Glue boards, Snap Traps, Cages, Rodent Boxes',
-          'Drill-Fill-Seal, TERMATRACK',
-          'Net and Spikes Solutions, Aesthetic & Transparent Net',
-          'Microbial disinfection, Nano-Herbal Disinfection'
-        ],
-        price: 'Price/-',
-        originalPrice: 'Price/-',
-        package: '3 Services 1 Year',
-        isRecommended: true,
-        lastBooking: 'Last Booking on 15th Dec 2023'
-      },
-      {
-        title: 'Standard Cockroach Control',
-        features: [
-          'Effective spray treatment',
-          'Quick results within 24 hours',
-          'Professional service guarantee'
-        ],
-        price: 'Price/-',
-        package: 'Single Service',
-        lastBooking: 'Available Today'
-      }
-    ],
-    'commercial-control': [
-      {
-        title: 'commercial Service',
-        features: [
-          'Gel Baiting & Residual Sprays, Odorless & Human Safe Chemicals',
-          'Larviciding, Residual Sprays, Fogging, Mosquito Repellent Diffuser',
-          'Rodent Stations, Glue boards, Snap Traps, Cages, Rodent Boxes',
-          'Drill-Fill-Seal, TERMATRACK',
-          'Net and Spikes Solutions, Aesthetic & Transparent Net',
-          'Microbial disinfection, Nano-Herbal Disinfection'
-        ],
-        price: 'Price/-',
-        originalPrice: 'Price/-',
-        package: '6 Services 2 Years',
-        isRecommended: true,
-        lastBooking: 'Last Booking on 20th Dec 2023'
-      },
-      {
-        title: 'Essential Commercial Control',
-        features: [
-          'Basic pest elimination',
-          'Cockroach and ant control',
-          'Safe for commercial areas',
-          'Professional service'
-        ],
-        price: 'Price/-',
-        package: '3 Services 1 Year',
-        lastBooking: 'Available Today'
-      }
-    ],
-    'offers': [
-      {
-        title: 'Commercial Offers',
-        features: [
-          '50% Off First Service for Offices',
-          'Free Inspection for Commercial Properties',
-          'Bulk Discount for Multiple Services',
-          'Priority Scheduling for Businesses',
-          'Eco-Friendly Treatments Included'
-        ],
-        price: 'Price/-',
-        originalPrice: 'Price/-',
-        package: 'Commercial Package',
-        isRecommended: true,
-        lastBooking: 'Last Booking on 15th Dec 2023'
-      },
-      {
-        title: 'Residential Offers',
-        features: [
-          '30% Off Annual Maintenance Contract',
-          'Free Home Inspection',
-          'Family Discount for Multiple Services',
-          'Safe Treatments for Homes with Kids',
-          'Guaranteed Pest-Free Guarantee'
-        ],
-        price: 'Price/-',
-        originalPrice: 'Price/-',
-        package: 'Residential Package',
-        lastBooking: 'Available Today'
-      }
-    ]
+  residentialOneTimeRates = [
+    { treatment: 'Cockroach Control (Gel + Residual Spray)', '2bhk': '₹900', '3bhk': '₹1,300', '4bhk': '₹1,600', villa: '₹2,000', warranty: '3 Months' },
+    { treatment: 'Termite Treatment (Local + Deep)', '2bhk': '₹4,200', '3bhk': '₹6,000', '4bhk': '₹7,500', villa: '₹10,000', warranty: '3 Years' },
+    { treatment: 'General Pest Control (Cockroach + Ants + Spiders)', '2bhk': '₹1,000', '3bhk': '₹1,400', '4bhk': '₹1,800', villa: '₹2,200', warranty: '3 Months' },
+    { treatment: 'Rat / Rodent Control (Traps + Baits)', '2bhk': '₹1,100', '3bhk': '₹1,500', '4bhk': '₹1,800', villa: '₹2,200', warranty: 'No Warranty' },
+    { treatment: 'Flies / Flying Insects Treatment', '2bhk': '₹850', '3bhk': '₹1,200', '4bhk': '₹1,500', villa: '₹1,800', warranty: '3 Months' },
+    { treatment: 'Mosquito ICON Spray (Outdoor Residual)', '2bhk': '₹1,300', '3bhk': '₹1,700', '4bhk': '₹2,000', villa: '₹2,500', warranty: '2 Months' },
+    { treatment: 'Mosquito Fogging / ULV (Indoor)', '2bhk': '₹1,000', '3bhk': '₹1,300', '4bhk': '₹1,600', villa: '₹2,000', warranty: 'NA' }
+  ];
+
+  residentialAmcRates = [
+    {
+      name: 'SILVER',
+      frequency: 'Quarterly (4 visits/yr)',
+      prices: { '2bhk': '₹3,200 / yr', '3bhk': '₹4,400 / yr', '4bhk': '₹5,400 / yr', villa: '₹6,500 / yr' },
+      includes: 'General pest control, cockroach treatment. Re-service within 30 days.',
+      color: 'from-gray-300 to-gray-400',
+      icon: 'verified'
+    },
+    {
+      name: 'GOLD',
+      frequency: 'Bi-Monthly (6 visits/yr)',
+      prices: { '2bhk': '₹4,800 / yr', '3bhk': '₹6,600 / yr', '4bhk': '₹8,000 / yr', villa: '₹10,000 / yr' },
+      includes: 'Silver + rodent monitoring + 2 ICON mosquito sprays. Re-service within 45 days.',
+      color: 'from-yellow-300 to-yellow-500',
+      icon: 'workspace_premium',
+      recommended: true
+    },
+    {
+      name: 'PLATINUM',
+      frequency: 'Monthly (12 visits/yr)',
+      prices: { '2bhk': '₹8,000 / yr', '3bhk': '₹10,800 / yr', '4bhk': '₹13,500 / yr', villa: '₹18,000 / yr' },
+      includes: 'Priority response (24–48 hrs), termite annual inspection, unlimited re-service for covered pests.',
+      color: 'from-slate-700 to-slate-900 text-white',
+      icon: 'diamond'
+    }
+  ];
+
+  termiteAmcAddOn = {
+    '2bhk': '₹10,000', '3bhk': '₹15,000', '4bhk': '₹18,000', villa: '₹25,000'
   };
+
+  commercialRates = [
+    { area: 'Up to 1,000 sq.ft', oneTime: '₹2,500', amc: '₹10,000 / yr' },
+    { area: '1,001 – 3,000 sq.ft', oneTime: '₹4,500', amc: '₹18,000 / yr' },
+    { area: '3,001 – 10,000 sq.ft', oneTime: '₹7,500', amc: '₹30,000 / yr' },
+    { area: '10,000+ sq.ft', oneTime: 'Site Survey', amc: 'Site Survey' }
+  ];
 
   constructor(
     private advertisementService: AdvertisementService,
     private router: Router,
     private http: HttpClient
-  ) {}
+  ) { }
+
+  // Selection States
+  selectedCategory: 'residential' | 'commercial' = 'residential';
+  selectedServiceType: 'one-time' | 'amc' = 'one-time';
+  selectedPropertySize: '2bhk' | '3bhk' | '4bhk' | 'villa' = '2bhk';
+  selectedPestType: string = ''; // For one-time
+  selectedCommercialArea: string = 'Up to 1,000 sq.ft';
+
+  displayCards: PricingCard[] = [];
+
+  // Dropdown Options
+  pestTypes = [
+    'Cockroach Control (Gel + Residual Spray)',
+    'Termite Treatment (Local + Deep)',
+    'General Pest Control (Cockroach + Ants + Spiders)',
+    'Rat / Rodent Control (Traps + Baits)',
+    'Flies / Flying Insects Treatment',
+    'Mosquito ICON Spray (Outdoor Residual)',
+    'Mosquito Fogging / ULV (Indoor)'
+  ];
+
+  commercialAreas = [
+    'Up to 1,000 sq.ft',
+    '1,001 – 3,000 sq.ft',
+    '3,001 – 10,000 sq.ft',
+    '10,000+ sq.ft'
+  ];
 
   ngOnInit() {
     this.advertisementService.getActiveAdvertisements().subscribe(ads => {
@@ -203,6 +181,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loadReviews();
     this.startReviewAutoSlide();
     this.startLogoCycle();
+    this.updateCards(); // Initial load
   }
 
   loadReviews() {
@@ -252,90 +231,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   goToSlide(index: number) {
     this.currentSlide = index;
-  }
-
-  selectServiceType(type: string) {
-    this.selectedServiceType = type;
-    // Reset selections when service type changes
-    this.selectedPestType = '';
-    this.selectedPropertyType = '';
-    this.selectedServicePackage = '';
-    this.squareFeet = '';
-  }
-
-  onServiceChange(event: any) {
-    this.selectedPestType = event.target.value;
-    this.updatePricingCard();
-  }
-
-  onPropertyTypeChange(event: any) {
-    this.selectedPropertyType = event.target.value;
-    this.updatePricingCard();
-  }
-
-  onServicePackageChange(event: any) {
-    this.selectedServicePackage = event.target.value;
-    this.updatePricingCard();
-  }
-
-  updatePricingCard() {
-    // Update the first card based on selections
-    const cards = this.pricingData[this.selectedServiceType];
-    if (cards && cards.length > 0) {
-      const firstCard = cards[0];
-      if (this.selectedPestType) {
-        firstCard.features = this.getPestSpecificFeatures(this.selectedPestType);
-      }
-      if (this.selectedServiceType === 'residential-control' && this.selectedPropertyType) {
-        firstCard.title = `Residential Service (${this.selectedPropertyType.toUpperCase()})`;
-      } else if (this.selectedServiceType === 'commercial-control') {
-        firstCard.title = 'Commercial Service';
-      }
-      if (this.selectedServicePackage) {
-        firstCard.package = this.selectedServicePackage === 'single' ? 'Single Service' :
-                           this.selectedServicePackage === '3-services' ? '3 Services (1 Year)' :
-                           '6 Services (2 Years)';
-      }
-    }
-  }
-
-  getPestSpecificFeatures(pestType: string): string[] {
-    const pestFeatures: { [key: string]: string[] } = {
-      'cockroach': [
-        'Treatment: Gel Baiting & Residual Sprays',
-        'Chemicals: Odorless & Human Safe Chemicals',
-        'Areas Covered: Work Stations, Meeting & Conference Rooms, Kitchen & Cafeteria, Vending Machines, Utilities, Restrooms, Drains'
-      ],
-      'mosquito': [
-        'Treatment: Larviciding, Residual Sprays, Fogging',
-        'Products: Mosquito Repellent Diffuser',
-        'Areas Covered: Inside Office Spaces, Potted Plants, Utilities, Overhead Tanks, Common Passages, Entry/Exits'
-      ],
-      'rodent': [
-        'Treatment: Rodent Stations, Glue boards, Snap Traps, Cages',
-        'Products: Rodent Boxes',
-        'Areas Covered: Stores, Food Handling Area, HVAC system, FAS (Fire Alarm System), Electric conduits, Plumbing ducts, Dropped Ceilings, Raised Flooring'
-      ],
-      'termite': [
-        'Treatment: Drill-Fill-Seal',
-        'Method: TERMATRACK',
-        'Areas Covered: Electrical/Plumbing ducts, Wooden Furniture, Dropped Ceiling, Raised Flooring, Lift pits, Wall n floor junctions'
-      ],
-      'bird': [
-        'Treatment: Net and Spikes Solutions',
-        'Products: Aesthetic & Transparent Net',
-        'Areas Covered: Ducts, Parapets & Ledges, AC exhausts, Vents, Window AC, External Facade'
-      ],
-      'disinfection': [
-        'Treatment: Microbial disinfection, Nano-Herbal Disinfection',
-        'Benefits: Kills 99.99% microbial organisms, SteriCare for Properties, Silver Nano for All common touch points'
-      ]
-    };
-    return pestFeatures[pestType] || [];
-  }
-
-  getCurrentPricingCards(): PricingCard[] {
-    return this.pricingData[this.selectedServiceType] || [];
   }
 
   startReviewAutoSlide() {
@@ -405,4 +300,125 @@ export class HomeComponent implements OnInit, OnDestroy {
     return radii[index] || '50%';
   }
 
+  onCategoryChange(val: any) {
+    this.selectedCategory = val;
+    this.selectedServiceType = 'one-time'; // reset
+    this.updateCards();
+  }
+
+  onServiceTypeChange(val: any) {
+    this.selectedServiceType = val;
+    this.updateCards();
+  }
+
+  onPropertySizeChange(val: any) {
+    this.selectedPropertySize = val;
+    this.updateCards();
+  }
+
+  onPestTypeChange(val: any) {
+    this.selectedPestType = val;
+    this.updateCards();
+  }
+
+  onCommercialAreaChange(val: any) {
+    this.selectedCommercialArea = val;
+    this.updateCards();
+  }
+
+  updateCards() {
+    this.displayCards = [];
+
+    if (this.selectedCategory === 'residential') {
+      if (this.selectedServiceType === 'one-time') {
+        // Show specific pest cards or all if none selected
+        let ratesToShow = this.residentialOneTimeRates;
+        if (this.selectedPestType) {
+          ratesToShow = ratesToShow.filter(r => r.treatment === this.selectedPestType);
+        }
+
+        // enhance: if no specific pest selected, maybe show top 2 popular ones?
+        // simple: just show first 2 or filtered list
+        if (!this.selectedPestType && ratesToShow.length > 2) {
+          ratesToShow = ratesToShow.slice(0, 2); // Show top 2 by default to fit UI
+        }
+
+        this.displayCards = ratesToShow.map(rate => ({
+          title: rate.treatment,
+          features: [
+            `Warranty: ${rate.warranty}`,
+            'Professional Treatment',
+            'Safe Chemicals'
+          ],
+          price: (rate as any)[this.selectedPropertySize] || 'N/A',
+          package: 'One-Time Service',
+          isRecommended: rate.treatment.includes('General Pest') || rate.treatment.includes('Cockroach'),
+          lastBooking: 'Booked 2 hours ago'
+        }));
+
+      } else {
+        // AMC - Show Silver, Gold, Platinum
+        this.displayCards = this.residentialAmcRates.map(plan => ({
+          title: `${plan.name} PLAN`,
+          features: [
+            plan.frequency,
+            plan.includes,
+            // Add termite add-on info if relevant or generic
+            'Optional Termite Add-on Available'
+          ],
+          price: (plan.prices as any)[this.selectedPropertySize] || 'N/A',
+          package: 'Annual Contract',
+          isRecommended: plan.name === 'GOLD',
+          lastBooking: 'Popular Choice'
+        }));
+      }
+    } else {
+      // Commercial
+      // Map based on area
+      const rate = this.commercialRates.find(r => r.area === this.selectedCommercialArea);
+      if (rate) {
+        this.displayCards.push({
+          title: 'One-Time Service',
+          features: ['General Pest Control', 'Compliance Documentation', 'Night Service Available'],
+          price: rate.oneTime,
+          package: 'Single Service',
+          isRecommended: false,
+          lastBooking: 'Available Today'
+        });
+        this.displayCards.push({
+          title: 'Annual Maintenance',
+          features: ['6 Visits / Year', 'Priority Support', 'Audit Support', 'Trend Analysis'],
+          price: rate.amc,
+          package: '1 Year AMC',
+          isRecommended: true,
+          lastBooking: 'Business Favorite'
+        });
+      }
+    }
+  }
+
+  bookNow(card: PricingCard) {
+    const queryParams: any = {
+      service_type: this.selectedCategory === 'residential' ?
+        (this.selectedServiceType === 'one-time' ? 'Residential One-Time' : 'Residential AMC') :
+        'Commercial',
+      package: card.title, // e.g., "Silver Plan" or "Cockroach Control"
+      price: card.price,
+    };
+
+    if (this.selectedCategory === 'residential') {
+      queryParams.property_details = this.selectedPropertySize.toUpperCase();
+      if (this.selectedServiceType === 'one-time' && this.selectedPestType) {
+        queryParams.pest_type = this.selectedPestType;
+      }
+    } else {
+      queryParams.property_details = this.selectedCommercialArea;
+    }
+
+    this.router.navigate(['/enquiry'], { queryParams });
+  }
+
+  getCurrentPricingCards(): PricingCard[] {
+    return this.displayCards;
+  }
 }

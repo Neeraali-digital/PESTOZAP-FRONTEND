@@ -26,7 +26,14 @@
         <h1>Enquiries & Contacts</h1>
         <p>Manage customer enquiries and contact messages</p>
       </div>
-      <!-- s -->
+      <button 
+        (click)="loadEnquiries(1)" 
+        class="btn-refresh"
+        [disabled]="isLoading"
+        title="Refresh enquiries">
+        <i class="fas fa-sync-alt" [class.fa-spin]="isLoading"></i>
+        Refresh
+      </button>
     </div>
 
     <!-- Type Tabs -->
@@ -116,7 +123,7 @@
         [class.priority-low]="enquiry.priority === 'low'">
         <div class="enquiry-header">
           <div class="enquiry-info">
-            <h3>{{ enquiry.name }}</h3>
+            <h3>{{ enquiry.customer_name || enquiry.name }}</h3>
             <div class="enquiry-meta">
               <span><i class="fas fa-envelope"></i> {{ enquiry.email }}</span>
               <span><i class="fas fa-phone"></i> {{ enquiry.phone }}</span>
@@ -188,7 +195,7 @@
           <strong>Type:</strong> {{ selectedEnquiry.type }}
         </div>
         <div class="detail-item">
-          <strong>Name:</strong> {{ selectedEnquiry.name }}
+          <strong>Name:</strong> {{ selectedEnquiry.customer_name || selectedEnquiry.name }}
         </div>
         <div class="detail-item">
           <strong>Email:</strong> {{ selectedEnquiry.email }}
@@ -202,11 +209,20 @@
         <div class="detail-item">
           <strong>Service Type:</strong> {{ selectedEnquiry.service_type }}
         </div>
+        <div class="detail-item" *ngIf="selectedEnquiry.package_name">
+          <strong>Package:</strong> {{ selectedEnquiry.package_name }}
+        </div>
+        <div class="detail-item" *ngIf="selectedEnquiry.quoted_price">
+          <strong>Est. Price:</strong> {{ selectedEnquiry.quoted_price }}
+        </div>
         <div class="detail-item">
           <strong>Property Type:</strong> {{ selectedEnquiry.property_type }}
         </div>
+        <div class="detail-item" *ngIf="selectedEnquiry.area">
+          <strong>Area:</strong> {{ selectedEnquiry.area }}
+        </div>
         <div class="detail-item">
-          <strong>Pest Types:</strong> {{ selectedEnquiry.pest_types.join(', ') || 'N/A' }}
+          <strong>Pest Types:</strong> {{ selectedEnquiry.pests?.join(', ') || 'N/A' }}
         </div>
         <div class="detail-item">
           <strong>Address:</strong> {{ selectedEnquiry.address }}
