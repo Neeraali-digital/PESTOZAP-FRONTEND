@@ -146,9 +146,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // Selection States
   selectedCategory: 'residential' | 'commercial' = 'residential';
-  selectedServiceType: 'one-time' | 'amc' = 'one-time';
+  selectedServiceType: 'one-time' | 'amc' = 'amc'; 
   selectedPropertySize: '2bhk' | '3bhk' | '4bhk' | 'villa' = '2bhk';
-  selectedPestType: string = ''; // For one-time
+  selectedPestType: string = ''; 
   selectedCommercialArea: string = 'Up to 1,000 sq.ft';
 
   displayCards: PricingCard[] = [];
