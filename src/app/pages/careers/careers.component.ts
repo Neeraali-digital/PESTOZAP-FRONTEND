@@ -23,7 +23,7 @@ interface Job {
 })
 export class CareersComponent implements OnInit, OnDestroy {
   private apiUrl = 'http://localhost:8000/api/v1/careers/jobs/';
-  
+
   applicationForm: FormGroup;
   showModal = false;
   selectedPosition = '';
@@ -38,6 +38,8 @@ export class CareersComponent implements OnInit, OnDestroy {
     { icon: 'card_giftcard', title: 'Paid Time Off', description: 'Generous vacation and sick leave policies' },
     { icon: 'trending_up', title: 'Career Growth', description: 'Clear advancement paths and promotion opportunities' }
   ];
+
+  resumeFile: File | null = null;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.applicationForm = this.fb.group({
@@ -60,6 +62,7 @@ export class CareersComponent implements OnInit, OnDestroy {
     this.http.get<any>(`${this.apiUrl}active/`).subscribe({
       next: (jobs) => {
         this.openPositions = jobs.map((job: Job) => ({
+          id: job.id,
           title: job.title,
           location: job.location,
           type: job.employment_type,
@@ -72,7 +75,7 @@ export class CareersComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -105,13 +108,47 @@ export class CareersComponent implements OnInit, OnDestroy {
   closeModal() {
     this.showModal = false;
     this.applicationForm.reset();
+    this.resumeFile = null;
+  }
+
+  onFileSelect(event: any) {
+    if (event.target.files.length > 0) {
+      this.resumeFile = event.target.files[0];
+    }
   }
 
   onSubmit() {
     if (this.applicationForm.valid) {
-      console.log('Application submitted:', this.applicationForm.value);
-      this.closeModal();
-      // Handle form submission
+      const formData = new FormData();
+      const formValue = this.applicationForm.value;
+
+      const job = this.openPositions.find(j => j.title === formValue.position);
+      if (!job) {
+        alert('Invalid job position selected');
+        return;
+      }
+
+      formData.append('job', job.id);
+      formData.append('full_name', formValue.fullName);
+      formData.append('email', formValue.email);
+      formData.append('phone', formValue.phone);
+      formData.append('experience', formValue.experience);
+      formData.append('cover_letter', formValue.coverLetter || '');
+
+      if (this.resumeFile) {
+        formData.append('resume', this.resumeFile);
+      }
+
+      this.http.post('http://localhost:8000/api/v1/careers/applications/', formData).subscribe({
+        next: () => {
+          alert('Application submitted successfully!');
+          this.closeModal();
+        },
+        error: (error) => {
+          console.error('Error submitting application:', error);
+          alert('Failed to submit application. Please try again.');
+        }
+      });
     }
   }
 }

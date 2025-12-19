@@ -1,22 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { 
-  DashboardStats, 
-  BlogPost, 
-  Category, 
-  Tag, 
-  Review, 
-  Enquiry, 
-  Offer, 
-  User 
+import {
+  DashboardStats,
+  BlogPost,
+  Category,
+  Tag,
+  Review,
+  Enquiry,
+  Offer,
+  User,
+  Job,
+  JobApplication
 } from '../models/admin.models';
 
 @Injectable()
 export class AdminApiService {
   private readonly API_URL = 'http://localhost:8000/api/v1';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Dashboard
   getDashboardStats(): Observable<DashboardStats> {
@@ -186,5 +188,46 @@ export class AdminApiService {
     formData.append('file', file);
     formData.append('type', type);
     return this.http.post<{ url: string }>(`${this.API_URL}/admin/upload/`, formData);
+  }
+
+  // Career Management
+  getJobs(params?: any): Observable<{ results: Job[], count: number }> {
+    let httpParams = new HttpParams();
+    if (params) {
+      Object.keys(params).forEach(key => {
+        if (params[key]) {
+          httpParams = httpParams.set(key, params[key]);
+        }
+      });
+    }
+    return this.http.get<{ results: Job[], count: number }>(`${this.API_URL}/careers/jobs/`, { params: httpParams });
+  }
+
+  getJob(id: number): Observable<Job> {
+    return this.http.get<Job>(`${this.API_URL}/careers/jobs/${id}/`);
+  }
+
+  createJob(job: Partial<Job>): Observable<Job> {
+    return this.http.post<Job>(`${this.API_URL}/careers/jobs/`, job);
+  }
+
+  updateJob(id: number, job: Partial<Job>): Observable<Job> {
+    return this.http.put<Job>(`${this.API_URL}/careers/jobs/${id}/`, job);
+  }
+
+  deleteJob(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.API_URL}/careers/jobs/${id}/`);
+  }
+
+  getJobApplications(params?: any): Observable<{ results: JobApplication[], count: number }> {
+    let httpParams = new HttpParams();
+    if (params) {
+      Object.keys(params).forEach(key => {
+        if (params[key]) {
+          httpParams = httpParams.set(key, params[key]);
+        }
+      });
+    }
+    return this.http.get<{ results: JobApplication[], count: number }>(`${this.API_URL}/careers/applications/`, { params: httpParams });
   }
 }

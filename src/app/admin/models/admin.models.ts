@@ -10,6 +10,32 @@ export interface AdminUser {
   last_login?: string;
 }
 
+export interface Job {
+  id: number;
+  title: string;
+  location: string;
+  employment_type: 'full-time' | 'part-time' | 'contract';
+  experience: string;
+  description: string;
+  requirements: string[];
+  status: 'active' | 'closed';
+  created_at: string;
+  updated_at: string;
+}
+
+export interface JobApplication {
+  id: number;
+  job: number;
+  job_details?: Job;
+  full_name: string;
+  email: string;
+  phone: string;
+  experience: string;
+  resume: string;
+  cover_letter: string;
+  created_at: string;
+}
+
 export interface DashboardStats {
   stats: {
     total_revenue: number;
